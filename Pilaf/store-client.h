@@ -111,6 +111,11 @@ public:
   int put(const KEY_TYPE key, const VAL_TYPE value);
   int contains(const KEY_TYPE key);
   int remove(const KEY_TYPE key);
+ 
+  //similar to get and put, but with size parameter
+  int put_with_size(const KEY_TYPE key, VAL_TYPE value, size_t key_len, size_t val_len);
+  int get_with_size(const KEY_TYPE Key, VAL_TYPE& value, size_t& val_en);
+
 
   template <class K, class V>
   int get_ext(K key, V& value) {

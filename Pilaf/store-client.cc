@@ -832,3 +832,18 @@ void Client::print_stats(void) {
   manager->log(VERB_WARN,"RDMA Bad Extents: %19d\n",stats_rdma_bad_extents);
 }
 
+
+int Client::put_with_size(const KEY_TYPE key, VAL_TYPE value, size_t key_len, size_t val_len){
+
+  return write_(key, key_len, value, val_len, OP_PUT);
+}
+
+int Client::get_with_size(const KEY_TYPE key, VAL_TYPE& value, size_t &val_len){
+  
+  if (read_mode == READ_MODE_RDMA) {
+    return read_(key, strlen(key), value, val_len, OP_GET);
+  } else { //read_mode == READ_MODE_SERVER
+    return read_server_(key, strlen(key), value, val_len, OP_GET);
+  }
+}
+
