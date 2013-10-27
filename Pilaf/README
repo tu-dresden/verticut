@@ -1,0 +1,7 @@
+Infiniband K-V DHT Test
+-------------------------
+
+Server: ./dht-test s
+Client: ./dht-test c <list of servers> [<test type>]
+
+Will run 2M fetches and display average RTT fetch time

@@ -1,0 +1,1047 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+APPS	Makefile	/^APPS    := dht-test loadtest ib-test ht-test$/;"	m
+APPS	ploadtest/Makefile	/^APPS    := ploadtest$/;"	m
+APPS	tcp_echo/Makefile	/^APPS    := client multi$/;"	m
+BIG_CONSTANT	integrity.h	7;"	d
+BLOCK_READ_COUNT	ib.h	/^const int BLOCK_READ_COUNT = 1;$/;"	v
+BUCKET_NOT_FOUND	dht.h	37;"	d
+BUFLEN	tcp_echo/multi.c	20;"	d	file:
+BinaryCode	image_search/image_search.pb.cc	/^BinaryCode::BinaryCode()$/;"	f	class:BinaryCode
+BinaryCode	image_search/image_search.pb.cc	/^BinaryCode::BinaryCode(const BinaryCode& from)$/;"	f	class:BinaryCode
+BinaryCode	image_search/image_search.pb.h	/^class BinaryCode : public ::google::protobuf::Message {$/;"	c
+BinaryCode_descriptor_	image_search/image_search.pb.cc	/^const ::google::protobuf::Descriptor* BinaryCode_descriptor_ = NULL;$/;"	m	namespace:__anon3	file:
+BinaryCode_reflection_	image_search/image_search.pb.cc	/^  BinaryCode_reflection_ = NULL;$/;"	m	namespace:__anon3	file:
+ByteSize	image_search/image_search.pb.cc	/^int BinaryCode::ByteSize() const {$/;"	f	class:BinaryCode
+ByteSize	image_search/image_search.pb.cc	/^int HashIndex::ByteSize() const {$/;"	f	class:HashIndex
+ByteSize	image_search/image_search.pb.cc	/^int ID::ByteSize() const {$/;"	f	class:ID
+ByteSize	image_search/image_search.pb.cc	/^int ImageList::ByteSize() const {$/;"	f	class:ImageList
+CC	Makefile	/^CC      := g++$/;"	m
+CC	ploadtest/Makefile	/^CC      := g++$/;"	m
+CC	tcp_echo/Makefile	/^CC      := g++$/;"	m
+CFLAGS	Makefile	/^CFLAGS  := -Wno-write-strings -Ofast -g -rdynamic$/;"	m
+CFLAGS	ploadtest/Makefile	/^CFLAGS  :=-Wno-write-strings -Ofast $/;"	m
+CFLAGS	tcp_echo/Makefile	/^CFLAGS  := -Wno-write-strings -fpermissive -O3$/;"	m
+CHECK_GET_SUCCESS	dht-test.cc	46;"	d	file:
+CLIENTS	ib_perftest.py	/^CLIENTS = 32$/;"	v
+CLIENTS	tcp_echo/perftest.py	/^CLIENTS = 40$/;"	v
+CLIENT_CONF	ib_perftest.py	/^CLIENT_CONF = "tcp_echo\/mpiconf1417"$/;"	v
+CONNECT_RETRY_SLEEP	store-constants.h	70;"	d
+CONNECT_TIMEOUT	store-constants.h	69;"	d
+CONN_DISCO	ib.h	/^  CONN_DISCO,$/;"	e	enum:conn_state
+CONN_FINIS	ib.h	/^  CONN_FINIS$/;"	e	enum:conn_state
+CONN_READY	ib.h	/^  CONN_READY,$/;"	e	enum:conn_state
+CONN_SETUP	ib.h	/^  CONN_SETUP,$/;"	e	enum:conn_state
+CONN_TEARD	ib.h	/^  CONN_TEARD,$/;"	e	enum:conn_state
+CQ_ACK_THRESH	ib.h	/^const int CQ_ACK_THRESH = 16;$/;"	v
+CS_ADR_RES	store-client.h	/^  CS_ADR_RES,$/;"	e	enum:conn_setup_state
+CS_CREATED	store-client.h	/^  CS_CREATED = 0,$/;"	e	enum:conn_setup_state
+CS_ESTAB	store-client.h	/^  CS_ESTAB$/;"	e	enum:conn_setup_state
+CS_RT_RES	store-client.h	/^  CS_RT_RES,$/;"	e	enum:conn_setup_state
+CTRL_FREE	mem/mem5.h	78;"	d
+CTRL_LOGSIZE	mem/mem5.h	77;"	d
+CUCKOO_D	dht.h	44;"	d
+CXXFLAGS	ploadtest/Makefile	/^CXXFLAGS := -Wno-write-strings -Ofast -fPIC$/;"	m
+Clear	image_search/image_search.pb.cc	/^void BinaryCode::Clear() {$/;"	f	class:BinaryCode
+Clear	image_search/image_search.pb.cc	/^void HashIndex::Clear() {$/;"	f	class:HashIndex
+Clear	image_search/image_search.pb.cc	/^void ID::Clear() {$/;"	f	class:ID
+Clear	image_search/image_search.pb.cc	/^void ImageList::Clear() {$/;"	f	class:ImageList
+Client	store-client.cc	/^Client::Client() {$/;"	f	class:Client
+Client	store-client.h	/^class Client {$/;"	c
+ConfigReader	config.h	/^  ConfigReader(std::string fname) {$/;"	f	class:ConfigReader
+ConfigReader	config.h	/^class ConfigReader {$/;"	c
+CopyFrom	image_search/image_search.pb.cc	/^void BinaryCode::CopyFrom(const ::google::protobuf::Message& from) {$/;"	f	class:BinaryCode
+CopyFrom	image_search/image_search.pb.cc	/^void BinaryCode::CopyFrom(const BinaryCode& from) {$/;"	f	class:BinaryCode
+CopyFrom	image_search/image_search.pb.cc	/^void HashIndex::CopyFrom(const ::google::protobuf::Message& from) {$/;"	f	class:HashIndex
+CopyFrom	image_search/image_search.pb.cc	/^void HashIndex::CopyFrom(const HashIndex& from) {$/;"	f	class:HashIndex
+CopyFrom	image_search/image_search.pb.cc	/^void ID::CopyFrom(const ::google::protobuf::Message& from) {$/;"	f	class:ID
+CopyFrom	image_search/image_search.pb.cc	/^void ID::CopyFrom(const ID& from) {$/;"	f	class:ID
+CopyFrom	image_search/image_search.pb.cc	/^void ImageList::CopyFrom(const ::google::protobuf::Message& from) {$/;"	f	class:ImageList
+CopyFrom	image_search/image_search.pb.cc	/^void ImageList::CopyFrom(const ImageList& from) {$/;"	f	class:ImageList
+DEBUG	time/get_clock.c	50;"	d	file:
+DEBUG_DATA	time/get_clock.c	53;"	d	file:
+DHT	dht.h	/^  DHT() {$/;"	f	class:DHT
+DHT	dht.h	/^class DHT {$/;"	c
+DHTClient	dht.h	/^  DHTClient(void* dht, size_t dht_size) {$/;"	f	class:DHTClient
+DHTClient	dht.h	/^class DHTClient {$/;"	c
+DHT_H	dht.h	24;"	d
+DHT_SIZE	dht-test.cc	47;"	d	file:
+DO_	image_search/image_search.pb.cc	236;"	d	file:
+DO_	image_search/image_search.pb.cc	268;"	d	file:
+DO_	image_search/image_search.pb.cc	452;"	d	file:
+DO_	image_search/image_search.pb.cc	482;"	d	file:
+DO_	image_search/image_search.pb.cc	665;"	d	file:
+DO_	image_search/image_search.pb.cc	713;"	d	file:
+DO_	image_search/image_search.pb.cc	908;"	d	file:
+DO_	image_search/image_search.pb.cc	947;"	d	file:
+EXTENTSIZE	dht.h	49;"	d
+EXTENTS_MARGIN	dht.h	42;"	d
+GET_CLOCK_H	time/get_clock.h	38;"	d
+GET_PERCENTAGE	ploadtest/ploadtest.cc	46;"	d	file:
+GetCachedSize	image_search/image_search.pb.h	/^  int GetCachedSize() const { return _cached_size_; }$/;"	f	class:BinaryCode
+GetCachedSize	image_search/image_search.pb.h	/^  int GetCachedSize() const { return _cached_size_; }$/;"	f	class:HashIndex
+GetCachedSize	image_search/image_search.pb.h	/^  int GetCachedSize() const { return _cached_size_; }$/;"	f	class:ID
+GetCachedSize	image_search/image_search.pb.h	/^  int GetCachedSize() const { return _cached_size_; }$/;"	f	class:ImageList
+GetMetadata	image_search/image_search.pb.cc	/^::google::protobuf::Metadata BinaryCode::GetMetadata() const {$/;"	f	class:BinaryCode
+GetMetadata	image_search/image_search.pb.cc	/^::google::protobuf::Metadata HashIndex::GetMetadata() const {$/;"	f	class:HashIndex
+GetMetadata	image_search/image_search.pb.cc	/^::google::protobuf::Metadata ID::GetMetadata() const {$/;"	f	class:ID
+GetMetadata	image_search/image_search.pb.cc	/^::google::protobuf::Metadata ImageList::GetMetadata() const {$/;"	f	class:ImageList
+HashIndex	image_search/image_search.pb.cc	/^HashIndex::HashIndex()$/;"	f	class:HashIndex
+HashIndex	image_search/image_search.pb.cc	/^HashIndex::HashIndex(const HashIndex& from)$/;"	f	class:HashIndex
+HashIndex	image_search/image_search.pb.h	/^class HashIndex : public ::google::protobuf::Message {$/;"	c
+HashIndex_descriptor_	image_search/image_search.pb.cc	/^const ::google::protobuf::Descriptor* HashIndex_descriptor_ = NULL;$/;"	m	namespace:__anon3	file:
+HashIndex_reflection_	image_search/image_search.pb.cc	/^  HashIndex_reflection_ = NULL;$/;"	m	namespace:__anon3	file:
+IBC_DECREF	ib.h	20;"	d
+IBC_INCREF	ib.h	19;"	d
+IBClient	ib-client.cc	/^IBClient::IBClient() {$/;"	f	class:IBClient
+IBClient	ib-client.h	/^class IBClient {$/;"	c
+IBConn	ib.cc	/^IBConn::IBConn(IBConnManager* manager, size_t msgbuf_size) {$/;"	f	class:IBConn
+IBConn	ib.h	/^class IBConn {$/;"	c
+IBConnManager	ibman.cc	/^IBConnManager::IBConnManager(int role) {$/;"	f	class:IBConnManager
+IBConnManager	ibman.h	/^class IBConnManager {$/;"	c
+IBMAN_H	ibman.h	2;"	d
+IBServer	ib-server.cc	/^IBServer::IBServer() {$/;"	f	class:IBServer
+IBServer	ib-server.h	/^class IBServer {$/;"	c
+IB_CLIENT_H	ib-client.h	2;"	d
+IB_H	ib.h	2;"	d
+IB_SERVER_H	ib-server.h	2;"	d
+ID	image_search/image_search.pb.cc	/^ID::ID()$/;"	f	class:ID
+ID	image_search/image_search.pb.cc	/^ID::ID(const ID& from)$/;"	f	class:ID
+ID	image_search/image_search.pb.h	/^class ID : public ::google::protobuf::Message {$/;"	c
+ID_descriptor_	image_search/image_search.pb.cc	/^const ::google::protobuf::Descriptor* ID_descriptor_ = NULL;$/;"	m	namespace:__anon3	file:
+ID_reflection_	image_search/image_search.pb.cc	/^  ID_reflection_ = NULL;$/;"	m	namespace:__anon3	file:
+IMAGE_APP	Makefile	/^IMAGE_APP := image-build-test image-search-test image-linear-search-test generate_binarycode$/;"	m
+IMAGE_COUNT	image_search/search_image.cc	26;"	d	file:
+IMAGE_SOURCE_DIR	Makefile	/^IMAGE_SOURCE_DIR := image_search$/;"	m
+IMAGE_TOOLS_H	image_search/image_tools.h	8;"	d
+INIT_COMPLETE_SIZE	tcp_echo/multi.c	22;"	d	file:
+INIT_EXTENTS_SIZE	dht.h	39;"	d
+INIT_KV_CAPACITY	dht.h	40;"	d
+INTEGRITY_H	integrity.h	2;"	d
+INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION	image_search/image_search.pb.cc	4;"	d	file:
+INTERVAL_TIME	ploadtest/ploadtest.cc	50;"	d	file:
+ImageList	image_search/image_search.pb.cc	/^ImageList::ImageList()$/;"	f	class:ImageList
+ImageList	image_search/image_search.pb.cc	/^ImageList::ImageList(const ImageList& from)$/;"	f	class:ImageList
+ImageList	image_search/image_search.pb.h	/^class ImageList : public ::google::protobuf::Message {$/;"	c
+ImageList_descriptor_	image_search/image_search.pb.cc	/^const ::google::protobuf::Descriptor* ImageList_descriptor_ = NULL;$/;"	m	namespace:__anon3	file:
+ImageList_reflection_	image_search/image_search.pb.cc	/^  ImageList_reflection_ = NULL;$/;"	m	namespace:__anon3	file:
+InitAsDefaultInstance	image_search/image_search.pb.cc	/^void BinaryCode::InitAsDefaultInstance() {$/;"	f	class:BinaryCode
+InitAsDefaultInstance	image_search/image_search.pb.cc	/^void HashIndex::InitAsDefaultInstance() {$/;"	f	class:HashIndex
+InitAsDefaultInstance	image_search/image_search.pb.cc	/^void ID::InitAsDefaultInstance() {$/;"	f	class:ID
+InitAsDefaultInstance	image_search/image_search.pb.cc	/^void ImageList::InitAsDefaultInstance() {$/;"	f	class:ImageList
+Integrity64	integrity.h	/^    Integrity64() {$/;"	f	class:Integrity64
+Integrity64	integrity.h	/^class Integrity64 {$/;"	c
+IsInitialized	image_search/image_search.pb.cc	/^bool BinaryCode::IsInitialized() const {$/;"	f	class:BinaryCode
+IsInitialized	image_search/image_search.pb.cc	/^bool HashIndex::IsInitialized() const {$/;"	f	class:HashIndex
+IsInitialized	image_search/image_search.pb.cc	/^bool ID::IsInitialized() const {$/;"	f	class:ID
+IsInitialized	image_search/image_search.pb.cc	/^bool ImageList::IsInitialized() const {$/;"	f	class:ImageList
+KEY_TYPE	table_types.h	12;"	d
+KEY_TYPE	table_types.h	17;"	d
+KEY_VAL_PAIRTYPE	table_types.h	7;"	d
+KVPT_CHARP_CHARP	table_types.h	5;"	d
+KVPT_SIZET_DOUBLE	table_types.h	4;"	d
+LATENCY_NUM	ploadtest/ploadtest.cc	48;"	d	file:
+LATITEMS_BASE	tcp_echo/multi.c	21;"	d	file:
+LDFLAGS	Makefile	/^LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread -lprotobuf$/;"	m
+LDFLAGS	ploadtest/Makefile	/^LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lprofiler -lrt$/;"	m
+LDFLAGS	tcp_echo/Makefile	/^LDFLAGS := $(LDFLAGS) -lrt$/;"	m
+LISTENQ	tcp_echo/helper.h	23;"	d
+LOGMAX	mem/mem5.h	72;"	d
+LOG_BUF_FLUSH	store-server.h	15;"	d
+LOG_BUF_SIZE	store-server.h	14;"	d
+MACHINES	tcp_echo/perftest.py	/^MACHINES = 5$/;"	v
+MAX	ib.h	16;"	d
+MAX	image_search/linear_search.cc	/^struct MAX {$/;"	s	file:
+MAX	image_search/search_image.cc	/^struct MAX {$/;"	s	file:
+MAX_BUF	store-client.h	15;"	d
+MAX_INLINE_SEND	ib.h	/^const int MAX_INLINE_SEND = 400; \/\/bytes$/;"	v
+MAX_INSERT_CYCLES	dht.h	45;"	d
+MAX_KEY_SIZE	ploadtest/ploadtest.cc	44;"	d	file:
+MAX_LINE	tcp_echo/client.c	28;"	d	file:
+MAX_PAIR_NUM	ploadtest/ploadtest.cc	43;"	d	file:
+MAX_RDMA_BUF_RECV_SIZE	ib-server.h	15;"	d
+MAX_RDMA_BUF_SIZE	ib-client.h	12;"	d
+MAX_RDMA_BUF_SIZE	ib-server.h	14;"	d
+MAX_RDMA_RECV_BUF_SIZE	ib-client.h	13;"	d
+MAX_VAL_SIZE	ploadtest/ploadtest.cc	45;"	d	file:
+MEASUREMENTS	time/get_clock.c	56;"	d	file:
+MEM5LINK	mem/mem5.h	116;"	d
+MEMCACHED_HOME	ploadtest/Makefile	/^MEMCACHED_HOME=\/home\/yifeng\/lib\/libmemcached$/;"	m
+MR_LOC_LOCAL	ib.h	/^  MR_LOC_LOCAL,$/;"	e	enum:mr_location
+MR_LOC_REMOTE	ib.h	/^  MR_LOC_REMOTE$/;"	e	enum:mr_location
+MR_SCOPE_GLOBAL	ib.h	/^  MR_SCOPE_GLOBAL$/;"	e	enum:mr_scope
+MR_SCOPE_LOCAL	ib.h	/^  MR_SCOPE_LOCAL,$/;"	e	enum:mr_scope
+MR_TYPE_DHT_EXTENTS	store-constants.h	/^  MR_TYPE_DHT_EXTENTS,$/;"	e	enum:mr_types
+MR_TYPE_DHT_TABLE	store-constants.h	/^  MR_TYPE_DHT_TABLE,$/;"	e	enum:mr_types
+MR_TYPE_RDMA_BUF_EXTENTS	store-constants.h	/^  MR_TYPE_RDMA_BUF_EXTENTS$/;"	e	enum:mr_types
+MR_TYPE_RDMA_BUF_TABLE	store-constants.h	/^  MR_TYPE_RDMA_BUF_TABLE,$/;"	e	enum:mr_types
+MR_TYPE_RDMA_LADLE	ib-client.h	16;"	d
+MR_TYPE_RDMA_POOL	ib-client.h	17;"	d
+MR_TYPE_RDMA_POOL	ib-server.h	18;"	d
+MR_TYPE_RECV_BUF	store-constants.h	/^  MR_TYPE_RECV_BUF,$/;"	e	enum:mr_types
+MR_TYPE_SEND_BUF	store-constants.h	/^  MR_TYPE_SEND_BUF,$/;"	e	enum:mr_types
+MSG_BUF_SIZE	ib-client.h	14;"	d
+MSG_BUF_SIZE	ib-server.h	16;"	d
+MSG_BUF_SIZE	store-constants.h	/^const int MSG_BUF_SIZE = MAX(RECV_EXT_SIZE,sizeof(dht_message));$/;"	v
+MSG_BUF_SIZE	store-constants.h	/^const int MSG_BUF_SIZE = sizeof(dht_message);			\/\/It will actually be the max of the sizes of the message and mrmessage structs$/;"	v
+MSG_DHT_CAPACITY	store-constants.h	/^  MSG_DHT_CAPACITY$/;"	e	enum:app_msg_type
+MSG_DHT_CONTAINS	store-constants.h	/^  MSG_DHT_CONTAINS,$/;"	e	enum:app_msg_type
+MSG_DHT_CONTAINS_DONE	store-constants.h	/^  MSG_DHT_CONTAINS_DONE,$/;"	e	enum:app_msg_type
+MSG_DHT_DELETE	store-constants.h	/^  MSG_DHT_DELETE,$/;"	e	enum:app_msg_type
+MSG_DHT_DELETE_DONE	store-constants.h	/^  MSG_DHT_DELETE_DONE,$/;"	e	enum:app_msg_type
+MSG_DHT_GET	store-constants.h	/^  MSG_DHT_GET,$/;"	e	enum:app_msg_type
+MSG_DHT_GET_DONE	store-constants.h	/^  MSG_DHT_GET_DONE,$/;"	e	enum:app_msg_type
+MSG_DHT_GET_DONE_MISSING	store-constants.h	/^  MSG_DHT_GET_DONE_MISSING,$/;"	e	enum:app_msg_type
+MSG_DHT_PUT	store-constants.h	/^  MSG_DHT_PUT = MSG_USER_FIRST,$/;"	e	enum:app_msg_type
+MSG_DHT_PUT_DONE	store-constants.h	/^  MSG_DHT_PUT_DONE,$/;"	e	enum:app_msg_type
+MSG_DONE	ib.h	/^  MSG_DONE,$/;"	e	enum:msg_type
+MSG_MR	ib.h	/^  MSG_MR,$/;"	e	enum:msg_type
+MSG_USER_FIRST	ib.h	/^  MSG_USER_FIRST$/;"	e	enum:msg_type
+MULTI_HOST	ib_perftest.py	/^MULTI_HOST = "beaker-16"$/;"	v
+MULTI_HOST	tcp_echo/perftest.py	/^MULTI_HOST = "beaker-25"$/;"	v
+Mem5Link	mem/mem5.h	/^  struct Mem5Link {$/;"	s	class:PoolMalloc
+Mem5Link	mem/mem5.h	/^  typedef struct Mem5Link Mem5Link;$/;"	t	class:PoolMalloc	typeref:struct:PoolMalloc::Mem5Link
+MergeFrom	image_search/image_search.pb.cc	/^void BinaryCode::MergeFrom(const ::google::protobuf::Message& from) {$/;"	f	class:BinaryCode
+MergeFrom	image_search/image_search.pb.cc	/^void BinaryCode::MergeFrom(const BinaryCode& from) {$/;"	f	class:BinaryCode
+MergeFrom	image_search/image_search.pb.cc	/^void HashIndex::MergeFrom(const ::google::protobuf::Message& from) {$/;"	f	class:HashIndex
+MergeFrom	image_search/image_search.pb.cc	/^void HashIndex::MergeFrom(const HashIndex& from) {$/;"	f	class:HashIndex
+MergeFrom	image_search/image_search.pb.cc	/^void ID::MergeFrom(const ::google::protobuf::Message& from) {$/;"	f	class:ID
+MergeFrom	image_search/image_search.pb.cc	/^void ID::MergeFrom(const ID& from) {$/;"	f	class:ID
+MergeFrom	image_search/image_search.pb.cc	/^void ImageList::MergeFrom(const ::google::protobuf::Message& from) {$/;"	f	class:ImageList
+MergeFrom	image_search/image_search.pb.cc	/^void ImageList::MergeFrom(const ImageList& from) {$/;"	f	class:ImageList
+MergePartialFromCodedStream	image_search/image_search.pb.cc	/^bool BinaryCode::MergePartialFromCodedStream($/;"	f	class:BinaryCode
+MergePartialFromCodedStream	image_search/image_search.pb.cc	/^bool HashIndex::MergePartialFromCodedStream($/;"	f	class:HashIndex
+MergePartialFromCodedStream	image_search/image_search.pb.cc	/^bool ID::MergePartialFromCodedStream($/;"	f	class:ID
+MergePartialFromCodedStream	image_search/image_search.pb.cc	/^bool ImageList::MergePartialFromCodedStream($/;"	f	class:ImageList
+New	image_search/image_search.pb.cc	/^BinaryCode* BinaryCode::New() const {$/;"	f	class:BinaryCode
+New	image_search/image_search.pb.cc	/^HashIndex* HashIndex::New() const {$/;"	f	class:HashIndex
+New	image_search/image_search.pb.cc	/^ID* ID::New() const {$/;"	f	class:ID
+New	image_search/image_search.pb.cc	/^ImageList* ImageList::New() const {$/;"	f	class:ImageList
+OBJS_CL	tcp_echo/Makefile	/^OBJS_CL := client.o helper.o$/;"	m
+OBJS_DT	Makefile	/^OBJS_DT := ib.o ibman.o dht-test.o store-server.o store-client.o$/;"	m
+OBJS_HT	Makefile	/^OBJS_HT := ht-test.o time\/get_clock.o$/;"	m
+OBJS_IB	Makefile	/^OBJS_IB := ib.o ibman.o ib-test.o ib-server.o ib-client.o$/;"	m
+OBJS_IMAGE_BUILD	Makefile	/^OBJS_IMAGE_BUILD := ib.o ibman.o $(IMAGE_SOURCE_DIR)\/image_search.pb.o store-client.o $(IMAGE_SOURCE_DIR)\/build_hash_tables.o$/;"	m
+OBJS_IMAGE_GENERATE	Makefile	/^OBJS_IMAGE_GENERATE := $(IMAGE_SOURCE_DIR)\/generate_binarycode.o$/;"	m
+OBJS_IMAGE_LINEAR_SEARCH	Makefile	/^OBJS_IMAGE_LINEAR_SEARCH := ib.o ibman.o $(IMAGE_SOURCE_DIR)\/image_search.pb.o store-client.o $(IMAGE_SOURCE_DIR)\/linear_search.o$/;"	m
+OBJS_IMAGE_SEARCH	Makefile	/^OBJS_IMAGE_SEARCH := ib.o ibman.o $(IMAGE_SOURCE_DIR)\/image_search.pb.o store-client.o $(IMAGE_SOURCE_DIR)\/search_image.o$/;"	m
+OBJS_LT	Makefile	/^OBJS_LT := ib.o ibman.o loadtest.o store-client.o$/;"	m
+OBJS_PLT	ploadtest/Makefile	/^OBJS_PLT := ..\/ib.o ..\/ibman.o ploadtest.o ..\/store-client.o$/;"	m
+OBJS_SR	tcp_echo/Makefile	/^OBJS_SR := multi.o helper.o$/;"	m
+OP_CONTAINS	store-client.h	/^  OP_CONTAINS = 3,$/;"	e	enum:dhtClientOps
+OP_DELETE	store-client.h	/^  OP_DELETE = 4$/;"	e	enum:dhtClientOps
+OP_GET	store-client.h	/^  OP_GET = 1,$/;"	e	enum:dhtClientOps
+OP_PUT	store-client.h	/^  OP_PUT = 2,$/;"	e	enum:dhtClientOps
+PG_SOCK_HELP	tcp_echo/helper.h	18;"	d
+POST_CONTAINS_FAILURE	dht.h	/^  POST_CONTAINS_FAILURE = -5 \/\/ contains failed for some reason$/;"	e	enum:post_get_state
+POST_GET_COLLISION	dht.h	/^  POST_GET_COLLISION = -4,   \/\/ slot is filled, but with wrong key$/;"	e	enum:post_get_state
+POST_GET_FAILURE	dht.h	/^  POST_GET_FAILURE = -3,     \/\/ IB problem$/;"	e	enum:post_get_state
+POST_GET_FOUND	dht.h	/^  POST_GET_FOUND = 0,        \/\/ success$/;"	e	enum:post_get_state
+POST_GET_LOCKED	dht.h	/^  POST_GET_LOCKED = -1,      \/\/ locked, need to re-read$/;"	e	enum:post_get_state
+POST_GET_MISSING	dht.h	/^  POST_GET_MISSING = -2,     \/\/ slot is not in_use$/;"	e	enum:post_get_state
+POST_PUT_FAILURE	dht.h	602;"	d
+PROTOBUF_image_5fsearch_2eproto__INCLUDED	image_search/image_search.pb.h	5;"	d
+PULL_ITEM	ib_perftest.py	/^PULL_ITEM = 10 # Clients run 20 iterations; this pulls the middle one's results$/;"	v
+PWRS	ib-test.cc	/^const int PWRS = 18;			\/\/ max powers of 2 to test$/;"	v
+ParseCmdLine	tcp_echo/client.c	/^int ParseCmdLine(int argc, char *argv[], char **szAddress, char **szPort, size_t *msgSize, size_t *respSize) {$/;"	f
+ParseCmdLine	tcp_echo/multi.c	/^int ParseCmdLine(int argc, char *argv[], int *szPort, size_t *msgSize, size_t *respSize, int *latRec) {$/;"	f
+PoolMalloc	mem/mem5.h	/^class PoolMalloc {$/;"	c
+RDMA_BUFFER_SIZE	ib.h	/^const int RDMA_BUFFER_SIZE = 1024;$/;"	v
+READ_MODE_RDMA	store-client.h	/^  READ_MODE_RDMA,$/;"	e	enum:read_modes
+READ_MODE_SERVER	store-client.h	/^  READ_MODE_SERVER$/;"	e	enum:read_modes
+RECONN_ITERS_TIMEOUT	store-constants.h	68;"	d
+RECV_BUFS	ib.h	/^const int RECV_BUFS = 8;$/;"	v
+RECV_BUF_SIZE	ib.h	/^const int RECV_BUF_SIZE = 2048; \/* 2 KB *\/$/;"	v
+RECV_EXT_SIZE	store-constants.h	/^const int RECV_EXT_SIZE = (1<<20); \/* 16 MB (aka freaking massive, to fit key-val for giant puts) *\/$/;"	v
+REDIS_HOME	ploadtest/Makefile	/^REDIS_HOME=\/home\/yifeng\/hiredis$/;"	m
+REPS	ht-test.cc	/^const int REPS = 2L;$/;"	v
+RESP_SIZE	ib-client.h	18;"	d
+RESP_SIZE	ib-server.h	19;"	d
+RS	ib.h	/^enum RS {$/;"	g
+RS_DONE_RECV	ib.h	/^  RS_DONE_RECV$/;"	e	enum:RS
+RS_INIT	ib.h	/^  RS_INIT,$/;"	e	enum:RS
+RS_MR_RECV	ib.h	/^  RS_MR_RECV,$/;"	e	enum:RS
+R_CLIENT	ib.h	/^  R_CLIENT$/;"	e	enum:role
+R_SERVER	ib.h	/^  R_SERVER,$/;"	e	enum:role
+Readmsg	tcp_echo/helper.c	/^size_t Readmsg(int sockd, char *vptr, size_t len) {$/;"	f
+SERVER_PORT	ib-server.h	12;"	d
+SERVER_PORT	store-server.h	13;"	d
+SERV_CONF	ib_perftest.py	/^SERV_CONF = "dht-one16.cnf"$/;"	v
+SIZE_MAX	dht.h	36;"	d
+SQLITE_ERROR	mem/mem5.h	53;"	d
+SQLITE_OK	mem/mem5.h	54;"	d
+SS	ib.h	/^enum SS {$/;"	g
+SS_DONE_SENT	ib.h	/^  SS_DONE_SENT$/;"	e	enum:SS
+SS_INIT	ib.h	/^  SS_INIT,$/;"	e	enum:SS
+SS_MR_SENDING	ib.h	/^  SS_MR_SENDING,$/;"	e	enum:SS
+SS_MR_SENT	ib.h	/^  SS_MR_SENT,$/;"	e	enum:SS
+SS_RDMA_SENT	ib.h	/^  SS_RDMA_SENT,$/;"	e	enum:SS
+START_TIME	ploadtest/ploadtest.cc	49;"	d	file:
+STORE_CLIENT_H	store-client.h	2;"	d
+STORE_SERVER_H	store-server.h	2;"	d
+STRESS_COUNT	ht-test.cc	/^const int STRESS_COUNT = 100000L;$/;"	v
+STRESS_COUNT	ib-test.cc	/^const int STRESS_COUNT = 200000;$/;"	v
+STRESS_COUNT_BASE	dht-test.cc	/^const int STRESS_COUNT_BASE = 2000000;$/;"	v
+SUB_BITS	image_search/image_tools.h	19;"	d
+SerializeWithCachedSizes	image_search/image_search.pb.cc	/^void BinaryCode::SerializeWithCachedSizes($/;"	f	class:BinaryCode
+SerializeWithCachedSizes	image_search/image_search.pb.cc	/^void HashIndex::SerializeWithCachedSizes($/;"	f	class:HashIndex
+SerializeWithCachedSizes	image_search/image_search.pb.cc	/^void ID::SerializeWithCachedSizes($/;"	f	class:ID
+SerializeWithCachedSizes	image_search/image_search.pb.cc	/^void ImageList::SerializeWithCachedSizes($/;"	f	class:ImageList
+SerializeWithCachedSizesToArray	image_search/image_search.pb.cc	/^::google::protobuf::uint8* BinaryCode::SerializeWithCachedSizesToArray($/;"	f	class:BinaryCode
+SerializeWithCachedSizesToArray	image_search/image_search.pb.cc	/^::google::protobuf::uint8* HashIndex::SerializeWithCachedSizesToArray($/;"	f	class:HashIndex
+SerializeWithCachedSizesToArray	image_search/image_search.pb.cc	/^::google::protobuf::uint8* ID::SerializeWithCachedSizesToArray($/;"	f	class:ID
+SerializeWithCachedSizesToArray	image_search/image_search.pb.cc	/^::google::protobuf::uint8* ImageList::SerializeWithCachedSizesToArray($/;"	f	class:ImageList
+Server	store-server.cc	/^Server::Server() {$/;"	f	class:Server
+Server	store-server.h	/^class Server {$/;"	c
+ServerInfo	ib-client.h	/^struct ServerInfo {$/;"	s
+ServerInfo	store-client.h	/^struct ServerInfo {$/;"	s
+SetCachedSize	image_search/image_search.pb.cc	/^void BinaryCode::SetCachedSize(int size) const {$/;"	f	class:BinaryCode
+SetCachedSize	image_search/image_search.pb.cc	/^void HashIndex::SetCachedSize(int size) const {$/;"	f	class:HashIndex
+SetCachedSize	image_search/image_search.pb.cc	/^void ID::SetCachedSize(int size) const {$/;"	f	class:ID
+SetCachedSize	image_search/image_search.pb.cc	/^void ImageList::SetCachedSize(int size) const {$/;"	f	class:ImageList
+SharedCtor	image_search/image_search.pb.cc	/^void BinaryCode::SharedCtor() {$/;"	f	class:BinaryCode
+SharedCtor	image_search/image_search.pb.cc	/^void HashIndex::SharedCtor() {$/;"	f	class:HashIndex
+SharedCtor	image_search/image_search.pb.cc	/^void ID::SharedCtor() {$/;"	f	class:ID
+SharedCtor	image_search/image_search.pb.cc	/^void ImageList::SharedCtor() {$/;"	f	class:ImageList
+SharedDtor	image_search/image_search.pb.cc	/^void BinaryCode::SharedDtor() {$/;"	f	class:BinaryCode
+SharedDtor	image_search/image_search.pb.cc	/^void HashIndex::SharedDtor() {$/;"	f	class:HashIndex
+SharedDtor	image_search/image_search.pb.cc	/^void ID::SharedDtor() {$/;"	f	class:ID
+SharedDtor	image_search/image_search.pb.cc	/^void ImageList::SharedDtor() {$/;"	f	class:ImageList
+StaticDescriptorInitializer_image_5fsearch_2eproto	image_search/image_search.pb.cc	/^  StaticDescriptorInitializer_image_5fsearch_2eproto() {$/;"	f	struct:StaticDescriptorInitializer_image_5fsearch_2eproto
+StaticDescriptorInitializer_image_5fsearch_2eproto	image_search/image_search.pb.cc	/^struct StaticDescriptorInitializer_image_5fsearch_2eproto {$/;"	s	file:
+Swap	image_search/image_search.pb.cc	/^void BinaryCode::Swap(BinaryCode* other) {$/;"	f	class:BinaryCode
+Swap	image_search/image_search.pb.cc	/^void HashIndex::Swap(HashIndex* other) {$/;"	f	class:HashIndex
+Swap	image_search/image_search.pb.cc	/^void ID::Swap(ID* other) {$/;"	f	class:ID
+Swap	image_search/image_search.pb.cc	/^void ImageList::Swap(ImageList* other) {$/;"	f	class:ImageList
+TABLE_TYPES_H	table_types.h	2;"	d
+TEST_CONTDEL	dht-test.cc	/^  TEST_CONTDEL,$/;"	e	enum:tests	file:
+TEST_GET	dht-test.cc	/^  TEST_GET,$/;"	e	enum:tests	file:
+TEST_NZ	ib.h	13;"	d
+TEST_PUT	dht-test.cc	/^  TEST_PUT,$/;"	e	enum:tests	file:
+TEST_STEP	dht-test.cc	44;"	d	file:
+TEST_Z	ib.h	14;"	d
+TIMEOUT_IN_MS	ib.h	/^const int TIMEOUT_IN_MS = 500; \/* ms *\/$/;"	v
+TIMEVAL_NUM	ploadtest/ploadtest.cc	47;"	d	file:
+Tclient	ploadtest/ploadtest.cc	/^        Tclient(const char *conf){$/;"	f	class:Tclient
+Tclient	ploadtest/ploadtest.cc	/^class Tclient{$/;"	c	file:
+USECSTART	time/get_clock.c	58;"	d	file:
+USECSTEP	time/get_clock.c	57;"	d	file:
+VAL_TYPE	table_types.h	13;"	d
+VAL_TYPE	table_types.h	18;"	d
+VERB_DEBUG	ibman.h	/^	VERB_DEBUG$/;"	e	enum:ibman_verb
+VERB_ERROR	ibman.h	/^	VERB_ERROR = 0,$/;"	e	enum:ibman_verb
+VERB_INFO	ibman.h	/^	VERB_INFO,$/;"	e	enum:ibman_verb
+VERB_VITAL	ibman.h	/^    VERB_VITAL = -1,$/;"	e	enum:ibman_verb
+VERB_WARN	ibman.h	/^	VERB_WARN,$/;"	e	enum:ibman_verb
+Writemsg	tcp_echo/helper.c	/^size_t Writemsg(int sockd, const char *vptr, size_t len) {$/;"	f
+_BSD_SOURCE	time/get_clock.c	42;"	d	file:
+_cached_size_	image_search/image_search.pb.h	/^  mutable int _cached_size_;$/;"	m	class:BinaryCode
+_cached_size_	image_search/image_search.pb.h	/^  mutable int _cached_size_;$/;"	m	class:HashIndex
+_cached_size_	image_search/image_search.pb.h	/^  mutable int _cached_size_;$/;"	m	class:ID
+_cached_size_	image_search/image_search.pb.h	/^  mutable int _cached_size_;$/;"	m	class:ImageList
+_has_bits_	image_search/image_search.pb.h	/^  ::google::protobuf::uint32 _has_bits_[(1 + 31) \/ 32];$/;"	m	class:BinaryCode
+_has_bits_	image_search/image_search.pb.h	/^  ::google::protobuf::uint32 _has_bits_[(1 + 31) \/ 32];$/;"	m	class:ID
+_has_bits_	image_search/image_search.pb.h	/^  ::google::protobuf::uint32 _has_bits_[(1 + 31) \/ 32];$/;"	m	class:ImageList
+_has_bits_	image_search/image_search.pb.h	/^  ::google::protobuf::uint32 _has_bits_[(2 + 31) \/ 32];$/;"	m	class:HashIndex
+_unknown_fields_	image_search/image_search.pb.h	/^  ::google::protobuf::UnknownFieldSet _unknown_fields_;$/;"	m	class:BinaryCode
+_unknown_fields_	image_search/image_search.pb.h	/^  ::google::protobuf::UnknownFieldSet _unknown_fields_;$/;"	m	class:HashIndex
+_unknown_fields_	image_search/image_search.pb.h	/^  ::google::protobuf::UnknownFieldSet _unknown_fields_;$/;"	m	class:ID
+_unknown_fields_	image_search/image_search.pb.h	/^  ::google::protobuf::UnknownFieldSet _unknown_fields_;$/;"	m	class:ImageList
+_write_barrier	dht.h	47;"	d
+aCtrl	mem/mem5.h	/^  u8 *aCtrl;$/;"	m	class:PoolMalloc
+add_images	image_search/image_search.pb.h	/^inline void ImageList::add_images(::google::protobuf::uint32 value) {$/;"	f	class:ImageList
+add_server	ib-client.cc	/^int IBClient::add_server(const char* server_host, const char* server_port) {$/;"	f	class:IBClient
+add_server	store-client.cc	/^int Client::add_server(const char* server_host, const char* server_port) {$/;"	f	class:Client
+addr	ib-server.h	/^  struct sockaddr_in addr;$/;"	m	class:IBServer	typeref:struct:IBServer::sockaddr_in
+addr	store-server.h	/^  struct sockaddr_in addr;$/;"	m	class:Server	typeref:struct:Server::sockaddr_in
+aiFreelist	mem/mem5.h	/^  i64 aiFreelist[LOGMAX+1];$/;"	m	class:PoolMalloc
+app_msg_type	store-constants.h	/^enum app_msg_type {$/;"	g
+args	ib_perftest.py	/^		args = "mpirun -n "+str(CLIENTS)+" -bynode -hostfile "+CLIENT_CONF+" ib-test -c "+SERV_CONF+" -"+test+" -m "+str(ccount)+" -t throughput"$/;"	v
+args	pilaf_perftest.py	/^					args = [".\/dht-test","-s",str(port),"-T","-P",str(ccount*clsize)]$/;"	v
+args	pilaf_perftest.py	/^					args = [".\/dht-test","-s",str(port),"-T"]$/;"	v
+args	pilaf_perftest.py	/^					args = args+["-l","\/ssd\/kerm\/dhtlog.log"]$/;"	v
+args	pilaf_perftest.py	/^			args = "mpirun -n "+str(ccount)+" -bynode -hostfile mpiconf .\/dht-test -c dht-one.cnf -T -r -t "+test_code+" -P "+str(clsize)+""$/;"	v
+at	config.h	/^  int at;$/;"	m	class:ConfigReader
+avg	ib_perftest.py	/^		avg = sum(vals)\/len(vals)$/;"	v
+avg	pilaf_perftest.py	/^			avg = sum(vals)\/len(vals)$/;"	v
+avg	tcp_echo/perftest.py	/^				avg = sum(vals)\/len(vals)$/;"	v
+binaryToInt	image_search/image_tools.h	/^inline uint32_t binaryToInt(const char * p, int len) {$/;"	f
+binaryToString	image_search/image_tools.h	/^inline std::string binaryToString(const char *p, int len) {$/;"	f
+binary_bits	image_search/build_hash_tables.cc	/^int binary_bits = 128;$/;"	v
+binary_bits	image_search/linear_search.cc	/^int binary_bits;$/;"	v
+binary_bits	image_search/search_image.cc	/^int binary_bits;$/;"	v
+binarycmp	dht.h	/^inline bool binarycmp(const char * p1, size_t p1_len, const char *p2, size_t p2_len) {$/;"	f
+blankrow	dht.h	/^  struct dht_block blankrow;$/;"	m	class:DHT	typeref:struct:DHT::dht_block
+body	store-constants.h	/^      char body;$/;"	m	struct:dht_message::mdata::__anon1
+body	store-constants.h	/^      double body;$/;"	m	struct:dht_message::mdata::__anon2
+bucket_idx	dht.h	/^  inline size_t bucket_idx(const K& key, size_t key_len, int hash = 0) {		\/\/starting position from hash$/;"	f	class:DHT
+buckets	dht.h	/^  size_t buckets() {$/;"	f	class:DHT
+buckets_	dht.h	/^  std::vector<dht_block> buckets_;$/;"	m	class:DHT
+build_connection	ib.cc	/^int IBConn::build_connection(struct rdma_cm_id *id) {$/;"	f	class:IBConn
+build_context	ib.cc	/^int IBConn::build_context(struct rdma_cm_id *id) {$/;"	f	class:IBConn
+build_hash_tables	image_search/build_hash_tables.cc	/^void *build_hash_tables(void *arg) {$/;"	f
+build_params	ib.cc	/^void IBConn::build_params(struct rdma_conn_param *params) {$/;"	f	class:IBConn
+build_qp_attr	ib.cc	/^int IBConn::build_qp_attr(struct ibv_qp_init_attr *qp_attr) {$/;"	f	class:IBConn
+built	ib.h	/^  bool built;$/;"	m	class:IBConn
+bytes_xchged	dht-test.cc	/^size_t bytes_xchged;$/;"	v
+c	ploadtest/ploadtest.cc	/^        Client *c;$/;"	m	class:Tclient	file:
+c	ploadtest/ploadtest.cc	/^        memcached_st *c;$/;"	m	class:Tclient	file:
+c	ploadtest/ploadtest.cc	/^        redisContext *c;$/;"	m	class:Tclient	file:
+ccounts	ib_perftest.py	/^ccounts = range(0,18) # [8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072]$/;"	v
+ccounts	pilaf_perftest.py	/^ccounts = [40]$/;"	v
+ccounts	tcp_echo/perftest.py	/^ccounts = [8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072]$/;"	v
+check_crc	dht.h	/^  uint64_t check_crc(void* mem, size_t len) {$/;"	f	class:DHTClient
+clear_code	image_search/image_search.pb.h	/^inline void BinaryCode::clear_code() {$/;"	f	class:BinaryCode
+clear_has_code	image_search/image_search.pb.h	/^inline void BinaryCode::clear_has_code() {$/;"	f	class:BinaryCode
+clear_has_id	image_search/image_search.pb.h	/^inline void ID::clear_has_id() {$/;"	f	class:ID
+clear_has_index	image_search/image_search.pb.h	/^inline void HashIndex::clear_has_index() {$/;"	f	class:HashIndex
+clear_has_table_id	image_search/image_search.pb.h	/^inline void HashIndex::clear_has_table_id() {$/;"	f	class:HashIndex
+clear_id	image_search/image_search.pb.h	/^inline void ID::clear_id() {$/;"	f	class:ID
+clear_images	image_search/image_search.pb.h	/^inline void ImageList::clear_images() {$/;"	f	class:ImageList
+clear_index	image_search/image_search.pb.h	/^inline void HashIndex::clear_index() {$/;"	f	class:HashIndex
+clear_table_id	image_search/image_search.pb.h	/^inline void HashIndex::clear_table_id() {$/;"	f	class:HashIndex
+client	ib-client.h	/^  IBClient* client;     \/\/ loops self-referentially to the IBClient that contains this ServerInfo$/;"	m	struct:ServerInfo
+client	store-client.h	/^  Client* client;     \/\/ loops self-referentially to the Client that contains this ServerInfo$/;"	m	struct:ServerInfo
+clients	ib-server.h	/^  std::vector<IBConn*> clients;$/;"	m	class:IBServer
+clients	store-server.h	/^  std::vector<IBConn*> clients;$/;"	m	class:Server
+clsize	pilaf_perftest.py	/^				clsize = (12*1024*1024*1024)\/((ccount)*(1024+64+64))$/;"	v
+clsize	pilaf_perftest.py	/^				clsize = (14*1024*1024*1024)\/((ccount)*(64+16+64))$/;"	v
+clsize	pilaf_perftest.py	/^				clsize = min(clsize,1000000)$/;"	v
+clsize	pilaf_perftest.py	/^				clsize = min(clsize,800000)$/;"	v
+code	image_search/image_search.pb.h	/^inline const ::std::string& BinaryCode::code() const {$/;"	f	class:BinaryCode
+code_	image_search/image_search.pb.h	/^  ::std::string* code_;$/;"	m	class:BinaryCode
+comp_channel	ib.h	/^  struct ibv_comp_channel *comp_channel;$/;"	m	struct:context	typeref:struct:context::ibv_comp_channel
+complete	pilaf_perftest.py	/^			complete = 0$/;"	v
+compute_hamming_dist	image_search/image_tools.h	/^inline int compute_hamming_dist(std::string code1, std::string code2) {$/;"	f
+config_path	image_search/build_hash_tables.cc	/^char * config_path;$/;"	v
+config_path	image_search/linear_search.cc	/^char* config_path;$/;"	v
+config_path	image_search/search_image.cc	/^char* config_path;$/;"	v
+conn	ib-client.h	/^  struct rdma_cm_id* conn;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::rdma_cm_id
+conn	store-client.h	/^  struct rdma_cm_id* conn;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::rdma_cm_id
+conn_setup_state	store-client.h	/^enum conn_setup_state {$/;"	g
+conn_state	ib.h	/^enum conn_state {$/;"	g
+connected	ib.h	/^  int connected;$/;"	m	struct:connection
+connection	ib-client.h	/^  IBConn* connection;$/;"	m	struct:ServerInfo
+connection	ib.h	/^struct connection {$/;"	s
+connection	store-client.h	/^  IBConn* connection;$/;"	m	struct:ServerInfo
+contains	dht.h	/^  bool contains(const K& key, size_t key_len) {$/;"	f	class:DHT
+contains	store-client.cc	/^int Client::contains(const KEY_TYPE key) {$/;"	f	class:Client
+contains_ext	store-client.h	/^  int contains_ext(K key) {$/;"	f	class:Client
+context	ib.h	/^struct context {$/;"	s
+count	ib_perftest.py	/^		count = 0$/;"	v
+count	pilaf_perftest.py	/^		count = 0$/;"	v
+count	tcp_echo/perftest.py	/^			count = 0$/;"	v
+cq	ib.h	/^  struct ibv_cq *cq;$/;"	m	struct:context	typeref:struct:context::ibv_cq
+cq_ack_pending	ib.h	/^  int cq_ack_pending;$/;"	m	struct:connection
+crc	dht.h	/^      uint64_t crc;$/;"	m	struct:DHT::dht_data
+crc	dht.h	/^  Integrity64 crc;$/;"	m	class:DHT
+crc	dht.h	/^  Integrity64 crc;$/;"	m	class:DHTClient
+crc	integrity.h	/^    uint64_t crc(const char* msg, size_t len) {$/;"	f	class:Integrity64
+crc_table	integrity.h	/^    uint64_t crc_table[256];$/;"	m	class:Integrity64
+create_mr	ibman.cc	/^struct ibv_mr* IBConnManager::create_mr(void* addr, size_t length, int flags, enum mr_scope scope, IBConn* IBC) {$/;"	f	class:IBConnManager
+create_mrs	ib-client.cc	/^void IBClient::create_mrs(struct ServerInfo* this_info) {$/;"	f	class:IBClient
+create_mrs	ib-server.cc	/^void IBServer::create_mrs(IBConn* conn) {$/;"	f	class:IBServer
+create_mrs	store-client.cc	/^void Client::create_mrs(struct ServerInfo* this_info) {$/;"	f	class:Client
+create_mrs	store-server.cc	/^void Server::create_mrs(IBConn* conn_) {$/;"	f	class:Server
+ctx	ib.h	/^  struct ibv_context *ctx;$/;"	m	struct:context	typeref:struct:context::ibv_context
+cur_op_count	ploadtest/ploadtest.cc	/^int cur_op_count=0;$/;"	v
+currentCount	mem/mem5.h	/^  u32 currentCount;   \/* Current number of distinct checkouts *\/$/;"	m	class:PoolMalloc
+currentOut	mem/mem5.h	/^  u32 currentOut;     \/* Current checkout, including internal fragmentation *\/$/;"	m	class:PoolMalloc
+cwd	ib_perftest.py	/^cwd = os.getcwd()$/;"	v
+cwd	tcp_echo/perftest.py	/^cwd = os.getcwd()$/;"	v
+cycles_t	time/get_clock.h	/^typedef unsigned long cycles_t;$/;"	t
+cycles_t	time/get_clock.h	/^typedef unsigned long long cycles_t;$/;"	t
+d	dht.h	/^    struct dht_data d;$/;"	m	struct:DHT::dht_block	typeref:struct:DHT::dht_block::dht_data
+data	store-constants.h	/^  } data;$/;"	m	struct:dht_message	typeref:union:dht_message::mdata
+data_xchgs	dht-test.cc	/^size_t data_xchgs;$/;"	v
+default_instance	image_search/image_search.pb.cc	/^const BinaryCode& BinaryCode::default_instance() {$/;"	f	class:BinaryCode
+default_instance	image_search/image_search.pb.cc	/^const HashIndex& HashIndex::default_instance() {$/;"	f	class:HashIndex
+default_instance	image_search/image_search.pb.cc	/^const ID& ID::default_instance() {$/;"	f	class:ID
+default_instance	image_search/image_search.pb.cc	/^const ImageList& ImageList::default_instance() {$/;"	f	class:ImageList
+default_instance_	image_search/image_search.pb.cc	/^BinaryCode* BinaryCode::default_instance_ = NULL;$/;"	m	class:BinaryCode	file:
+default_instance_	image_search/image_search.pb.cc	/^HashIndex* HashIndex::default_instance_ = NULL;$/;"	m	class:HashIndex	file:
+default_instance_	image_search/image_search.pb.cc	/^ID* ID::default_instance_ = NULL;$/;"	m	class:ID	file:
+default_instance_	image_search/image_search.pb.cc	/^ImageList* ImageList::default_instance_ = NULL;$/;"	m	class:ImageList	file:
+default_instance_	image_search/image_search.pb.h	/^  static BinaryCode* default_instance_;$/;"	m	class:BinaryCode
+default_instance_	image_search/image_search.pb.h	/^  static HashIndex* default_instance_;$/;"	m	class:HashIndex
+default_instance_	image_search/image_search.pb.h	/^  static ID* default_instance_;$/;"	m	class:ID
+default_instance_	image_search/image_search.pb.h	/^  static ImageList* default_instance_;$/;"	m	class:ImageList
+descriptor	image_search/image_search.pb.cc	/^const ::google::protobuf::Descriptor* BinaryCode::descriptor() {$/;"	f	class:BinaryCode
+descriptor	image_search/image_search.pb.cc	/^const ::google::protobuf::Descriptor* HashIndex::descriptor() {$/;"	f	class:HashIndex
+descriptor	image_search/image_search.pb.cc	/^const ::google::protobuf::Descriptor* ID::descriptor() {$/;"	f	class:ID
+descriptor	image_search/image_search.pb.cc	/^const ::google::protobuf::Descriptor* ImageList::descriptor() {$/;"	f	class:ImageList
+destroy_connection	ib.cc	/^void IBConn::destroy_connection() {$/;"	f	class:IBConn
+destroy_context	ib.cc	/^void IBConn::destroy_context(void) {$/;"	f	class:IBConn
+destroy_global_mrs	ibman.cc	/^void IBConnManager::destroy_global_mrs(void) {$/;"	f	class:IBConnManager
+dev	ib_perftest.py	/^		dev = math.sqrt(devsum\/len(vals))$/;"	v
+dev	pilaf_perftest.py	/^			dev = math.sqrt(devsum\/len(vals))$/;"	v
+dev	tcp_echo/perftest.py	/^				dev = math.sqrt(devsum\/len(vals))$/;"	v
+devsum	ib_perftest.py	/^		devsum = 0;$/;"	v
+devsum	pilaf_perftest.py	/^			devsum = 0;$/;"	v
+devsum	tcp_echo/perftest.py	/^				devsum = 0;$/;"	v
+dht	store-server.h	/^  DHT<KEY_TYPE, VAL_TYPE> dht;$/;"	m	class:Server
+dhtClientOps	store-client.h	/^enum dhtClientOps {$/;"	g
+dht_	dht.h	/^  std::vector<struct DHT<K,V>::dht_block>* dht_;$/;"	m	class:DHTClient
+dht_block	dht.h	/^  struct __attribute__ ((__packed__)) dht_block {$/;"	s	class:DHT
+dht_data	dht.h	/^    struct __attribute__ ((__packed__)) dht_data {$/;"	s	class:DHT
+dht_ext_mr	store-client.h	/^  struct ibv_mr* dht_ext_mr;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::ibv_mr
+dht_ext_mr	store-server.h	/^  struct ibv_mr *dht_ext_mr;$/;"	m	class:Server	typeref:struct:Server::ibv_mr
+dht_message	store-constants.h	/^struct dht_message {$/;"	s
+dht_size_	dht.h	/^  size_t dht_size_;$/;"	m	class:DHTClient
+dht_table_mr	store-client.h	/^  struct ibv_mr* dht_table_mr;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::ibv_mr
+dht_table_mr	store-server.h	/^  struct ibv_mr *dht_table_mr;$/;"	m	class:Server	typeref:struct:Server::ibv_mr
+dhtclient	dht-test.cc	/^DHTClient<KEY_TYPE,VAL_TYPE>* dhtclient;$/;"	v
+dhtclient	store-client.h	/^  DHTClient<const KEY_TYPE,VAL_TYPE>* dhtclient;$/;"	m	struct:ServerInfo
+dhtclient	store-server.h	/^  DHTClient<KEY_TYPE, VAL_TYPE>* dhtclient;    \/\/ used for server-mediated reads$/;"	m	class:Server
+die	ib.cc	/^void die(const char *reason) { diewithcode(reason,9999); }$/;"	f
+diewithcode	ib.cc	/^void diewithcode(const char *reason, int code)$/;"	f
+disconnect	ib.cc	/^void IBConn::disconnect() {$/;"	f	class:IBConn
+disconnecting	ib.h	/^  int disconnecting;$/;"	m	struct:connection
+dist	image_search/linear_search.cc	/^  int dist;$/;"	m	struct:MAX	file:
+dist	image_search/search_image.cc	/^  int dist;$/;"	m	struct:MAX	file:
+do_event_loop	ib-client.cc	/^int IBClient::do_event_loop() {$/;"	f	class:IBClient
+do_event_loop	ib-server.cc	/^int IBServer::do_event_loop() {$/;"	f	class:IBServer
+do_event_loop	store-client.cc	/^int Client::do_event_loop() {$/;"	f	class:Client
+do_event_loop	store-server.cc	/^int Server::do_event_loop() {$/;"	f	class:Server
+dump_binarycode	image_search/build_hash_tables.cc	/^void dump_binarycode() {$/;"	f
+dump_hashtables	image_search/build_hash_tables.cc	/^void dump_hashtables(int table_count) {$/;"	f
+dump_table	dht.h	/^  void dump_table(void) {$/;"	f	class:DHT
+end_time	tcp_echo/multi.c	/^struct timeval start_time, end_time;$/;"	v	typeref:struct:
+entries	store-client.h	/^  size_t entries;$/;"	m	struct:ServerInfo
+entries_	dht.h	/^  size_t entries_;		\/\/filled  capacity$/;"	m	class:DHT
+enumerate_entry	image_search/search_image.cc	/^void enumerate_entry(uint32_t curr, int len, int rr, Client* c, HashIndex& idx) {$/;"	f
+enumerate_image	image_search/search_image.cc	/^void enumerate_image(int table_id, uint32_t search_index, Client* c) {$/;"	f
+epoch	ib-client.h	/^  unsigned int epoch;$/;"	m	struct:ServerInfo
+epoch	store-client.h	/^  unsigned int epoch;$/;"	m	struct:ServerInfo
+epoch	store-server.h	/^  unsigned int epoch;$/;"	m	class:Server
+event	ib-client.h	/^  struct rdma_cm_event* event;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::rdma_cm_event
+event	store-client.h	/^  struct rdma_cm_event* event;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::rdma_cm_event
+event_hook_context	ibman.h	/^  void* event_hook_context;$/;"	m	class:IBConnManager
+ext_capacity	dht.h	/^      unsigned int ext_capacity;		\/\/extents$/;"	m	struct:DHT::dht_data
+ext_size_	dht.h	/^  size_t ext_size_;$/;"	m	class:DHT
+f	tcp_echo/perftest.py	/^				f = open("echo_lat.log",'r');$/;"	v
+f	tcp_echo/perftest.py	/^				f = open("echo_thru.log",'r');$/;"	v
+fetch_mr	ibman.cc	/^struct ibv_mr* IBConnManager::fetch_mr(enum mr_location location, int mr_id, IBConn* IBC) {$/;"	f	class:IBConnManager
+fix_guard	dht.h	/^  inline void fix_guard(struct dht_block* block) {$/;"	f	class:DHT
+fnull	ib_perftest.py	/^		fnull = open(os.devnull, "w")$/;"	v
+fnull	pilaf_perftest.py	/^				fnull = open(os.devnull, "w")$/;"	v
+gcq	ibman.h	/^  struct ibv_cq* gcq; \/\/shared completion queue$/;"	m	class:IBConnManager	typeref:struct:IBConnManager::ibv_cq
+gec	ibman.h	/^  struct rdma_event_channel* gec; \/\/shared event channel$/;"	m	class:IBConnManager	typeref:struct:IBConnManager::rdma_event_channel
+get	ploadtest/ploadtest.cc	/^        int get(char *key,char *&val){$/;"	f	class:Tclient
+get	ploadtest/ploadtest.cc	/^        int get(char *key,char **val){$/;"	f	class:Tclient
+get	ploadtest/ploadtest.cc	/^        int get(char *key,redisReply *&r){$/;"	f	class:Tclient
+get	store-client.cc	/^int Client::get(const KEY_TYPE key, VAL_TYPE& value) {$/;"	f	class:Client
+get_count	config.h	/^  int get_count(void) { return servers.size(); }$/;"	f	class:ConfigReader
+get_cpu_mhz	time/get_clock.c	/^double get_cpu_mhz(int no_cpu_freq_fail)$/;"	f
+get_cycles	time/get_clock.h	/^static inline cycles_t get_cycles()$/;"	f
+get_ec	ibman.h	/^  struct rdma_event_channel* get_ec() { return gec; }$/;"	f	class:IBConnManager
+get_end	config.h	/^  bool get_end(void) { return (at >= servers.size()); }$/;"	f	class:ConfigReader
+get_ext	store-client.h	/^  int get_ext(K key, V& value) {$/;"	f	class:Client
+get_next	config.h	/^  struct server_info* get_next(void) {$/;"	f	class:ConfigReader
+get_pd	ibman.h	/^  ibv_pd* get_pd(void) { return gpd; }$/;"	f	class:IBConnManager
+get_reset	config.h	/^  void get_reset(void) {$/;"	f	class:ConfigReader
+get_send_buf	ib.h	/^  message* get_send_buf(void) { return s_conn->send_msg; }$/;"	f	class:IBConn
+get_test	ploadtest/ploadtest.cc	/^void get_test(Tclient *c,int count,int total,int iters = 1){$/;"	f
+global_mrs	ibman.h	/^  struct mr_chain_node* global_mrs;$/;"	m	class:IBConnManager	typeref:struct:IBConnManager::mr_chain_node
+google	image_search/image_search.pb.h	/^namespace google {$/;"	n
+gpd	ibman.h	/^  struct ibv_pd* gpd; \/\/shared protection domain$/;"	m	class:IBConnManager	typeref:struct:IBConnManager::ibv_pd
+guard	dht.h	/^    uint64_t guard;$/;"	m	struct:DHT::dht_block
+has_code	image_search/image_search.pb.h	/^inline bool BinaryCode::has_code() const {$/;"	f	class:BinaryCode
+has_id	image_search/image_search.pb.h	/^inline bool ID::has_id() const {$/;"	f	class:ID
+has_index	image_search/image_search.pb.h	/^inline bool HashIndex::has_index() const {$/;"	f	class:HashIndex
+has_table_id	image_search/image_search.pb.h	/^inline bool HashIndex::has_table_id() const {$/;"	f	class:HashIndex
+hash	dht.h	/^      int  hash:7;$/;"	m	struct:DHT::dht_data
+hash	integrity.h	/^    uint64_t hash(const void * key, uint64_t seed, int len) {$/;"	f	class:Integrity64
+hashN	integrity.h	/^    uint64_t hashN(const void * key, size_t key_len, int n = 0) {$/;"	f	class:Integrity64
+hook_ibv_recv	ib-client.cc	/^void IBClient::hook_ibv_recv(int type, struct message* msg, size_t len, IBConn* conn, void* context) {$/;"	f	class:IBClient
+hook_ibv_recv	ib-server.cc	/^void IBServer::hook_ibv_recv(int type, struct message* msg_, size_t len, IBConn* conn, void* context) {$/;"	f	class:IBServer
+hook_ibv_recv	store-client.cc	/^void Client::hook_ibv_recv(int type, struct message* msg, size_t len, IBConn* conn, void* context) {$/;"	f	class:Client
+hook_ibv_recv	store-server.cc	/^void Server::hook_ibv_recv(int type, struct message* msg_, size_t len, IBConn* conn, void* context) {$/;"	f	class:Server
+hook_post_resize	store-server.cc	/^int Server::hook_post_resize(size_t newsize, std::vector<DHT<KEY_TYPE,VAL_TYPE>::dht_block>* contents, void* context) {$/;"	f	class:Server
+hook_pre_resize	store-server.cc	/^int Server::hook_pre_resize(size_t oldsize, std::vector<DHT<KEY_TYPE,VAL_TYPE>::dht_block>* contents, void* context) {$/;"	f	class:Server
+hook_rdma_recv	ib-client.cc	/^void IBClient::hook_rdma_recv(int type, \/*void* entry, void* extents,*\/ IBConn* conn, void* context) {$/;"	f	class:IBClient
+hook_rdma_recv	store-client.cc	/^void Client::hook_rdma_recv(int type, IBConn* conn, void* context) {$/;"	f	class:Client
+hook_ready	ib-client.cc	/^void IBClient::hook_ready(\/*void* peer_mr, size_t capacity,*\/ void* context) {$/;"	f	class:IBClient
+hook_ready	store-client.cc	/^void Client::hook_ready(void* context) {$/;"	f	class:Client
+hook_send_complete	ib-client.cc	/^void IBClient::hook_send_complete(void* context) {$/;"	f	class:IBClient
+host	config.h	/^  std::string* host; $/;"	m	struct:server_info
+hvinit	integrity.h	12;"	d
+i64	mem/mem5.h	51;"	d
+ib_ping	ib-client.cc	/^int IBClient::ib_ping(size_t bytes) {$/;"	f	class:IBClient
+ib_pingpong	ib-client.cc	/^int IBClient::ib_pingpong(size_t twopower, bool bigreply = false) {$/;"	f	class:IBClient
+ibman_verb	ibman.h	/^enum ibman_verb {$/;"	g
+ibv_msg_ready	ib-client.h	/^  bool ibv_msg_ready;$/;"	m	struct:ServerInfo
+ibv_msg_ready	store-client.h	/^  bool ibv_msg_ready;$/;"	m	struct:ServerInfo
+ibv_recv_buf	ib-client.h	/^  struct message* ibv_recv_buf;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::message
+ibv_recv_buf	store-client.h	/^  struct message* ibv_recv_buf;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::message
+id	ib.h	/^  struct rdma_cm_id *id;$/;"	m	struct:connection	typeref:struct:connection::rdma_cm_id
+id	image_search/image_search.pb.h	/^inline ::google::protobuf::uint32 ID::id() const {$/;"	f	class:ID
+id_	image_search/image_search.pb.h	/^  ::google::protobuf::uint32 id_;$/;"	m	class:ID
+image_count	image_search/build_hash_tables.cc	/^uint32_t image_count = 0;$/;"	v
+image_count	image_search/linear_search.cc	/^uint32_t image_count;$/;"	v
+image_count	image_search/search_image.cc	/^uint32_t image_count;$/;"	v
+image_id	image_search/linear_search.cc	/^  uint32_t image_id;$/;"	m	struct:MAX	file:
+image_id	image_search/search_image.cc	/^  uint32_t image_id;$/;"	m	struct:MAX	file:
+image_map	image_search/search_image.cc	/^std::bitset<IMAGE_COUNT> image_map;$/;"	v
+images	image_search/image_search.pb.h	/^ImageList::images() const {$/;"	f	class:ImageList
+images	image_search/image_search.pb.h	/^inline ::google::protobuf::uint32 ImageList::images(int index) const {$/;"	f	class:ImageList
+images_	image_search/image_search.pb.h	/^  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > images_;$/;"	m	class:ImageList
+images_size	image_search/image_search.pb.h	/^inline int ImageList::images_size() const {$/;"	f	class:ImageList
+in_use	dht.h	/^      bool in_use:1;$/;"	m	struct:DHT::dht_data
+index	image_search/image_search.pb.h	/^inline ::google::protobuf::uint32 HashIndex::index() const {$/;"	f	class:HashIndex
+index_	image_search/image_search.pb.h	/^  ::google::protobuf::uint32 index_;$/;"	m	class:HashIndex
+init	ploadtest/ploadtest.cc	/^        void init(const char *conf){$/;"	f	class:Tclient
+init_serverinfo	store-client.cc	/^void Client::init_serverinfo(struct ServerInfo* this_info) {$/;"	f	class:Client
+insert	dht.h	/^  void insert(const K& key, size_t key_len, V value, size_t val_len, uint64_t crc_ = 0, bool have_crc = false, bool nocopy = false, size_t capacity = 0) {$/;"	f	class:DHT
+insert_internal	dht.h	/^  void insert_internal(const K& key, size_t key_len, V value, size_t val_len, uint64_t crc_, bool have_crc, size_t capacity) {$/;"	f	class:DHT
+instance	ib.h	/^  void* instance;$/;"	m	struct:recv_buf
+int_compare	ploadtest/ploadtest.cc	/^static int int_compare(const void *aptr, const void *bptr) {$/;"	f	file:
+is_connected	ib.h	/^  int is_connected(void) { return (s_conn->connected); }$/;"	f	class:IBConn
+is_ready	ib-server.h	/^  bool is_ready;                              \/\/ set once ready for clients$/;"	m	class:IBServer
+is_ready	store-server.h	/^  bool is_ready;                              \/\/ set once ready for clients$/;"	m	class:Server
+kCodeFieldNumber	image_search/image_search.pb.cc	/^const int BinaryCode::kCodeFieldNumber;$/;"	m	class:BinaryCode	file:
+kCodeFieldNumber	image_search/image_search.pb.h	/^  static const int kCodeFieldNumber = 1;$/;"	m	class:BinaryCode
+kIdFieldNumber	image_search/image_search.pb.cc	/^const int ID::kIdFieldNumber;$/;"	m	class:ID	file:
+kIdFieldNumber	image_search/image_search.pb.h	/^  static const int kIdFieldNumber = 1;$/;"	m	class:ID
+kImagesFieldNumber	image_search/image_search.pb.cc	/^const int ImageList::kImagesFieldNumber;$/;"	m	class:ImageList	file:
+kImagesFieldNumber	image_search/image_search.pb.h	/^  static const int kImagesFieldNumber = 1;$/;"	m	class:ImageList
+kIndexFieldNumber	image_search/image_search.pb.cc	/^const int HashIndex::kIndexFieldNumber;$/;"	m	class:HashIndex	file:
+kIndexFieldNumber	image_search/image_search.pb.h	/^  static const int kIndexFieldNumber = 2;$/;"	m	class:HashIndex
+kLoadFactor	dht.h	/^  static const double kLoadFactor = 0.75;$/;"	m	class:DHT
+kTableIdFieldNumber	image_search/image_search.pb.cc	/^const int HashIndex::kTableIdFieldNumber;$/;"	m	class:HashIndex	file:
+kTableIdFieldNumber	image_search/image_search.pb.h	/^  static const int kTableIdFieldNumber = 1;$/;"	m	class:HashIndex
+key	dht.h	/^      K key;$/;"	m	struct:DHT::dht_data
+key	store-constants.h	/^  KEY_TYPE key;$/;"	m	struct:kv_req
+key_len	dht.h	/^      size_t key_len;$/;"	m	struct:DHT::dht_data
+key_len	store-constants.h	/^      size_t key_len; $/;"	m	struct:dht_message::mdata::__anon1
+key_read_offset	dht-test.cc	/^size_t key_read_offset;$/;"	v
+kv_req	store-constants.h	/^struct kv_req {$/;"	s
+last	ib.h	/^  bool last;$/;"	m	struct:mrmessage
+latency	ploadtest/ploadtest.cc	/^int latency[LATENCY_NUM];$/;"	v
+lindex	ploadtest/ploadtest.cc	/^int lindex=-1;$/;"	v
+line	ib_perftest.py	/^				line = line.strip()$/;"	v
+line	ib_perftest.py	/^			line = nextline$/;"	v
+line	tcp_echo/perftest.py	/^					line = line.strip()$/;"	v
+listener	ib-server.h	/^  struct rdma_cm_id *listener;$/;"	m	class:IBServer	typeref:struct:IBServer::rdma_cm_id
+listener	store-server.h	/^  struct rdma_cm_id *listener;$/;"	m	class:Server	typeref:struct:Server::rdma_cm_id
+load_binarycode	image_search/build_hash_tables.cc	/^void load_binarycode(char * fname, char * config_path) {$/;"	f
+load_get_file	ploadtest/ploadtest.cc	/^int load_get_file(char *filename){$/;"	f
+load_put_file	ploadtest/ploadtest.cc	/^int load_put_file(char *filename){$/;"	f
+local_mrs	ib.h	/^  struct mr_chain_node* local_mrs;    \/\/ stores connection-specific MRs$/;"	m	struct:connection	typeref:struct:connection::mr_chain_node
+location	ib.h	/^  enum mr_location location;$/;"	m	struct:mr_chain_node	typeref:enum:mr_chain_node::mr_location
+location	ib.h	/^  enum mr_location location;$/;"	m	struct:mrmessage	typeref:enum:mrmessage::mr_location
+locked_reread_count_	dht-test.cc	/^size_t locked_reread_count_;$/;"	v
+log	ibman.cc	/^void IBConnManager::log(enum ibman_verb loglevel, char* fmt, ...) {$/;"	f	class:IBConnManager
+log_buf	store-server.h	/^  char* log_buf;$/;"	m	class:Server
+log_fh	store-server.h	/^  FILE* log_fh;$/;"	m	class:Server
+log_flush	store-server.cc	/^void Server::log_flush(void) {$/;"	f	class:Server
+log_fname	store-server.h	/^  char* log_fname;$/;"	m	class:Server
+log_offset	store-server.h	/^  size_t log_offset;$/;"	m	class:Server
+logging	store-server.h	/^  bool logging;$/;"	m	class:Server
+long_compare	tcp_echo/multi.c	/^static int long_compare(const void *aptr, const void *bptr) {$/;"	f	file:
+long_options	dht-test.cc	/^static struct option long_options[] = {$/;"	v	typeref:struct:option	file:
+long_options	ib-test.cc	/^static struct option long_options[] = {$/;"	v	typeref:struct:option	file:
+main	dht-test.cc	/^int main(int argc, char **argv) {$/;"	f
+main	ht-test.cc	/^int main(int argc, char **argv) {$/;"	f
+main	ib-test.cc	/^int main(int argc, char **argv) {$/;"	f
+main	image_search/build_hash_tables.cc	/^int main (int argc, char *argv[]) {$/;"	f
+main	image_search/generate_binarycode.cc	/^int main (int argc, char *argv[]) {$/;"	f
+main	image_search/linear_search.cc	/^int main (int argc, char *argv[]) {$/;"	f
+main	image_search/search_image.cc	/^int main (int argc, char *argv[]) {$/;"	f
+main	loadtest.cc	/^int main(int argc, char **argv) {$/;"	f
+main	ploadtest/ploadtest.cc	/^int main(int argc, char **argv) {$/;"	f
+main	tcp_echo/client.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	tcp_echo/multi.c	/^int main(int argc, char* argv[])$/;"	f
+manager	ib-client.h	/^  IBConnManager* manager;$/;"	m	class:IBClient
+manager	ib-server.h	/^  IBConnManager* manager;$/;"	m	class:IBServer
+manager	store-client.h	/^  IBConnManager* manager;$/;"	m	class:Client
+manager	store-server.h	/^  IBConnManager* manager;$/;"	m	class:Server
+manager_	ib.h	/^  IBConnManager* manager_;$/;"	m	class:IBConn
+maxCount	mem/mem5.h	/^  u32 maxCount;       \/* Maximum instantaneous currentCount *\/$/;"	m	class:PoolMalloc
+maxOut	mem/mem5.h	/^  u32 maxOut;         \/* Maximum instantaneous currentOut *\/$/;"	m	class:PoolMalloc
+maxRequest	mem/mem5.h	/^  u32 maxRequest;     \/* Largest allocation (exclusive of internal frag) *\/$/;"	m	class:PoolMalloc
+mdata	ib.h	/^  char mdata;  \/\/ first byte of user message contents; dummy$/;"	m	struct:message
+mdata	store-constants.h	/^  union mdata {$/;"	u	struct:dht_message
+measure	ploadtest/ploadtest.cc	/^void measure(int num){$/;"	f
+memregion	dht.h	/^  void* memregion;					\/\/used for extents$/;"	m	class:DHT
+memsys5Enter	mem/mem5.h	/^void memsys5Enter(void){$/;"	f	class:PoolMalloc
+memsys5Free	mem/mem5.h	/^void memsys5Free(void *pPrior){$/;"	f	class:PoolMalloc
+memsys5FreeUnsafe	mem/mem5.h	/^void memsys5FreeUnsafe(void *pOld){$/;"	f	class:PoolMalloc
+memsys5Init	mem/mem5.h	/^int memsys5Init(void* region, size_t size, int logminalloc) {$/;"	f	class:PoolMalloc
+memsys5Leave	mem/mem5.h	/^void memsys5Leave(void){$/;"	f	class:PoolMalloc
+memsys5Link	mem/mem5.h	/^void memsys5Link(i64 i, int iLogsize){$/;"	f	class:PoolMalloc
+memsys5Log	mem/mem5.h	/^int memsys5Log(u64 iValue){$/;"	f	class:PoolMalloc
+memsys5Malloc	mem/mem5.h	/^void *memsys5Malloc(size_t nBytes){$/;"	f	class:PoolMalloc
+memsys5MallocUnsafe	mem/mem5.h	/^void *memsys5MallocUnsafe(size_t nByte){$/;"	f	class:PoolMalloc
+memsys5Realloc	mem/mem5.h	/^void *memsys5Realloc(void *pPrior, u64 nBytes){$/;"	f	class:PoolMalloc
+memsys5Roundup	mem/mem5.h	/^u64 memsys5Roundup(u64 n){$/;"	f	class:PoolMalloc
+memsys5Shutdown	mem/mem5.h	/^void memsys5Shutdown(void) {$/;"	f	class:PoolMalloc
+memsys5Size	mem/mem5.h	/^u64 memsys5Size(void *p){$/;"	f	class:PoolMalloc
+memsys5Unlink	mem/mem5.h	/^void memsys5Unlink(i64 i, int iLogsize){$/;"	f	class:PoolMalloc
+memsys5UnlinkFirst	mem/mem5.h	/^i64 memsys5UnlinkFirst(int iLogsize){$/;"	f	class:PoolMalloc
+message	ib.h	/^struct message {$/;"	s
+mixed_test	ploadtest/ploadtest.cc	/^void mixed_test(Tclient *c,int count, int total){$/;"	f
+mr	ib.h	/^  struct ibv_mr *mr;				\/\/actual mr structure$/;"	m	struct:mr_chain_node	typeref:struct:mr_chain_node::ibv_mr
+mr	ib.h	/^  struct ibv_mr mr;$/;"	m	struct:mrmessage	typeref:struct:mrmessage::ibv_mr
+mr	ib.h	/^  struct ibv_mr* mr;$/;"	m	struct:recv_buf	typeref:struct:recv_buf::ibv_mr
+mr_chain_node	ib.h	/^struct mr_chain_node {$/;"	s
+mr_hook_context	ib.h	/^  void* mr_hook_context;$/;"	m	class:IBConn
+mr_id	ib.h	/^  int mr_id;						\/\/application-defined$/;"	m	struct:mr_chain_node
+mr_id	ib.h	/^  int mr_id;$/;"	m	struct:mrmessage
+mr_init	ib-client.h	/^  bool mr_init;$/;"	m	struct:ServerInfo
+mr_init	ib-server.h	/^  bool mr_init;$/;"	m	class:IBServer
+mr_init	store-client.h	/^  bool mr_init;$/;"	m	struct:ServerInfo
+mr_init	store-server.h	/^  bool mr_init;$/;"	m	class:Server
+mr_location	ib.h	/^enum mr_location {$/;"	g
+mr_scope	ib.h	/^enum mr_scope {$/;"	g
+mr_types	store-constants.h	/^enum mr_types {$/;"	g
+mrmessage	ib.h	/^struct mrmessage {$/;"	s
+msg	ib.h	/^  struct message* msg;$/;"	m	struct:recv_buf	typeref:struct:recv_buf::message
+msgSize	tcp_echo/multi.c	/^size_t msgSize = 0;$/;"	v
+msg_type	ib.h	/^enum msg_type {$/;"	g
+msgs	tcp_echo/multi.c	/^size_t msgs = 0;$/;"	v
+mutable_code	image_search/image_search.pb.h	/^inline ::std::string* BinaryCode::mutable_code() {$/;"	f	class:BinaryCode
+mutable_images	image_search/image_search.pb.h	/^ImageList::mutable_images() {$/;"	f	class:ImageList
+mutable_unknown_fields	image_search/image_search.pb.h	/^  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {$/;"	f	class:BinaryCode
+mutable_unknown_fields	image_search/image_search.pb.h	/^  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {$/;"	f	class:HashIndex
+mutable_unknown_fields	image_search/image_search.pb.h	/^  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {$/;"	f	class:ID
+mutable_unknown_fields	image_search/image_search.pb.h	/^  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {$/;"	f	class:ImageList
+mutex	mem/mem5.h	/^  sqlite3_mutex *mutex;$/;"	m	class:PoolMalloc
+nAlloc	mem/mem5.h	/^  u64 nAlloc;         \/* Total number of calls to malloc *\/$/;"	m	class:PoolMalloc
+nAtom	mem/mem5.h	/^  int nAtom;       \/* Smallest possible allocation in bytes *\/$/;"	m	class:PoolMalloc
+nBlock	mem/mem5.h	/^  i64 nBlock;      \/* Number of nAtom sized blocks in zPool *\/$/;"	m	class:PoolMalloc
+n_global_mrs	ibman.h	/^  int n_global_mrs;$/;"	m	class:IBConnManager
+n_local_mrs	ib.h	/^  int n_local_mrs;$/;"	m	struct:connection
+new_conn	ibman.cc	/^IBConn* IBConnManager::new_conn(size_t msgbuf_size) {$/;"	f	class:IBConnManager
+next	ib.h	/^  struct mr_chain_node* next;	\/\/pointer to next node in list, or null$/;"	m	struct:mr_chain_node	typeref:struct:mr_chain_node::mr_chain_node
+next	mem/mem5.h	/^    i64 next;       \/* Index of next free chunk *\/$/;"	m	struct:PoolMalloc::Mem5Link
+nextline	ib_perftest.py	/^			nextline = proc_clients.stdout.readline()$/;"	v
+ok	config.h	/^  bool ok;$/;"	m	class:ConfigReader
+on_addr_resolved	ib-client.cc	/^int IBClient::on_addr_resolved(struct ServerInfo* server, struct rdma_cm_id *id) {$/;"	f	class:IBClient
+on_addr_resolved	store-client.cc	/^int Client::on_addr_resolved(struct ServerInfo* server, struct rdma_cm_id *id) {$/;"	f	class:Client
+on_completion	ib.cc	/^void IBConn::on_completion(struct ibv_wc *wc) {$/;"	f	class:IBConn
+on_connect	ib.cc	/^void IBConn::on_connect() {$/;"	f	class:IBConn
+on_connect_request	ib-server.cc	/^int IBServer::on_connect_request(struct rdma_cm_id *id) {$/;"	f	class:IBServer
+on_connect_request	store-server.cc	/^int Server::on_connect_request(struct rdma_cm_id *id) {$/;"	f	class:Server
+on_connection	ib-client.cc	/^int IBClient::on_connection(struct ServerInfo* server, struct rdma_cm_id *id) {$/;"	f	class:IBClient
+on_connection	ib-server.cc	/^int IBServer::on_connection(struct rdma_cm_id *id)$/;"	f	class:IBServer
+on_connection	store-client.cc	/^int Client::on_connection(struct ServerInfo* server, struct rdma_cm_id *id) {$/;"	f	class:Client
+on_connection	store-server.cc	/^int Server::on_connection(struct rdma_cm_id *id)$/;"	f	class:Server
+on_disconnect	ib-client.cc	/^int IBClient::on_disconnect(struct ServerInfo* server, struct rdma_cm_id *id) {$/;"	f	class:IBClient
+on_disconnect	ib-server.cc	/^int IBServer::on_disconnect(struct rdma_cm_id *id) {$/;"	f	class:IBServer
+on_disconnect	store-client.cc	/^int Client::on_disconnect(struct ServerInfo* server, struct rdma_cm_id *id) {$/;"	f	class:Client
+on_disconnect	store-server.cc	/^int Server::on_disconnect(struct rdma_cm_id *id) {$/;"	f	class:Server
+on_event	ib-client.cc	/^int IBClient::on_event(struct rdma_cm_event *event, void* ec_context, void* event_context) {$/;"	f	class:IBClient
+on_event	ib-server.cc	/^int IBServer::on_event(struct rdma_cm_event *event, void* ec_context, void* event_context) {$/;"	f	class:IBServer
+on_event	store-client.cc	/^int Client::on_event(struct rdma_cm_event *event, void* ec_context, void* event_context) {$/;"	f	class:Client
+on_event	store-server.cc	/^int Server::on_event(struct rdma_cm_event *event, void* ec_context, void* event_context)$/;"	f	class:Server
+on_event_hook	ibman.h	/^  int (*on_event_hook)(struct rdma_cm_event*, void*, void*);$/;"	m	class:IBConnManager
+on_mr_hook	ib.h	/^  void (*on_mr_hook)(int*, struct ibv_mr*, int*, void*);$/;"	m	class:IBConn
+on_rdma_recv_hook	ib.h	/^  void (*on_rdma_recv_hook)(int, IBConn*, void*);$/;"	m	class:IBConn
+on_ready_hook	ib.h	/^  void (*on_ready_hook)(void*);$/;"	m	class:IBConn
+on_recv_hook	ib.h	/^  void (*on_recv_hook)(int, struct message*, size_t, IBConn*, void*);$/;"	m	class:IBConn
+on_reject	ib-client.cc	/^int IBClient::on_reject(struct ServerInfo* server, const char* private_data) {$/;"	f	class:IBClient
+on_reject	store-client.cc	/^int Client::on_reject(struct ServerInfo* server, const char* private_data) {$/;"	f	class:Client
+on_route_resolved	ib-client.cc	/^int IBClient::on_route_resolved(struct ServerInfo* server, struct rdma_cm_id *id) {$/;"	f	class:IBClient
+on_route_resolved	store-client.cc	/^int Client::on_route_resolved(struct ServerInfo* server, struct rdma_cm_id *id) {$/;"	f	class:Client
+on_send_complete_hook	ib.h	/^  void (*on_send_complete_hook)(void*);$/;"	m	class:IBConn
+op_index	ploadtest/ploadtest.cc	/^int op_index=0;$/;"	v
+op_num	ploadtest/ploadtest.cc	/^int op_num[TIMEVAL_NUM+1];$/;"	v
+operator <	image_search/linear_search.cc	/^bool operator<(const MAX &a,const MAX &b)$/;"	f
+operator <	image_search/search_image.cc	/^bool operator<(const MAX &a,const MAX &b)$/;"	f
+operator =	image_search/image_search.pb.h	/^  inline BinaryCode& operator=(const BinaryCode& from) {$/;"	f	class:BinaryCode
+operator =	image_search/image_search.pb.h	/^  inline HashIndex& operator=(const HashIndex& from) {$/;"	f	class:HashIndex
+operator =	image_search/image_search.pb.h	/^  inline ID& operator=(const ID& from) {$/;"	f	class:ID
+operator =	image_search/image_search.pb.h	/^  inline ImageList& operator=(const ImageList& from) {$/;"	f	class:ImageList
+output	ib_perftest.py	/^output = {}$/;"	v
+output	pilaf_perftest.py	/^output = {}$/;"	v
+output	tcp_echo/perftest.py	/^output = {}$/;"	v
+pd	ib.h	/^  struct ibv_pd *pd;$/;"	m	struct:context	typeref:struct:context::ibv_pd
+pieces	ib_perftest.py	/^				pieces = line.split()$/;"	v
+pieces	tcp_echo/perftest.py	/^					pieces = line.split()$/;"	v
+pipes	pilaf_perftest.py	/^			pipes = proc.communicate()$/;"	v
+poll_cq	ibman.cc	/^int IBConnManager::poll_cq(int do_not_terminate) {$/;"	f	class:IBConnManager
+poly	integrity.h	11;"	d
+pool	dht.h	/^  PoolMalloc pool;$/;"	m	class:DHT
+port	config.h	/^  std::string* port;$/;"	m	struct:server_info
+port	ib-server.h	/^  uint16_t port;$/;"	m	class:IBServer
+port	ib_perftest.py	/^		port = 4001$/;"	v
+port	pilaf_perftest.py	/^				port = 4000$/;"	v
+port	store-server.h	/^  uint16_t port;$/;"	m	class:Server
+port	tcp_echo/perftest.py	/^			port = random.randint(2048,65535)$/;"	v
+post_contains	dht.h	/^  inline int post_contains(struct DHT<K,V>::dht_block* block, K key, size_t key_len, bool skip_crc = false) {$/;"	f	class:DHTClient
+post_contains_extents	dht.h	/^  inline int post_contains_extents(struct DHT<K,V>::dht_block* block, K key, size_t key_len, bool skip_crc = false) {$/;"	f	class:DHTClient
+post_get	dht.h	/^  inline int post_get(struct DHT<K,V>::dht_block* block, K key, size_t key_len, V& value, bool skip_crc = false) {$/;"	f	class:DHTClient
+post_get_extents	dht.h	/^  inline int post_get_extents(struct DHT<K,V>::dht_block* block, K key, size_t key_len, bool skip_crc = false \/*, V* value*\/) {$/;"	f	class:DHTClient
+post_get_state	dht.h	/^enum post_get_state {$/;"	g
+post_receives	ib.cc	/^void IBConn::post_receives(struct connection *conn) {$/;"	f	class:IBConn
+post_recv_pending	ib.h	/^  bool post_recv_pending;$/;"	m	struct:connection
+post_resize_context	dht.h	/^  void* post_resize_context;$/;"	m	class:DHT
+post_resize_extents_context	dht.h	/^  void* post_resize_extents_context;$/;"	m	class:DHT
+post_resize_extents_hook	dht.h	/^  int (*post_resize_extents_hook)(size_t, std::vector<dht_block>*, void*);$/;"	m	class:DHT
+post_resize_hook	dht.h	/^  int (*post_resize_hook)(size_t, std::vector<dht_block>*, void*);$/;"	m	class:DHT
+pre_get	dht.h	/^  void* pre_get(K key, size_t key_len, int hash_idx) {$/;"	f	class:DHTClient
+pre_resize_context	dht.h	/^  void* pre_resize_context;$/;"	m	class:DHT
+pre_resize_extents_context	dht.h	/^  void* pre_resize_extents_context;$/;"	m	class:DHT
+pre_resize_extents_hook	dht.h	/^  int (*pre_resize_extents_hook) (size_t, std::vector<dht_block>*, void*);$/;"	m	class:DHT
+pre_resize_hook	dht.h	/^  int (*pre_resize_hook) (size_t, std::vector<dht_block>*, void*);$/;"	m	class:DHT
+presize	pilaf_perftest.py	/^				presize = (test[-1] != 'r')$/;"	v
+prev	mem/mem5.h	/^    i64 prev;       \/* Index of previous free chunk *\/$/;"	m	struct:PoolMalloc::Mem5Link
+print_stats	ploadtest/ploadtest.cc	/^		void print_stats(void) {$/;"	f	class:Tclient
+print_stats	store-client.cc	/^void Client::print_stats(void) {$/;"	f	class:Client
+proc	pilaf_perftest.py	/^			proc = subprocess.Popen(args,shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)$/;"	v
+proc_clients	ib_perftest.py	/^		proc_clients = subprocess.Popen(args,shell=True,stdout=subprocess.PIPE, stderr=fnull)$/;"	v
+proc_clients	tcp_echo/perftest.py	/^				proc_clients = subprocess.Popen("mpirun --mca btl tcp,self -n "+str(CLIENTS)+" -hostfile mpiconf .\/client -a "+SERV_IP+" -p "+str(port)+" -s "+str(ccount)+" -r 10",shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)$/;"	v
+proc_clients	tcp_echo/perftest.py	/^				proc_clients = subprocess.Popen("ssh beaker-21 \\"cd \/home\/kerm\/infiniband\/rdma-hashtable\/tcp_echo\/ && .\/client -a "+SERV_IP+" -p "+str(port)+" -s "+str(ccount)+" -r 10\\"",shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)$/;"	v
+proc_clients	tcp_echo/perftest.py	/^			proc_clients = subprocess.Popen("mpirun -n "+str(MACHINES)+" -bynode -hostfile mpiconf killall -9 client",shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)$/;"	v
+proc_get_cpu_mhz	time/get_clock.c	/^static double proc_get_cpu_mhz(int no_cpu_freq_fail)$/;"	f	file:
+proc_kill	ib_perftest.py	/^		proc_kill = subprocess.Popen("killall -9 ib-test",shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)$/;"	v
+proc_kill	pilaf_perftest.py	/^				proc_kill = subprocess.Popen("killall -9 dht-test",shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)$/;"	v
+proc_kill	tcp_echo/perftest.py	/^				proc_kill = subprocess.Popen(["\/bin\/kill","-10",str(proc_server.pid)])$/;"	v
+proc_kill	tcp_echo/perftest.py	/^			proc_kill = subprocess.Popen("killall -9 multi",shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)$/;"	v
+proc_server	ib_perftest.py	/^		proc_server = subprocess.Popen([".\/ib-test","s",str(port)], stdout=fnull, stderr=fnull)$/;"	v
+proc_server	pilaf_perftest.py	/^				proc_server = subprocess.Popen(args, stdout=slog, stderr=slog)$/;"	v
+proc_server	tcp_echo/perftest.py	/^				proc_server = subprocess.Popen([".\/multi","-p",str(port),"-s",str(ccount),"-r","10","-L"])$/;"	v
+proc_server	tcp_echo/perftest.py	/^				proc_server = subprocess.Popen([".\/multi","-p",str(port),"-s",str(ccount),"-r","10"])$/;"	v
+protobuf	image_search/image_search.pb.h	/^namespace protobuf {$/;"	n	namespace:google
+protobuf_AddDesc_image_5fsearch_2eproto	image_search/image_search.pb.cc	/^void protobuf_AddDesc_image_5fsearch_2eproto() {$/;"	f
+protobuf_AssignDesc_image_5fsearch_2eproto	image_search/image_search.pb.cc	/^void protobuf_AssignDesc_image_5fsearch_2eproto() {$/;"	f
+protobuf_AssignDescriptorsOnce	image_search/image_search.pb.cc	/^inline void protobuf_AssignDescriptorsOnce() {$/;"	f	namespace:__anon4
+protobuf_RegisterTypes	image_search/image_search.pb.cc	/^void protobuf_RegisterTypes(const ::std::string&) {$/;"	f	namespace:__anon4
+protobuf_ShutdownFile_image_5fsearch_2eproto	image_search/image_search.pb.cc	/^void protobuf_ShutdownFile_image_5fsearch_2eproto() {$/;"	f
+put	ploadtest/ploadtest.cc	/^        int put(char *key,char *val){$/;"	f	class:Tclient
+put	store-client.cc	/^int Client::put(const KEY_TYPE key, const VAL_TYPE value) {$/;"	f	class:Client
+put	store-constants.h	/^    } put;               \/\/ get or put request$/;"	m	union:dht_message::mdata	typeref:struct:dht_message::mdata::__anon1
+put	store-constants.h	/^    } put;$/;"	m	union:dht_message::mdata	typeref:struct:dht_message::mdata::__anon2
+put_ext	store-client.h	/^  int put_ext(K key, V value) {$/;"	f	class:Client
+put_test	ploadtest/ploadtest.cc	/^void put_test(Tclient *c,int begin, int count, bool run_forever = false){$/;"	f
+qp	ib.h	/^  struct ibv_qp *qp;$/;"	m	struct:connection	typeref:struct:connection::ibv_qp
+r	image_search/search_image.cc	/^int r;$/;"	v
+rdma_fetch	ib-client.cc	/^int IBClient::rdma_fetch(size_t bytes) {$/;"	f	class:IBClient
+rdma_fetch	ib.cc	/^int IBConn::rdma_fetch(uintptr_t addr, size_t length, struct ibv_mr* remote_mr, ibv_mr* local_mr) {$/;"	f	class:IBConn
+rdma_fetch_buf	ib-client.h	/^  void* rdma_fetch_buf;$/;"	m	struct:ServerInfo
+rdma_fetch_buf	store-client.h	/^  void* rdma_fetch_buf;$/;"	m	struct:ServerInfo
+rdma_fetch_buf_mr	ib-client.h	/^  struct ibv_mr* rdma_fetch_buf_mr;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::ibv_mr
+rdma_fetch_buf_mr	store-client.h	/^  struct ibv_mr *rdma_fetch_buf_mr;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::ibv_mr
+rdma_fetch_ext_buf	store-client.h	/^  void* rdma_fetch_ext_buf;$/;"	m	struct:ServerInfo
+rdma_fetch_ext_buf_mr	store-client.h	/^  struct ibv_mr *rdma_fetch_ext_buf_mr;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::ibv_mr
+rdma_local_buf	ib-server.h	/^  void* rdma_local_buf;$/;"	m	class:IBServer
+rdma_local_mr	ib-server.h	/^  struct ibv_mr *rdma_local_mr;$/;"	m	class:IBServer	typeref:struct:IBServer::ibv_mr
+rdma_msg_ready	ib-client.h	/^  bool rdma_msg_ready;$/;"	m	struct:ServerInfo
+rdma_msg_ready	store-client.h	/^  bool rdma_msg_ready;$/;"	m	struct:ServerInfo
+rdma_push	ib.cc	/^int IBConn::rdma_push(uintptr_t addr, size_t length, uintptr_t local_addr, struct ibv_mr* remote_mr, ibv_mr* local_mr) {$/;"	f	class:IBConn
+rdma_recv_hook_context	ib.h	/^  void* rdma_recv_hook_context;$/;"	m	class:IBConn
+rdma_remote_buf_mr	ib-client.h	/^  struct ibv_mr* rdma_remote_buf_mr;$/;"	m	struct:ServerInfo	typeref:struct:ServerInfo::ibv_mr
+read_	store-client.cc	/^int Client::read_(const KEY_TYPE key, size_t key_len, VAL_TYPE& value, size_t& val_len, int op) {$/;"	f	class:Client
+read_mode	store-client.h	/^  int read_mode;$/;"	m	class:Client
+read_modes	store-client.h	/^enum read_modes {$/;"	g
+read_server_	store-client.cc	/^int Client::read_server_(const KEY_TYPE key, size_t key_len, VAL_TYPE& value, size_t& val_len, int op) {$/;"	f	class:Client
+ready	ib-client.cc	/^int IBClient::ready(void) {$/;"	f	class:IBClient
+ready	ib-client.h	/^  bool ready;   \/\/ sort of like "connected", but also with MRs swapped$/;"	m	struct:ServerInfo
+ready	ib-server.cc	/^int IBServer::ready(unsigned short port) {$/;"	f	class:IBServer
+ready	ib.h	/^  bool ready;$/;"	m	class:IBConn
+ready	store-client.cc	/^int Client::ready(void) {$/;"	f	class:Client
+ready	store-client.h	/^  bool ready;   \/\/ sort of like "connected", but also with MRs swapped$/;"	m	struct:ServerInfo
+ready	store-server.cc	/^int Server::ready(unsigned short port) {$/;"	f	class:Server
+ready_hook_context	ib.h	/^  void* ready_hook_context;$/;"	m	class:IBConn
+reconnecting	store-client.h	/^  bool reconnecting;$/;"	m	struct:ServerInfo
+recv_buf	ib.h	/^struct recv_buf {$/;"	s
+recv_buf_mr	ib-server.h	/^  struct ibv_mr *recv_buf_mr;$/;"	m	class:IBServer	typeref:struct:IBServer::ibv_mr
+recv_buf_mr	store-server.h	/^  struct ibv_mr *recv_buf_mr;$/;"	m	class:Server	typeref:struct:Server::ibv_mr
+recv_buf_size	ib.h	/^  size_t recv_buf_size;$/;"	m	class:IBConn
+recv_bufs	ib.h	/^  std::vector<struct recv_buf*> recv_bufs;$/;"	m	class:IBConn
+recv_hook_context	ib.h	/^  void* recv_hook_context;$/;"	m	class:IBConn
+recv_mr	ib-server.h	/^  struct ibv_mr *recv_mr;$/;"	m	class:IBServer	typeref:struct:IBServer::ibv_mr
+recv_mr	store-server.h	/^  struct ibv_mr *recv_mr;$/;"	m	class:Server	typeref:struct:Server::ibv_mr
+recv_nonce	ib.h	/^  unsigned int recv_nonce;$/;"	m	struct:connection
+recv_pend_post	ib.h	/^  std::queue<struct recv_buf*> recv_pend_post;$/;"	m	class:IBConn
+recv_state	ib.h	/^  int recv_state;$/;"	m	struct:connection
+refcount	ib.h	/^  unsigned int refcount;$/;"	m	class:IBConn
+register_memory	ib.cc	/^void IBConn::register_memory(struct connection *conn) {$/;"	f	class:IBConn
+reject	ib.cc	/^void IBConn::reject(rdma_cm_id* id, const char* imm = NULL) {$/;"	f	class:IBConn
+release_code	image_search/image_search.pb.h	/^inline ::std::string* BinaryCode::release_code() {$/;"	f	class:BinaryCode
+remove	dht.h	/^  void remove(const K& key,size_t key_len) {$/;"	f	class:DHT
+remove	store-client.cc	/^int Client::remove(const KEY_TYPE key) {$/;"	f	class:Client
+remove_ext	store-client.h	/^  int remove_ext(K key) {$/;"	f	class:Client
+reply	ploadtest/ploadtest.cc	/^        redisReply *reply;$/;"	m	class:Tclient	file:
+req	store-constants.h	/^    struct kv_req req;$/;"	m	union:dht_message::mdata	typeref:struct:dht_message::mdata::kv_req
+reserve_extents	dht.h	/^  size_t reserve_extents(const K& key, size_t key_len, V value, size_t val_len, dht_block* block) {$/;"	f	class:DHT
+resize	dht.h	/^  void resize(size_t capacity) {$/;"	f	class:DHT
+resize	dht.h	/^  void resize(void) {$/;"	f	class:DHT
+resize_extents	dht.h	/^  void resize_extents(size_t capacity) {$/;"	f	class:DHT
+resizing	store-server.h	/^  bool resizing;$/;"	m	class:Server
+respSize	tcp_echo/multi.c	/^size_t respSize = 0;$/;"	v
+role	dht-test.cc	/^int role;$/;"	v
+role	ht-test.cc	/^int role;$/;"	v
+role	ib.h	/^enum role {$/;"	g
+role_to_str	ib.cc	/^const char* role_to_str(int s_role) {$/;"	f
+s	dht-test.cc	/^Server* s = NULL;$/;"	v
+s_bits	image_search/build_hash_tables.cc	/^int s_bits = 32;$/;"	v
+s_bits	image_search/linear_search.cc	/^int s_bits;$/;"	v
+s_bits	image_search/search_image.cc	/^int s_bits;$/;"	v
+s_conn	ib.h	/^  struct connection *s_conn;$/;"	m	class:IBConn	typeref:struct:IBConn::connection
+s_ctx	ib.h	/^  struct context *s_ctx;$/;"	m	class:IBConn	typeref:struct:IBConn::context
+s_role	ib.h	/^  int s_role;$/;"	m	class:IBConn
+s_role	ibman.h	/^  int s_role;$/;"	m	class:IBConnManager
+sample_get_cpu_mhz	time/get_clock.c	/^static double sample_get_cpu_mhz(void)$/;"	f	file:
+scope	ib.h	/^  enum mr_scope scope;$/;"	m	struct:mr_chain_node	typeref:enum:mr_chain_node::mr_scope
+scope	ib.h	/^  enum mr_scope scope;$/;"	m	struct:mrmessage	typeref:enum:mrmessage::mr_scope
+search_K_nearest_neighbors	image_search/linear_search.cc	/^void search_K_nearest_neighbors(int k, Client* c) {$/;"	f
+search_K_nearest_neighbors	image_search/search_image.cc	/^void search_K_nearest_neighbors(int k, Client* c) {$/;"	f
+search_R_neighbors	image_search/search_image.cc	/^void *search_R_neighbors(void *arg) {$/;"	f
+search_code	image_search/linear_search.cc	/^std::string search_code;$/;"	v
+search_code	image_search/search_image.cc	/^std::string search_code;$/;"	v
+seeds	integrity.h	/^	uint64_t seeds[4];$/;"	m	class:Integrity64
+send_buf	ib.h	/^  struct recv_buf* send_buf;$/;"	m	class:IBConn	typeref:struct:IBConn::recv_buf
+send_buf_size	ib.h	/^  size_t send_buf_size;$/;"	m	class:IBConn
+send_complete_hook_context	ib.h	/^  void* send_complete_hook_context;$/;"	m	class:IBConn
+send_head_mr	ib.cc	/^int IBConn::send_head_mr() {$/;"	f	class:IBConn
+send_message	ib.cc	/^void IBConn::send_message(struct connection *conn, int msg_size) {$/;"	f	class:IBConn
+send_message_ext	ib.cc	/^void IBConn::send_message_ext(int type, char* data, size_t data_len) {$/;"	f	class:IBConn
+send_mr	ib-server.h	/^  struct ibv_mr *send_mr;$/;"	m	class:IBServer	typeref:struct:IBServer::ibv_mr
+send_mr	ib.cc	/^int IBConn::send_mr() {$/;"	f	class:IBConn
+send_mr	ib.h	/^  struct ibv_mr *send_mr; $/;"	m	struct:connection	typeref:struct:connection::ibv_mr
+send_mr	store-server.h	/^  struct ibv_mr *send_mr;$/;"	m	class:Server	typeref:struct:Server::ibv_mr
+send_msg	ib.h	/^  struct message *send_msg;$/;"	m	struct:connection	typeref:struct:connection::message
+send_nonce	ib.h	/^  unsigned int send_nonce;$/;"	m	struct:connection
+send_state	ib.h	/^  int send_state;$/;"	m	struct:connection
+sending_mrs	ib.h	/^  struct mr_chain_node* sending_mrs;  \/\/ holds MRs being current transmitted; only used during setup$/;"	m	struct:connection	typeref:struct:connection::mr_chain_node
+sent	ib-client.h	/^  bool sent;$/;"	m	struct:ServerInfo
+serv_ips	tcp_echo/perftest.py	/^serv_ips = ["216.165.108.105","192.168.5.25"]$/;"	v
+server	ib-client.h	/^  struct ServerInfo server;$/;"	m	class:IBClient	typeref:struct:IBClient::ServerInfo
+server_count	ib-client.h	/^  unsigned int server_count;$/;"	m	class:IBClient
+server_count	store-client.h	/^  unsigned int server_count;$/;"	m	class:Client
+server_for_key	dht.h	/^  int server_for_key(int server_count, K key, size_t key_len) {$/;"	f	class:DHTClient
+server_host	ib-client.h	/^  char* server_host;$/;"	m	struct:ServerInfo
+server_host	store-client.h	/^  char* server_host;$/;"	m	struct:ServerInfo
+server_info	config.h	/^struct server_info {$/;"	s
+server_port	ib-client.h	/^  char* server_port;$/;"	m	struct:ServerInfo
+server_port	store-client.h	/^  char* server_port;$/;"	m	struct:ServerInfo
+servers	config.h	/^  std::vector<struct server_info*> servers;$/;"	m	class:ConfigReader
+servers	pilaf_perftest.py	/^servers = 4$/;"	v
+servers	store-client.h	/^  std::vector<struct ServerInfo*> servers;$/;"	m	class:Client
+set	dht.h	/^  void set(size_t b, const K& key, size_t key_len, V value, size_t val_len, uint64_t crc_ = 0, bool have_crc = false, bool nocopy = false, size_t capacity = 0) {$/;"	f	class:DHT
+set_allocated_code	image_search/image_search.pb.h	/^inline void BinaryCode::set_allocated_code(::std::string* code) {$/;"	f	class:BinaryCode
+set_code	image_search/image_search.pb.h	/^inline void BinaryCode::set_code(const ::std::string& value) {$/;"	f	class:BinaryCode
+set_code	image_search/image_search.pb.h	/^inline void BinaryCode::set_code(const char* value) {$/;"	f	class:BinaryCode
+set_code	image_search/image_search.pb.h	/^inline void BinaryCode::set_code(const void* value, size_t size) {$/;"	f	class:BinaryCode
+set_event_hook	ibman.cc	/^void IBConnManager::set_event_hook(int(*event_hook)(struct rdma_cm_event *event, void* ec_context,$/;"	f	class:IBConnManager
+set_has_code	image_search/image_search.pb.h	/^inline void BinaryCode::set_has_code() {$/;"	f	class:BinaryCode
+set_has_id	image_search/image_search.pb.h	/^inline void ID::set_has_id() {$/;"	f	class:ID
+set_has_index	image_search/image_search.pb.h	/^inline void HashIndex::set_has_index() {$/;"	f	class:HashIndex
+set_has_table_id	image_search/image_search.pb.h	/^inline void HashIndex::set_has_table_id() {$/;"	f	class:HashIndex
+set_id	image_search/image_search.pb.h	/^inline void ID::set_id(::google::protobuf::uint32 value) {$/;"	f	class:ID
+set_images	image_search/image_search.pb.h	/^inline void ImageList::set_images(int index, ::google::protobuf::uint32 value) {$/;"	f	class:ImageList
+set_index	image_search/image_search.pb.h	/^inline void HashIndex::set_index(::google::protobuf::uint32 value) {$/;"	f	class:HashIndex
+set_logging	store-server.cc	/^void Server::set_logging(bool state, char* fname = NULL) {$/;"	f	class:Server
+set_mr	ibman.cc	/^int IBConnManager::set_mr(enum mr_location location, enum mr_scope scope, struct ibv_mr* mr, int mr_id, IBConn* IBC) {$/;"	f	class:IBConnManager
+set_mr_hook	ib.cc	/^void IBConn::set_mr_hook(void(*mr_hook)(int* status, struct ibv_mr* mr, int* mr_id, void*),$/;"	f	class:IBConn
+set_rdma_recv_hook	ib.cc	/^void IBConn::set_rdma_recv_hook(void(*rdma_recv_hook)(int,IBConn*,void*),$/;"	f	class:IBConn
+set_read_mode	store-client.cc	/^void Client::set_read_mode(read_modes mode) {$/;"	f	class:Client
+set_ready_hook	ib.cc	/^void IBConn::set_ready_hook(void(*ready_hook)( void*), void* ready_context) {$/;"	f	class:IBConn
+set_recv_hook	ib.cc	/^void IBConn::set_recv_hook(void(*recv_hook)(int,struct message*,size_t,IBConn*,void*), void* recv_context) {$/;"	f	class:IBConn
+set_resize_extents_hooks	dht.h	/^  void set_resize_extents_hooks(int(*pre_hook)(size_t, std::vector<dht_block>*, void*), void* pre_context,$/;"	f	class:DHT
+set_resize_hooks	dht.h	/^  void set_resize_hooks(int(*pre_hook)(size_t, std::vector<dht_block>*, void*), void* pre_context,$/;"	f	class:DHT
+set_role	ib.cc	/^void IBConn::set_role(enum role r) {$/;"	f	class:IBConn
+set_send_complete_hook	ib.cc	/^void IBConn::set_send_complete_hook(void(*send_complete_hook)(void*),$/;"	f	class:IBConn
+set_table_id	image_search/image_search.pb.h	/^inline void HashIndex::set_table_id(::google::protobuf::uint32 value) {$/;"	f	class:HashIndex
+setup	ib-client.cc	/^int IBClient::setup(void) {$/;"	f	class:IBClient
+setup	ib-server.cc	/^int IBServer::setup(void) {$/;"	f	class:IBServer
+setup	store-client.cc	/^int Client::setup(void) {$/;"	f	class:Client
+setup	store-server.cc	/^int Server::setup(void) {$/;"	f	class:Server
+sigUSR1	tcp_echo/multi.c	/^void* sigUSR1(int signal) {$/;"	f
+sighandler	dht-test.cc	/^void sighandler(int)$/;"	f
+sighandler	ib-test.cc	/^void sighandler(int)$/;"	f
+size_	dht.h	/^  size_t size_;			\/\/current capacity$/;"	m	class:DHT
+slog	pilaf_perftest.py	/^				slog  = open("server.log", "w")$/;"	v
+sqlite3Memsys5Dump	mem/mem5.h	/^void sqlite3Memsys5Dump(const char *zFilename){$/;"	f	class:PoolMalloc
+start_time	tcp_echo/multi.c	/^struct timeval start_time, end_time;$/;"	v	typeref:struct:timeval
+state	store-client.h	/^  enum conn_setup_state state;$/;"	m	struct:ServerInfo	typeref:enum:ServerInfo::conn_setup_state
+static_descriptor_initializer_image_5fsearch_2eproto_	image_search/image_search.pb.cc	/^} static_descriptor_initializer_image_5fsearch_2eproto_;$/;"	v	typeref:struct:StaticDescriptorInitializer_image_5fsearch_2eproto
+stats_rdma_bad_extents	store-client.h	/^  size_t stats_rdma_bad_extents;$/;"	m	class:Client
+stats_rdma_ht_reprobes	store-client.h	/^  size_t stats_rdma_ht_reprobes;$/;"	m	class:Client
+stats_rdma_locked	store-client.h	/^  size_t stats_rdma_locked;$/;"	m	class:Client
+stats_rdma_rts	store-client.h	/^  size_t stats_rdma_rts;$/;"	m	class:Client
+statusval	store-constants.h	/^    char statusval;$/;"	m	union:dht_message::mdata
+substr_len	image_search/build_hash_tables.cc	/^int substr_len;$/;"	v
+substr_len	image_search/search_image.cc	/^int substr_len;$/;"	v
+table	store-client.h	/^  void* table;$/;"	m	struct:ServerInfo
+table_count	image_search/search_image.cc	/^int table_count;$/;"	v
+table_id	image_search/image_search.pb.h	/^inline ::google::protobuf::uint32 HashIndex::table_id() const {$/;"	f	class:HashIndex
+table_id_	image_search/image_search.pb.h	/^  ::google::protobuf::uint32 table_id_;$/;"	m	class:HashIndex
+teardown	ib-client.cc	/^void IBClient::teardown(void) {$/;"	f	class:IBClient
+teardown	store-client.cc	/^void Client::teardown(void) {$/;"	f	class:Client
+test_code	pilaf_perftest.py	/^				test_code = test_code[:-1]$/;"	v
+test_code	pilaf_perftest.py	/^			test_code = test$/;"	v
+test_type_	dht-test.cc	/^int test_type_;$/;"	v
+tests	dht-test.cc	/^enum tests {$/;"	g	file:
+tests	ib_perftest.py	/^tests = ["2","1","r"]$/;"	v
+tests	pilaf_perftest.py	/^tests = ["p","g"]$/;"	v
+tests	tcp_echo/perftest.py	/^tests = ["LAT","THRU"]$/;"	v
+timeE	ploadtest/ploadtest.cc	/^struct timeval timeE;$/;"	v	typeref:struct:timeval
+timeS	ploadtest/ploadtest.cc	/^struct timeval timeS;$/;"	v	typeref:struct:timeval
+timediff	ib-test.cc	/^long timediff(cycles_t *now, cycles_t *then) {$/;"	f
+timediff	tcp_echo/multi.c	/^static long timediff(struct timespec *now, struct timespec *then)$/;"	f	file:
+totalAlloc	mem/mem5.h	/^  u64 totalAlloc;     \/* Total of all malloc calls - includes internal frag *\/$/;"	m	class:PoolMalloc
+totalExcess	mem/mem5.h	/^  u64 totalExcess;    \/* Total internal fragmentation *\/$/;"	m	class:PoolMalloc
+ts_sge_rf	ib.h	/^  struct ibv_sge ts_sge_rf;			\/\/ for rdma_fetch$/;"	m	struct:connection	typeref:struct:connection::ibv_sge
+ts_wr_rf	ib.h	/^  struct ibv_send_wr ts_wr_rf;		\/\/ for rdma_fetch$/;"	m	struct:connection	typeref:struct:connection::ibv_send_wr
+type	ib.h	/^  int type;$/;"	m	struct:message
+type	ib.h	/^  int type;$/;"	m	struct:mrmessage
+type	store-constants.h	/^  int type;$/;"	m	struct:dht_message
+u16	mem/mem5.h	49;"	d
+u32	mem/mem5.h	48;"	d
+u64	mem/mem5.h	47;"	d
+u8	mem/mem5.h	50;"	d
+uint64_t	dht-test.cc	36;"	d	file:
+uint64_t	ht-test.cc	37;"	d	file:
+uint64_t	ib-test.cc	41;"	d	file:
+uint64_t	loadtest.cc	33;"	d	file:
+uint64_t	ploadtest/ploadtest.cc	42;"	d	file:
+ulong_compare	ib-test.cc	/^int ulong_compare(const void *aptr, const void *bptr) {$/;"	f
+unknown_fields	image_search/image_search.pb.h	/^  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {$/;"	f	class:BinaryCode
+unknown_fields	image_search/image_search.pb.h	/^  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {$/;"	f	class:HashIndex
+unknown_fields	image_search/image_search.pb.h	/^  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {$/;"	f	class:ID
+unknown_fields	image_search/image_search.pb.h	/^  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {$/;"	f	class:ImageList
+unload_files	ploadtest/ploadtest.cc	/^void unload_files(){$/;"	f
+unset_mr	ibman.cc	/^int IBConnManager::unset_mr(enum mr_scope scope, int mr_id, IBConn* IBC) {$/;"	f	class:IBConnManager
+update	dht.h	/^  void update(const K& key, size_t key_len, V value, size_t val_len, uint64_t crc_ = 0, bool have_crc = false) {$/;"	f	class:DHT
+updated_key_count_	dht-test.cc	/^size_t updated_key_count_;$/;"	v
+usage	dht-test.cc	/^void usage(const char *argv0)$/;"	f
+usage	ht-test.cc	/^void usage(const char *argv0) {$/;"	f
+usage	ib-test.cc	/^void usage(const char *argv0) {$/;"	f
+usage	image_search/build_hash_tables.cc	/^void usage() {$/;"	f
+usage	image_search/generate_binarycode.cc	/^void usage() {$/;"	f
+usage	image_search/linear_search.cc	/^void usage() {$/;"	f
+usage	image_search/search_image.cc	/^void usage() {$/;"	f
+usage	ploadtest/ploadtest.cc	/^void usage(char **argv){$/;"	f
+val	ib_perftest.py	/^					val = float(pieces[2]) # operations per second$/;"	v
+val	pilaf_perftest.py	/^					val = float(line.strip())$/;"	v
+val	tcp_echo/perftest.py	/^						val = float(pieces[2])\/(float(pieces[1])\/1000000) # operations per second$/;"	v
+val_len	dht.h	/^      size_t val_len;$/;"	m	struct:DHT::dht_data
+val_len	store-constants.h	/^      size_t val_len;$/;"	m	struct:dht_message::mdata::__anon1
+valresp	store-constants.h	/^    char valresp;        \/\/ value response$/;"	m	union:dht_message::mdata
+vals	ib_perftest.py	/^		vals = []$/;"	v
+vals	pilaf_perftest.py	/^			vals = []$/;"	v
+vals	tcp_echo/perftest.py	/^				vals = []$/;"	v
+vals	tcp_echo/perftest.py	/^				vals = [vals[1]]$/;"	v
+value	dht.h	/^      V value;$/;"	m	struct:DHT::dht_data
+value	store-constants.h	/^  VAL_TYPE value;$/;"	m	struct:kv_req
+verb_	ibman.h	/^  enum ibman_verb verb_;$/;"	m	class:IBConnManager	typeref:enum:IBConnManager::ibman_verb
+verbosity	ib-client.cc	/^void IBClient::verbosity(enum ibman_verb verb) {$/;"	f	class:IBClient
+verbosity	ib-server.cc	/^void IBServer::verbosity(enum ibman_verb verb) {$/;"	f	class:IBServer
+verbosity	ibman.cc	/^void IBConnManager::verbosity(enum ibman_verb verb) {$/;"	f	class:IBConnManager
+verbosity	store-client.cc	/^void Client::verbosity(enum ibman_verb verb) {$/;"	f	class:Client
+verbosity	store-server.cc	/^void Server::verbosity(enum ibman_verb verb) {$/;"	f	class:Server
+wc	ibman.h	/^  struct ibv_wc wc;$/;"	m	class:IBConnManager	typeref:struct:IBConnManager::ibv_wc
+write_	store-client.cc	/^int Client::write_(const KEY_TYPE key, size_t key_len, const VAL_TYPE value, size_t val_len, int op) {$/;"	f	class:Client
+zPool	mem/mem5.h	/^  u8 *zPool;$/;"	m	class:PoolMalloc
+~BinaryCode	image_search/image_search.pb.cc	/^BinaryCode::~BinaryCode() {$/;"	f	class:BinaryCode
+~HashIndex	image_search/image_search.pb.cc	/^HashIndex::~HashIndex() {$/;"	f	class:HashIndex
+~ID	image_search/image_search.pb.cc	/^ID::~ID() {$/;"	f	class:ID
+~ImageList	image_search/image_search.pb.cc	/^ImageList::~ImageList() {$/;"	f	class:ImageList
+~Tclient	ploadtest/ploadtest.cc	/^        ~Tclient(){$/;"	f	class:Tclient

@@ -1,0 +1,16 @@
+message ID {
+    required uint32 id = 1;
+}
+
+message BinaryCode {
+    required bytes code = 1;
+}
+
+message HashIndex {
+    required uint32 table_id = 1;
+    required uint32 index = 2;
+}
+
+message ImageList {
+    repeated uint32 images = 1;
+}
