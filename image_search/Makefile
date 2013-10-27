@@ -9,7 +9,7 @@ OBJS_IMAGE_BUILD := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o $(PILAF_PATH)/store
 OBJS_IMAGE_SEARCH := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o image_search.pb.o $(PILAF_PATH)/store-client.o search_image.o
 OBJS_IMAGE_LINEAR_SEARCH := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o image_search.pb.o $(PILAF_PATH)/store-client.o linear_search.o
 OBJS_IMAGE_GENERATE := generate_binarycode.o
-APPS    := image-build-test image-search-test generate_binarycode
+APPS    := image-build-test image-search-test generate_binarycode image-linear-search-test
 #IMAGE_APP := image-build-test image-search-test image-linear-search-test generate_binarycode
 
 all: $(APPS) 
@@ -26,6 +26,8 @@ image-search-test: $(OBJS_IMAGE_SEARCH)
 generate_binarycode: $(OBJS_IMAGE_GENERATE)
 	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
 
+image-linear-search-test: $(OBJS_IMAGE_LINEAR_SEARCH)
+	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
 
 clean:
 	@rm -f *.o ${APPS}
