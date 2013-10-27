@@ -5,9 +5,10 @@ LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread -lprotobuf
 CFLAGS  := -Wno-write-strings -Ofast -g -rdynamic
 CC      := g++
 
-OBJS_IMAGE_BUILD := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o $(PILAF_PATH)/store-client.o image_search.pb.o build_hash_tables.o
-OBJS_IMAGE_SEARCH := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o image_search.pb.o $(PILAF_PATH)/store-client.o search_image.o
-OBJS_IMAGE_LINEAR_SEARCH := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o image_search.pb.o $(PILAF_PATH)/store-client.o linear_search.o
+OBJS_PILAF := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o $(PILAF_PATH)/store-client.o
+OBJS_IMAGE_BUILD :=  $(OBJS_PILAF) image_search.pb.o build_hash_tables.o
+OBJS_IMAGE_SEARCH := $(OBJS_PILAF) image_search.pb.o search_image.o
+OBJS_IMAGE_LINEAR_SEARCH := $(OBJS_PILAF) image_search.pb.o linear_search.o
 OBJS_IMAGE_GENERATE := generate_binarycode.o
 APPS    := image-build-test image-search-test generate_binarycode image-linear-search-test
 

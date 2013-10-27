@@ -9,7 +9,7 @@ Client clt;
 
 void setup(const char *ip, const char* port){
   clt.setup();
-  clt.add_server("192.168.5.14", "36001");
+  clt.add_server(ip, port);
   clt.set_read_mode(READ_MODE_RDMA);
   clt.ready();
 }

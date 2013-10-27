@@ -8,12 +8,7 @@ OBJS_DT := ib.o ibman.o dht-test.o store-server.o store-client.o
 OBJS_LT := ib.o ibman.o loadtest.o store-client.o
 OBJS_IB := ib.o ibman.o ib-test.o ib-server.o ib-client.o
 OBJS_HT := ht-test.o time/get_clock.o
-#OBJS_IMAGE_BUILD := ib.o ibman.o $(IMAGE_SOURCE_DIR)/image_search.pb.o store-client.o $(IMAGE_SOURCE_DIR)/build_hash_tables.o
-#OBJS_IMAGE_SEARCH := ib.o ibman.o $(IMAGE_SOURCE_DIR)/image_search.pb.o store-client.o $(IMAGE_SOURCE_DIR)/search_image.o
-#OBJS_IMAGE_LINEAR_SEARCH := ib.o ibman.o $(IMAGE_SOURCE_DIR)/image_search.pb.o store-client.o $(IMAGE_SOURCE_DIR)/linear_search.o
-#OBJS_IMAGE_GENERATE := $(IMAGE_SOURCE_DIR)/generate_binarycode.o
 APPS    := dht-test loadtest ib-test ht-test
-#IMAGE_APP := image-build-test image-search-test image-linear-search-test generate_binarycode
 
 all: $(APPS)
 

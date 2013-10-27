@@ -4,3 +4,4 @@ log
 *.swp
 *.tmp
 tmp_test
+*.data
