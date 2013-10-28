@@ -28,7 +28,6 @@ void mpi_coordinator::bcast(int *buf, int count, int root){
   MPI_Bcast(buf, count, MPI_INT, root, m_comm);
 }
 
-using namespace std;
 void mpi_coordinator::gather(int *send_buf, int *recv_buf, int count){
   MPI_Gather(send_buf, count, MPI_INT, recv_buf, count, MPI_INT, MASTER, m_comm);
 }
@@ -64,8 +63,7 @@ std::vector<int> mpi_coordinator::gather_vectors(std::vector<int> &data){
     delete disp_array;
     delete count_array;
     return ret;
-  }
-  
+  } 
   return std::vector<int>();
 }
 
