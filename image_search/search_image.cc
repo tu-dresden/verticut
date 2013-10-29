@@ -50,7 +50,7 @@ bool operator<(const MAX &a,const MAX &b)
 
 void enumerate_entry(uint32_t curr, int len, int rr, Client* c, HashIndex& idx) {
 
-  if (rr == 0 || len == s_bits) {
+   if (rr == 0) {
     //printf("try entry:%d\n", curr);
     ImageList img_list;
     idx.set_index(curr);
@@ -63,7 +63,8 @@ void enumerate_entry(uint32_t curr, int len, int rr, Client* c, HashIndex& idx) 
     }
   } else {
     enumerate_entry(curr^(1<<len), len+1, rr-1, c, idx);
-    enumerate_entry(curr, len+1, rr, c, idx);
+    if(s_bits - len > rr)
+      enumerate_entry(curr, len+1, rr, c, idx);
   }
 }
 
@@ -80,7 +81,7 @@ void enumerate_image(int table_id, uint32_t search_index, Client* c) {
       uint32_t index = binaryToInt(tmp_str.c_str(), substr_len);
 
       int dist = __builtin_popcount(search_index ^ index);
-      if (dist <= r) image_map.set(i);
+      if (dist == r) image_map.set(i);
   }
 }
 
@@ -108,13 +109,13 @@ void *search_R_neighbors(void *arg) {
   uint32_t search_index = binaryToInt(search_str.c_str(), substr_len);
 
   // enum the index of table entry which has at most r bits different from the search index
-  if ((1<<r) < image_count) {
+  //if ((1<<r) < image_count) {
     HashIndex idx;
     idx.set_table_id(table_id);
     enumerate_entry(search_index, 0, r, c, idx);
-  } else {
-    enumerate_image(table_id, search_index, c);
-  }
+  //} else {
+  //  enumerate_image(table_id, search_index, c);
+  //}
 
   printf("end search in table:%d\n", table_id);
   c->teardown();
@@ -131,7 +132,7 @@ void search_K_nearest_neighbors(int k, Client* c) {
 
   r = 0;
   while (qmax.size() < k) {
-    qmax = std::priority_queue<MAX>();
+    //qmax = std::priority_queue<MAX>();
     image_map.reset();
 
     for (int i = 0; i < table_count; i++) {
@@ -140,10 +141,6 @@ void search_K_nearest_neighbors(int k, Client* c) {
       pthread_join(threads[i], NULL);
     }
 
-    //for (int i = 0; i < table_count; i++)
-    //  pthread_join(threads[i], NULL);
-
-    // get nearest K images
     ID image_id;
     BinaryCode code;
     for (uint32_t i = 0; i < image_count; i++) {

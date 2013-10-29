@@ -20,7 +20,7 @@ static int table_count;
 static int binary_bits;
 static int s_bits;
 static read_modes read_mode;
-static int k = 3;
+static int k = 1000;
 static int substr_len;
 static char* config_path = "dht-test.cnf";
 static vector<int> kn_candidates;
@@ -46,7 +46,6 @@ void enumerate_entry(uint32_t curr, int len, int rr, HashIndex& idx, int& count)
     idx.set_index(curr);
     int rval = clt->get_ext(idx, img_list);
     
-
     if (rval == POST_GET_FOUND) {
       for(int i = 0; i < img_list.images_size(); i++){
         kn_candidates.push_back(img_list.images(i));
@@ -59,15 +58,32 @@ void enumerate_entry(uint32_t curr, int len, int rr, HashIndex& idx, int& count)
   }
 }
 
+void enumerate_image(int table_id, uint32_t search_index, int r) {
+  ID image_id;
+  BinaryCode code;
+
+  int start_pos = table_id * substr_len;
+  for (uint32_t i = 0; i < image_count; i++) {
+      image_id.set_id(i);
+      clt->get_ext(image_id, code);
+
+      std::string tmp_str = code.code().substr(start_pos, substr_len);
+      uint32_t index = binaryToInt(tmp_str.c_str(), substr_len);
+
+      int dist = __builtin_popcount(search_index ^ index);
+      if (dist == r) kn_candidates.push_back(i);
+  }
+}
+
 int search_R_neighbors(int r, uint32_t search_index){ 
   int count = 0; 
   // enum the index of table entry which has at most r bits different from the search index
-  //if ((1<<r) < image_count) {
+  if ((1<<r) < image_count) {
     HashIndex idx;
     idx.set_table_id(coord->get_rank());
     enumerate_entry(search_index, 0, r, idx, count);
-  //}else
-  //  assert(false);
+  }else
+    enumerate_image(coord->get_rank(), search_index, r);
 }
 
 int search_K_nearest_neighbors(int k, std::string query_code){
@@ -80,10 +96,6 @@ int search_K_nearest_neighbors(int k, std::string query_code){
   std::string local_query_code = query_code.substr(start_pos, substr_len);
   uint32_t search_index = binaryToInt(local_query_code.c_str(), substr_len);  
     
-  MAX item;
-  item.dist = 0;
-  item.image_id = 8;
-
   HashIndex idx;
   ImageList img_list;
   idx.set_table_id(coord->get_rank());
@@ -92,8 +104,8 @@ int search_K_nearest_neighbors(int k, std::string query_code){
   while(total_find < k && radius < s_bits){ 
     kn_candidates.clear();
     kn_candidates.reserve(4096);
-
     search_R_neighbors(radius, search_index);
+    
     vector<int> gathered_vector = coord->gather_vectors(kn_candidates);
 
     if(coord->is_master()){
@@ -134,6 +146,8 @@ int search_K_nearest_neighbors(int k, std::string query_code){
       qmax.pop();
       printf("Find image with id=%d and hamming_dist=%d\n", item.image_id, item.dist);
     }
+
+  cout<<"r : "<<radius<<endl;
 }
 
 void run(){   
@@ -168,9 +182,7 @@ void run(){
 
 int main(int argc, char* argv[]){  
   setup(argc, argv); 
-  
-  run();
-  
+  run(); 
   cleanup(); 
   return 0;
 }
@@ -196,7 +208,7 @@ void cleanup(){
 void setup(int argc, char* argv[]){
   int search_times = 1;
 
-  image_count = 10;
+  image_count = 1000000;
   binary_bits = 128;
   s_bits = 32;
   
@@ -214,7 +226,7 @@ void setup(int argc, char* argv[]){
     image_count = atoi(argv[1]);
     read_mode = (read_modes)atoi(argv[2]);
   }
-
+  
   mpi_coordinator::init(argc, argv);
   coord = new mpi_coordinator;
   clt = new Client;
