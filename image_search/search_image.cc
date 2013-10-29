@@ -184,7 +184,7 @@ void usage() {
 int main (int argc, char *argv[]) {
 
   struct timeval start_time, end_time;
-  read_mode = READ_MODE_RDMA;
+  read_mode = READ_MODE_SERVER;
   config_path = "dht-test.cnf";
   image_count = 10;
 
