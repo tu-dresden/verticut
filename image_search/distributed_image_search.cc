@@ -11,10 +11,14 @@
 #include "../Pilaf/config.h"
 #include <vector>
 #include <algorithm>
+#include "pilaf_proxy.h"
+#include "memcached_proxy.h"
+
 using namespace std;
+using namespace google;
 
 static mpi_coordinator* coord;
-static Client* clt;
+static BaseProxy<protobuf::Message, protobuf::Message>* proxy_clt;
 static uint32_t image_count;
 static int table_count;
 static int binary_bits;
@@ -44,9 +48,9 @@ void enumerate_entry(uint32_t curr, int len, int rr, HashIndex& idx, int& count,
     count++;
     ImageList img_list;
     idx.set_index(curr);
-    int rval = clt->get_ext(idx, img_list);
+    int rval = proxy_clt->get(idx, img_list);
     
-    if (rval == POST_GET_FOUND) {
+    if (rval == PROXY_FOUND) {
       for(int i = 0; i < img_list.images_size(); i++){
         kn_candidates.push_back(img_list.images(i));
       }
@@ -65,7 +69,7 @@ void enumerate_image(int table_id, uint32_t search_index, int r, std::vector<int
   int start_pos = table_id * substr_len;
   for (uint32_t i = 0; i < image_count; i++) {
       image_id.set_id(i);
-      clt->get_ext(image_id, code);
+      proxy_clt->get(image_id, code);
 
       std::string tmp_str = code.code().substr(start_pos, substr_len);
       uint32_t index = binaryToInt(tmp_str.c_str(), substr_len);
@@ -122,7 +126,7 @@ int search_K_nearest_neighbors(int k, std::string query_code){
 
       for(uint32_t i = 0; i < gathered_vector.size(); ++i){
         image_id.set_id(gathered_vector[i]);
-        if(clt->get_ext(image_id, code) != POST_GET_FOUND)
+        if(proxy_clt->get(image_id, code) != PROXY_FOUND)
           mpi_coordinator::die("No corresponding image found.\n");
         
         MAX item;
@@ -156,7 +160,6 @@ int search_K_nearest_neighbors(int k, std::string query_code){
 void run(){   
   ID image_id;
   BinaryCode code;
-   
   //printf("Run with config_path=%s image_count=%d binary_bits=%d substring_bits=%d k=%d\ 
   //    read_mode=%d\n", config_path, image_count, binary_bits, s_bits, k, read_mode); 
   table_count = binary_bits / s_bits;
@@ -164,7 +167,7 @@ void run(){
   
   if(table_count != coord->get_size())
     mpi_coordinator::die("The number of table must equals to the number of mpi processes.");
-
+  
   srand(34);
   int query_image;
     
@@ -175,7 +178,7 @@ void run(){
   
   image_id.set_id(query_image);
   
-  if(clt->get_ext(image_id, code) != POST_GET_FOUND)
+  if(proxy_clt->get(image_id, code) != PROXY_FOUND)
     mpi_coordinator::die("Can't find match\n");
   
   std::string query_code = code.code();
@@ -184,9 +187,10 @@ void run(){
 
 
 int main(int argc, char* argv[]){  
+  
   setup(argc, argv); 
   run(); 
-  cleanup(); 
+  cleanup();
   return 0;
 }
 
@@ -196,20 +200,23 @@ void usage() {
 }
 
 void cleanup(){
-  if(clt != 0){
-    clt->teardown();
-    delete clt;
-    clt = 0;
-  }
   if(coord != 0){
     delete coord;
     coord = 0;
-  }  
+  }
+  if(proxy_clt != 0){
+    proxy_clt->close();
+    delete proxy_clt;
+    proxy_clt = 0;
+  }
+
   mpi_coordinator::finalize(); 
 }
 
 void setup(int argc, char* argv[]){
-  //read_mode = READ_MODE_RDMA;
+  if(argc != 7)
+    mpi_coordinator::die("Incorrect number of arguments!");
+  
   config_path = argv[1];
   image_count = atoi(argv[2]);
   binary_bits = atoi(argv[3]);
@@ -219,18 +226,8 @@ void setup(int argc, char* argv[]){
 
   mpi_coordinator::init(argc, argv);
   coord = new mpi_coordinator;
-  clt = new Client;
   
-  if (clt->setup())
-    die("Failed to set up client");
-  
-  ConfigReader config(config_path);
-  while(!config.get_end()) {
-    struct server_info* this_server = config.get_next();
-    if (clt->add_server(this_server->host->c_str(),this_server->port->c_str()))
-      die("Failed to add server");
-  }
-  
-  clt->set_read_mode(read_mode);
-  clt->ready();
-}
+  proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
+  proxy_clt->init(config_path);
+
+} 

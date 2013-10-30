@@ -1,3 +1,5 @@
+#ifndef CONFIG_H
+#define CONFIG_H
 #include <string>
 #include <vector>
 
@@ -59,3 +61,5 @@ public:
 
   bool get_end(void) { return (at >= servers.size()); }
 };
+
+#endif
