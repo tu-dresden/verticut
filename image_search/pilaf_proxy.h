@@ -1,16 +1,10 @@
 #ifndef PILAF_PROXY
 #define PILAF_PROXY
 #include "base_proxy.h"
-#include <iostream>
 #include <string>
-#include "../Pilaf/table_types.h"
-#include "../Pilaf/store-server.h"
 #include "../Pilaf/store-client.h"
-#include "../Pilaf/ibman.h"
-#include "../Pilaf/dht.h"
 #include "../Pilaf/config.h"
 #define MAX_BUF_LEN 10000000
-using namespace std;
 
 template<class K, class V>
 class PilafProxy:public BaseProxy<K, V>{
@@ -77,7 +71,8 @@ int PilafProxy<K, V>::init(const char* filename){
 
 template<class K, class V>
 int PilafProxy<K, V>::contain(const K& key){
-  
+  //Not implemented yet.
+  assert(false); 
   return 0;
 }
 

@@ -222,7 +222,7 @@ int main (int argc, char *argv[]) {
 
   struct timeval start_time, end_time;
   char * binarycode_path = "lsh.code";
-  config_path = "dht-test.cnf";
+  config_path = "../config/pilaf.cnf";
   read_mode = READ_MODE_RDMA;
 
   if (argc == 5) {

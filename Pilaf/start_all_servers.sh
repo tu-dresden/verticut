@@ -7,7 +7,7 @@ else
 	PRESIZE=0
 fi
 
-cat dht-test.cnf| while read LINE
+cat ../config/pilaf.cnf| while read LINE
 do
     ip=`echo "$LINE" | awk '{print $1}'`
     host="beaker-`echo $ip |awk '{split($1,s,".");print s[4];}'`"

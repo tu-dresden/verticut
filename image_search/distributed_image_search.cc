@@ -1,14 +1,7 @@
 #include <iostream>
 #include "mpi_coordinator.h"
-#include <bitset>
 #include <string.h>
 #include "image_search.pb.h"
-#include "../Pilaf/table_types.h"
-#include "../Pilaf/store-server.h"
-#include "../Pilaf/store-client.h"
-#include "../Pilaf/ibman.h"
-#include "../Pilaf/dht.h"
-#include "../Pilaf/config.h"
 #include <vector>
 #include <algorithm>
 #include "pilaf_proxy.h"
@@ -26,7 +19,7 @@ static int s_bits;
 static read_modes read_mode;
 static int k;
 static int substr_len;
-static char* config_path = "dht-test.cnf";
+static char* config_path;
 
 struct MAX {
 public:
@@ -187,16 +180,10 @@ void run(){
 
 
 int main(int argc, char* argv[]){  
-  
   setup(argc, argv); 
   run(); 
   cleanup();
   return 0;
-}
-
-void usage() {
-  printf("./search_image <config_path> <image_count> <binary_bits>\ 
-      <substring_bits> <search_times> <K>\n");
 }
 
 void cleanup(){
@@ -209,7 +196,6 @@ void cleanup(){
     delete proxy_clt;
     proxy_clt = 0;
   }
-
   mpi_coordinator::finalize(); 
 }
 

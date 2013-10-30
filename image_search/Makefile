@@ -1,7 +1,7 @@
 .PHONY: clean
 
 PILAF_PATH := ../Pilaf
-LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread -lprotobuf
+LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached
 CFLAGS  := -Wno-write-strings -Ofast -g -rdynamic
 CC      := mpiCC.openmpi
 
