@@ -1,4 +1,5 @@
 image_search
 ============
 
-image_search based on Pilaf key-value store
+Image searching based on Pilaf or Memcached key-value store.
+
