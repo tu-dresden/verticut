@@ -11,45 +11,31 @@
 #include <boost/random.hpp>
 #include <boost/random/normal_distribution.hpp>
 
-#include "../Pilaf/table_types.h"
-#include "../Pilaf/store-server.h"
-#include "../Pilaf/store-client.h"
-#include "../Pilaf/ibman.h"
-#include "../Pilaf/dht.h"
-#include "../Pilaf/config.h"
 #include <signal.h>
 #include <getopt.h>
 #include <pthread.h>
 #include "image_search.pb.h"
 #include "../Pilaf/image_tools.h"
+#include "memcached_proxy.h"
+#include "pilaf_proxy.h"
+
+using namespace google;
 
 uint32_t image_count = 0;
 int binary_bits = 128;
 int s_bits = 32;
-
 int substr_len;
 char * config_path;
 read_modes read_mode;
+static BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt;
 
 void load_binarycode(char * fname, char * config_path) {
   FILE* fh;
+  int ret;
+
   if (NULL == (fh = fopen(fname,"r"))) {
     return;
   }
-
-  Client* c = new Client;
-  if (c->setup())
-    die("Failed to set up client");
-
-  ConfigReader config(config_path);
-  while(!config.get_end()) {
-    struct server_info* this_server = config.get_next();
-    if (c->add_server(this_server->host->c_str(),this_server->port->c_str()))
-      die("Failed to add server");
-  }
-
-  c->set_read_mode(read_mode);
-  c->ready();
 
   while(!feof(fh)) {
     char code[17] = {'\0'};
@@ -62,13 +48,15 @@ void load_binarycode(char * fname, char * config_path) {
     BinaryCode bcode;
     bcode.set_code(code, binary_bits/8);
     printf("id:%d code_length:%lu\n", image_count, bcode.code().size());
-    c->put_ext(image_id, bcode);
-
+    
+    if(proxy_clt->put(image_id, bcode) != PROXY_PUT_DONE){
+      printf("put fails\n");
+      exit(0);
+    }
+    
     image_count++;
   }
 
-  c->teardown();
-  delete c;
   fclose(fh);
 }
 
@@ -76,21 +64,6 @@ void *build_hash_tables(void *arg) {
   int table_id = *((int *)arg);
 
   printf("build hash table %d\n", table_id);
-
-  Client* c = new Client;
-  if (c->setup())
-    die("Failed to set up client");
-
-  ConfigReader config(config_path);
-  while(!config.get_end()) {
-    struct server_info* this_server = config.get_next();
-    if (c->add_server(this_server->host->c_str(),this_server->port->c_str()))
-      die("Failed to add server");
-  }
-
-  c->set_read_mode(read_mode);
-  c->ready();
-
   ID image_id;
   BinaryCode code;
   HashIndex idx;
@@ -101,25 +74,22 @@ void *build_hash_tables(void *arg) {
 
   for (uint32_t i = 0; i < image_count; i++) {
     image_id.set_id(i);
-    c->get_ext(image_id, code);
+    proxy_clt->get(image_id, code);
 
     std::string tmp_str = code.code().substr(start_pos, substr_len);
     idx.set_index(binaryToInt(tmp_str.c_str(), substr_len));
     printf("table id%d, image id:%d, index:%d\n", table_id, i, idx.index());
 
-    int rval = c->get_ext(idx, img_list);
-    if (rval == POST_GET_FOUND) {
+    int rval = proxy_clt->get(idx, img_list);
+    if (rval == PROXY_FOUND) {
       img_list.add_images(i);
-      c->put_ext(idx, img_list);
+      assert(proxy_clt->put(idx, img_list) == PROXY_PUT_DONE);
     } else {
       img_list.clear_images();
       img_list.add_images(i);
-      c->put_ext(idx, img_list);
+      assert(proxy_clt->put(idx, img_list) == PROXY_PUT_DONE);
     }
   }
-
-  c->teardown();
-  delete(c);
 }
 
 void usage() {
@@ -127,7 +97,7 @@ void usage() {
 }
 
 void dump_hashtables(int table_count) {
-  FILE* fh;
+  /*FILE* fh;
   if (NULL == (fh = fopen("dump_hashtables.tmp","w"))) {
     return;
   }
@@ -179,10 +149,11 @@ void dump_hashtables(int table_count) {
   fclose(fh);
   c->teardown();
   delete(c);
+  */
 }
 
 void dump_binarycode() {
-
+  /*
   printf("Dump binarycode to file dump_binarycode.tmp!\n");
 
   FILE* fh;
@@ -216,14 +187,18 @@ void dump_binarycode() {
   fclose(fh);
   c->teardown();
   delete(c);
+  */
 }
 
 int main (int argc, char *argv[]) {
 
   struct timeval start_time, end_time;
   char * binarycode_path = "lsh.code";
-  config_path = "../config/pilaf.cnf";
+  config_path = "../config/memcached.cnf";
   read_mode = READ_MODE_RDMA;
+
+  proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
+  proxy_clt->init(config_path);
 
   if (argc == 5) {
     binarycode_path = argv[1];
@@ -248,8 +223,6 @@ int main (int argc, char *argv[]) {
 
   printf("Load binary code finish! image count:%d time cost:%llus\n", image_count, totaltime);
 
-  //dump_binarycode();
-  //exit(0);
 
   // build multiple index hash table
   gettimeofday(&start_time, NULL);
@@ -272,9 +245,9 @@ int main (int argc, char *argv[]) {
   totaltime = (long long) (end_time.tv_sec - start_time.tv_sec) * 1000000
                           + (end_time.tv_usec - start_time.tv_usec);
   printf("build hash tables finish! time cost:%llus\n", totaltime);
-
-  //dump_hashtables(m);
-
+  
+  proxy_clt->close();
+  delete proxy_clt;
   delete table_ids;
   delete threads;
   return 0;

@@ -32,7 +32,6 @@ int MemcachedProxy<K, V>::put(const K& key, const V& value){
   std::string k_str, v_str;
   key.SerializeToString(&k_str);
   value.SerializeToString(&v_str);
-   
   memcached_return_t ret = memcached_set(m_clt, k_str.c_str(), k_str.size(), v_str.c_str(), v_str.size(), 0, 0); 
 
   return (ret == MEMCACHED_SUCCESS)? PROXY_PUT_DONE : PROXY_PUT_FAIL;
@@ -73,11 +72,14 @@ int MemcachedProxy<K, V>::init(const char* filename){
     port = MEMCACHED_DEFAULT_PORT;
     istringstream sin(addr);
     sin>>ip>>port;
+    
     ret = memcached_server_add(m_clt, ip.c_str(), port);
     if(ret != MEMCACHED_SUCCESS)
       return -1;
   }
   
+  memcached_behavior_set(m_clt, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, 1);
+
   return 0;
 }
 

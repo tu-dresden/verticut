@@ -4,7 +4,7 @@ import getopt
 from subprocess import call
 
 #Default value
-config_path = "../config/pilaf.cnf"
+config_path = "../config/memcached.cnf"
 binary_bits = 128
 substr_len = 32
 k = 100

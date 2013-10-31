@@ -213,6 +213,6 @@ void setup(int argc, char* argv[]){
   mpi_coordinator::init(argc, argv);
   coord = new mpi_coordinator;
   
-  proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
+  proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
   proxy_clt->init(config_path);
 } 
