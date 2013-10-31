@@ -2,7 +2,7 @@
 
 PILAF_PATH := ../Pilaf
 LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached
-CFLAGS  := -Wno-write-strings -Ofast -g -rdynamic -I${PILAF_PATH}
+CFLAGS  := -Wno-write-strings -Ofast -rdynamic -I${PILAF_PATH}
 CC      := mpiCC.openmpi
 
 PROXY_SRC := memcached_proxy.h pilaf_proxy.h base_proxy.h 

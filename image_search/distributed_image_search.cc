@@ -209,7 +209,7 @@ void cleanup(){
 
 //Set up code. The arguments should be passed by bootstrap script(run_distributed_search.py) 
 void setup(int argc, char* argv[]){
-  if(argc != 7)
+  if(argc != 8)
     mpi_coordinator::die("Incorrect number of arguments!");
   
   config_path = argv[1];
@@ -217,11 +217,17 @@ void setup(int argc, char* argv[]){
   binary_bits = atoi(argv[3]);
   s_bits = atoi(argv[4]);
   k = atoi(argv[5]);
-  read_mode = (read_modes)atoi(argv[6]);
+  read_mode = (read_modes)atoi(argv[7]);
 
   mpi_coordinator::init(argc, argv);
   coord = new mpi_coordinator;
   
-  proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
+  if(strcmp(argv[6], "pilaf") == 0)
+    proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
+  else if(strcmp(argv[6], "memcached") == 0)
+    proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
+  else
+    mpi_coordinator::die("Unrecognized server type.");
+
   proxy_clt->init(config_path);
 } 

@@ -1,7 +1,6 @@
 .PHONY: clean
 
-#IMAGE_SOURCE_DIR := image_search
-CFLAGS  := -Wno-write-strings -Ofast -g -rdynamic
+CFLAGS  := -Wno-write-strings -Ofast -rdynamic
 CC      := g++
 LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread
 OBJS_DT := ib.o ibman.o dht-test.o store-server.o store-client.o
