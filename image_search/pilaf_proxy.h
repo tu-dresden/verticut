@@ -5,13 +5,20 @@
 #define PILAF_PROXY
 #include "base_proxy.h"
 #include <string>
-#include "../Pilaf/store-client.h"
-#include "../Pilaf/config.h"
+#include "store-client.h"
+#include "config.h"
 #define MAX_BUF_LEN 10000000
 
 template<class K, class V>
 class PilafProxy:public BaseProxy<K, V>{
+  private:
+    //Diable copy constructor.
+    PilafProxy(const PilafProxy& p);
+  
   protected:
+    //We use this buffer to receive the data from server.
+    //This is OK since Pilaf is not thread-safe itself.
+    //So we won't get data from different threads.
     char m_buffer[MAX_BUF_LEN];
     Client *m_clt;
 
@@ -75,7 +82,6 @@ int PilafProxy<K, V>::init(const char* filename){
 template<class K, class V>
 int PilafProxy<K, V>::contain(const K& key){
   //Not implemented yet.
-  assert(false); 
   return 0;
 }
 

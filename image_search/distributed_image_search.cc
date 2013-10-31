@@ -155,7 +155,6 @@ int search_K_nearest_neighbors(int k, std::string query_code){
       qmax.pop();
       printf("Find image with id=%d and hamming_dist=%d\n", item.image_id, item.dist);
     }
-
 }
 
 void run(){   
@@ -164,19 +163,20 @@ void run(){
   table_count = binary_bits / s_bits;
   substr_len = s_bits / 8;
   
+  //The number of mpi workers must equal to number of tables.
   if(table_count != coord->get_size())
     mpi_coordinator::die("The number of table must equals to the number of mpi processes.");
   
   srand(34);
   int query_image;
     
+  //Just random pick one image and search its neighbors.
   if(coord->is_master())
     query_image = rand() % image_count;
  
   //Broadcast to all the workers.
   coord->bcast(&query_image);
   
-  //Just random pick one image and search its neighbors.
   image_id.set_id(query_image);
   if(proxy_clt->get(image_id, code) != PROXY_FOUND)
     mpi_coordinator::die("Can't find match\n");
@@ -207,7 +207,7 @@ void cleanup(){
   mpi_coordinator::finalize(); 
 }
 
-//Set up code. The arguments should be passed by bootstrap script run_distributed_search.py 
+//Set up code. The arguments should be passed by bootstrap script(run_distributed_search.py) 
 void setup(int argc, char* argv[]){
   if(argc != 7)
     mpi_coordinator::die("Incorrect number of arguments!");
@@ -222,6 +222,6 @@ void setup(int argc, char* argv[]){
   mpi_coordinator::init(argc, argv);
   coord = new mpi_coordinator;
   
-  proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
+  proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
   proxy_clt->init(config_path);
 } 

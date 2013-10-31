@@ -15,7 +15,7 @@
 #include <getopt.h>
 #include <pthread.h>
 #include "image_search.pb.h"
-#include "../Pilaf/image_tools.h"
+#include "image_tools.h"
 #include "memcached_proxy.h"
 #include "pilaf_proxy.h"
 

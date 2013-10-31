@@ -9,17 +9,17 @@
 #include <sys/time.h>
 #include <stdlib.h>
 
-#include "../Pilaf/table_types.h"
-#include "../Pilaf/store-server.h"
-#include "../Pilaf/store-client.h"
-#include "../Pilaf/ibman.h"
-#include "../Pilaf/dht.h"
-#include "../Pilaf/config.h"
+#include "table_types.h"
+#include "store-server.h"
+#include "store-client.h"
+#include "ibman.h"
+#include "dht.h"
+#include "config.h"
 #include <signal.h>
 #include <queue>
 #include <bitset>
 #include "image_search.pb.h"
-#include "../Pilaf/image_tools.h"
+#include "image_tools.h"
 
 uint32_t image_count;
 int binary_bits;

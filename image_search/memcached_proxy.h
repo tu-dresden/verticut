@@ -10,9 +10,13 @@
 
 template<class K, class V>
 class MemcachedProxy:public BaseProxy<K, V>{
+  private:
+    //Disable copy constructor.
+    MemcachedProxy(const MemcachedProxy &m);
+  
   protected:
     memcached_st* m_clt;
-
+  
   public:
     MemcachedProxy();    
     int put(const K& key, const V& value);
@@ -77,16 +81,14 @@ int MemcachedProxy<K, V>::init(const char* filename){
     if(ret != MEMCACHED_SUCCESS)
       return -1;
   }
-  
+  //We're actually transmitting binary data. 
   memcached_behavior_set(m_clt, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, 1);
-
   return 0;
 }
 
 template<class K, class V>
 int MemcachedProxy<K, V>::contain(const K& key){  
   //Not implemented yet.
-  assert(false); 
   return 0;
 }
 

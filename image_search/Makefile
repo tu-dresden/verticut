@@ -2,31 +2,31 @@
 
 PILAF_PATH := ../Pilaf
 LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached
-CFLAGS  := -Wno-write-strings -Ofast -g -rdynamic
+CFLAGS  := -Wno-write-strings -Ofast -g -rdynamic -I${PILAF_PATH}
 CC      := mpiCC.openmpi
 
-OBJS_PILAF := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o $(PILAF_PATH)/store-client.o
+PROXY_SRC := memcached_proxy.h pilaf_proxy.h base_proxy.h 
+OBJS_PILAF := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o $(PILAF_PATH)/store-client.o 
 OBJS_IMAGE_BUILD :=  $(OBJS_PILAF) image_search.pb.o build_hash_tables.o
-OBJS_IMAGE_SEARCH := $(OBJS_PILAF) image_search.pb.o search_image.o
 OBJS_IMAGE_LINEAR_SEARCH := $(OBJS_PILAF) image_search.pb.o linear_search.o
 OBJS_DISTRIBUTED_IMAGE_SEARCH := $(OBJS_PILAF) image_search.pb.o distributed_image_search.o mpi_coordinator.o 
-APPS := image-build-test image-search-test image-linear-search-test distributed-image-search
+APPS := image-build-test image-linear-search-test distributed-image-search
 
 all: $(APPS) 
+
+%.pb.h %.pb.cc : %.proto
+	protoc -I=. $< --cpp_out=./
 
 .cc.o:
 	$(CC) $(CFLAGS) $< -c -o $@
 
-image-build-test: $(OBJS_IMAGE_BUILD)
+image-build-test: $(OBJS_IMAGE_BUILD) $(PROXY_SRC)
+	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS) 
+
+image-linear-search-test: $(OBJS_IMAGE_LINEAR_SEARCH) $(PROXY_SRC)
 	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
 
-image-search-test: $(OBJS_IMAGE_SEARCH)
-	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
-
-image-linear-search-test: $(OBJS_IMAGE_LINEAR_SEARCH)
-	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
-
-distributed-image-search: $(OBJS_DISTRIBUTED_IMAGE_SEARCH)
+distributed-image-search: $(OBJS_DISTRIBUTED_IMAGE_SEARCH) $(PROXY_SRC)
 	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
 
 clean:
