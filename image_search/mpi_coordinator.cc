@@ -1,5 +1,4 @@
 #include "mpi_coordinator.h"
-#include <iostream>
 
 mpi_coordinator::mpi_coordinator(MPI_Comm comm){
   m_comm = comm;
@@ -43,17 +42,19 @@ std::vector<int> mpi_coordinator::gather_vectors(std::vector<int> &data){
     count_array = new int[m_size];
     disp_array = new int[m_size];
   }
-
+  //Gather vector size for each processes.
   MPI_Gather(&count, 1, MPI_INT, count_array, 1, MPI_INT, MASTER, m_comm);
   
   if(is_master()){
+    //Build displacement array.
     for (int i = 0; i < m_size; i++){
       disp_array[i] = (i > 0) ? (disp_array[i-1] + count_array[i-1]) : 0;
       sum += count_array[i];
     } 
     result_array = new int[sum];
   }
-
+  
+  //Gather vector data.
   MPI_Gatherv(data.data(), count, MPI_INT, result_array, count_array, disp_array, MPI_INT,
       MASTER, m_comm);
   

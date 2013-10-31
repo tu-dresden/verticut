@@ -1,3 +1,5 @@
+// Copyright (C) 2013, Peking University & New York University
+// Author: Qi Chen (chenqi871025@gmail.com) & Yisheng Liao(eason.liao@nyu.edu)
 #include <iostream>
 #include "mpi_coordinator.h"
 #include <string.h>
@@ -35,6 +37,7 @@ bool operator<(const MAX &a,const MAX &b)
 void cleanup();
 void setup(int argc, char* argv[]);
 
+//Enumerate all the entries.
 void enumerate_entry(uint32_t curr, int len, int rr, HashIndex& idx, int& count, 
     std::vector<int> &kn_candidates){ 
   if (rr == 0) {
@@ -55,6 +58,7 @@ void enumerate_entry(uint32_t curr, int len, int rr, HashIndex& idx, int& count,
   }
 }
 
+//Enumerate all the images.
 void enumerate_image(int table_id, uint32_t search_index, int r, std::vector<int> &kn_candidates) {
   ID image_id;
   BinaryCode code;
@@ -72,14 +76,16 @@ void enumerate_image(int table_id, uint32_t search_index, int r, std::vector<int
   }
 }
 
-int search_R_neighbors(int r, uint32_t search_index, std::vector<int>& kn_candidates){ 
+int search_R_neighbors(int r, uint32_t search_index, 
+    std::vector<int>& kn_candidates){ 
   int count = 0; 
-  // enum the index of table entry which has at most r bits different from the search index
+  // enumerate the index of table entry which has at most r bits different 
+  // from the search index
   if ((1<<r) < image_count) {
     HashIndex idx;
     idx.set_table_id(coord->get_rank());
     enumerate_entry(search_index, 0, r, idx, count, kn_candidates);
-  }else
+  }else //OK, if until now we still can't find KNN, just do linear search.
     enumerate_image(coord->get_rank(), search_index, r, kn_candidates);
 }
 
@@ -87,10 +93,10 @@ int search_R_neighbors(int r, uint32_t search_index, std::vector<int>& kn_candid
 int search_K_nearest_neighbors(int k, std::string query_code){
   ID image_id;
   BinaryCode code;
-  int total_find = 0;
+  int total_find = 0; //How many neighbors found so far.
   std::priority_queue<MAX> qmax;
-  int radius = 0;
-  std::vector<int> kn_candidates;
+  int radius = 0; //Current searching radius.
+  std::vector<int> kn_candidates; //KNN candidates for current searching radius.
 
   int start_pos = coord->get_rank() * substr_len; 
   std::string local_query_code = query_code.substr(start_pos, substr_len);
@@ -104,13 +110,14 @@ int search_K_nearest_neighbors(int k, std::string query_code){
   while(total_find < k && radius < s_bits){ 
     //Clear kn_candidates
     kn_candidates.clear();
-    kn_candidates.reserve(4096);
+    kn_candidates.reserve(8192);
     search_R_neighbors(radius, search_index, kn_candidates);
     
     vector<int> gathered_vector = coord->gather_vectors(kn_candidates);
 
     if(coord->is_master()){
       sort(gathered_vector.begin(), gathered_vector.end()); 
+      //Eliminate duplicates.
       vector<int>::iterator iter = unique(gathered_vector.begin(), gathered_vector.end());
       gathered_vector.resize(distance(gathered_vector.begin(), iter));
       
@@ -137,6 +144,7 @@ int search_K_nearest_neighbors(int k, std::string query_code){
       }
       total_find = qmax.size();
     }
+    //Broadcast total_find to all processes.
     coord->bcast(&total_find);
     radius += 1;
   }
@@ -153,10 +161,8 @@ int search_K_nearest_neighbors(int k, std::string query_code){
 void run(){   
   ID image_id;
   BinaryCode code;
-  //printf("Run with config_path=%s image_count=%d binary_bits=%d substring_bits=%d k=%d\ 
-  //    read_mode=%d\n", config_path, image_count, binary_bits, s_bits, k, read_mode); 
   table_count = binary_bits / s_bits;
-  substr_len = s_bits / 8 / sizeof(char);
+  substr_len = s_bits / 8;
   
   if(table_count != coord->get_size())
     mpi_coordinator::die("The number of table must equals to the number of mpi processes.");
@@ -166,11 +172,12 @@ void run(){
     
   if(coord->is_master())
     query_image = rand() % image_count;
-  
+ 
+  //Broadcast to all the workers.
   coord->bcast(&query_image);
   
+  //Just random pick one image and search its neighbors.
   image_id.set_id(query_image);
-  
   if(proxy_clt->get(image_id, code) != PROXY_FOUND)
     mpi_coordinator::die("Can't find match\n");
   
@@ -186,6 +193,7 @@ int main(int argc, char* argv[]){
   return 0;
 }
 
+//Clean up code.
 void cleanup(){
   if(coord != 0){
     delete coord;
@@ -199,6 +207,7 @@ void cleanup(){
   mpi_coordinator::finalize(); 
 }
 
+//Set up code. The arguments should be passed by bootstrap script run_distributed_search.py 
 void setup(int argc, char* argv[]){
   if(argc != 7)
     mpi_coordinator::die("Incorrect number of arguments!");

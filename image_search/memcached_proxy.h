@@ -1,12 +1,12 @@
+/* A memcached proxy client
+ * Author: Yisheng Liao & Chenqi */
 #ifndef MEMCACHED_PROXY
 #define MEMCACHED_PROXY
 #include "base_proxy.h"
 #include <libmemcached/memcached.h>
 #include <string.h>
 #include <fstream>
-#include <iostream>
 #include <sstream>
-using namespace std;
 
 template<class K, class V>
 class MemcachedProxy:public BaseProxy<K, V>{
@@ -70,7 +70,7 @@ int MemcachedProxy<K, V>::init(const char* filename){
 
   while(fin.getline(addr, 1024)){
     port = MEMCACHED_DEFAULT_PORT;
-    istringstream sin(addr);
+    std::istringstream sin(addr);
     sin>>ip>>port;
     
     ret = memcached_server_add(m_clt, ip.c_str(), port);

@@ -1,3 +1,6 @@
+/* Key-value store proxy client for Pilaf 
+ * Author : Yisheng Liao & Chenqi*/
+
 #ifndef PILAF_PROXY
 #define PILAF_PROXY
 #include "base_proxy.h"

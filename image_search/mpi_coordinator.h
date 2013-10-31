@@ -1,3 +1,8 @@
+// A wrapper on MPI to make mpi programming easier.
+// Author : Yisheng Liao & Chenqi
+
+#ifndef MPI_COORDINATOR_H
+#define MPI_COORDITATOR_H
 #include "mpi.h"
 #include <stdint.h>
 #include <string>
@@ -15,8 +20,13 @@ class mpi_coordinator{
 
     void synchronize(){ MPI_Barrier(m_comm); }
     void bitwise_or(int *send_bmp, int *recv_bmp, int count);   
+    
+    //Broadcast one integer to all processes.
     void bcast(int* buf, int count = 1, int root = 0);
     void gather(int *send_buf, int *recv_buf, int count);
+
+    //Gather the vetors from all processes. ONLY return the 
+    //gathered result vector to MASTER process.
     std::vector<int> gather_vectors(std::vector<int> &data); 
 
     static void die(const std::string& str);
@@ -34,5 +44,4 @@ class mpi_coordinator{
     
 };
 
-
-
+#endif
