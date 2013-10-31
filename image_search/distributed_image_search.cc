@@ -215,5 +215,4 @@ void setup(int argc, char* argv[]){
   
   proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
   proxy_clt->init(config_path);
-
 } 
