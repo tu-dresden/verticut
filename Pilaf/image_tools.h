@@ -6,6 +6,8 @@
 
 #ifndef IMAGE_TOOLS_H
 #define IMAGE_TOOLS_H
+#include <iostream>
+using namespace std;
 
 inline uint32_t binaryToInt(const char * p, int len) {
   uint32_t result = 0 | p[len-1];
@@ -16,7 +18,7 @@ inline uint32_t binaryToInt(const char * p, int len) {
 }
 
 #ifndef SUB_BITS
-#define SUB_BITS 64
+#define SUB_BITS 32
 #endif
 inline int compute_hamming_dist(std::string code1, std::string code2) {
 #if SUB_BITS == 64
@@ -28,8 +30,9 @@ inline int compute_hamming_dist(std::string code1, std::string code2) {
 #endif
 
   int unit_len = SUB_BITS / 8 / sizeof(char);
-  int len = code1.length() / unit_len;
+  int len = code1.size() / unit_len;
   int dist = 0;
+
   for (int i = 0; i < len; i++) {
     dist += __builtin_popcount(*(p1+i) ^ *(p2+i));
   }

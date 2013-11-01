@@ -8,6 +8,8 @@
 #include <algorithm>
 #include "pilaf_proxy.h"
 #include "memcached_proxy.h"
+#include <map>
+#include <iostream>
 
 using namespace std;
 using namespace google;
@@ -17,11 +19,12 @@ static BaseProxy<protobuf::Message, protobuf::Message>* proxy_clt;
 static uint32_t image_count;
 static int table_count;
 static int binary_bits;
-static int s_bits;
+static int n_local_bits;
 static read_modes read_mode;
 static int k;
-static int substr_len;
+static int n_local_bytes;
 static char* config_path;
+static std::map<int, bool> knn_found;
 
 struct MAX {
 public:
@@ -48,12 +51,14 @@ void enumerate_entry(uint32_t curr, int len, int rr, HashIndex& idx, int& count,
     
     if (rval == PROXY_FOUND) {
       for(int i = 0; i < img_list.images_size(); i++){
-        kn_candidates.push_back(img_list.images(i));
+        if(img_list.images(i) < image_count){
+          kn_candidates.push_back(img_list.images(i));
+        }
       }
     }
   }else {
     enumerate_entry(curr^(1<<len), len+1, rr-1, idx, count, kn_candidates);
-    if(s_bits - len > rr)
+    if(n_local_bits - len > rr)
       enumerate_entry(curr, len+1, rr, idx, count, kn_candidates);
   }
 }
@@ -63,13 +68,13 @@ void enumerate_image(int table_id, uint32_t search_index, int r, std::vector<int
   ID image_id;
   BinaryCode code;
 
-  int start_pos = table_id * substr_len;
+  int start_pos = table_id * n_local_bytes;
   for (uint32_t i = 0; i < image_count; i++) {
       image_id.set_id(i);
       proxy_clt->get(image_id, code);
 
-      std::string tmp_str = code.code().substr(start_pos, substr_len);
-      uint32_t index = binaryToInt(tmp_str.c_str(), substr_len);
+      std::string tmp_str = code.code().substr(start_pos, n_local_bytes);
+      uint32_t index = binaryToInt(tmp_str.c_str(), n_local_bytes);
 
       int dist = __builtin_popcount(search_index ^ index);
       if (dist == r) kn_candidates.push_back(i);
@@ -81,7 +86,7 @@ int search_R_neighbors(int r, uint32_t search_index,
   int count = 0; 
   // enumerate the index of table entry which has at most r bits different 
   // from the search index
-  if ((1<<r) < image_count) {
+  if (1) {
     HashIndex idx;
     idx.set_table_id(coord->get_rank());
     enumerate_entry(search_index, 0, r, idx, count, kn_candidates);
@@ -98,16 +103,16 @@ int search_K_nearest_neighbors(int k, std::string query_code){
   int radius = 0; //Current searching radius.
   std::vector<int> kn_candidates; //KNN candidates for current searching radius.
 
-  int start_pos = coord->get_rank() * substr_len; 
-  std::string local_query_code = query_code.substr(start_pos, substr_len);
-  uint32_t search_index = binaryToInt(local_query_code.c_str(), substr_len);  
+  int start_pos = coord->get_rank() * n_local_bytes; 
+  std::string local_query_code = query_code.substr(start_pos, n_local_bytes);
+  uint32_t search_index = binaryToInt(local_query_code.c_str(), n_local_bytes);  
     
   HashIndex idx;
   ImageList img_list;
   idx.set_table_id(coord->get_rank());
   idx.set_index(search_index); 
 
-  while(total_find < k && radius < s_bits){ 
+  while(total_find < k && radius < n_local_bits){ 
     //Clear kn_candidates
     kn_candidates.clear();
     kn_candidates.reserve(8192);
@@ -125,25 +130,35 @@ int search_K_nearest_neighbors(int k, std::string query_code){
       ID image_id;
 
       for(uint32_t i = 0; i < gathered_vector.size(); ++i){
-        image_id.set_id(gathered_vector[i]);
+        int id = gathered_vector[i];
+        
+        if(knn_found.find(id) != knn_found.end())
+          continue;
+
+        image_id.set_id(id);
         if(proxy_clt->get(image_id, code) != PROXY_FOUND)
           mpi_coordinator::die("No corresponding image found.\n");
         
         MAX item;
-        item.image_id = gathered_vector[i];
+        item.image_id = id;
         item.dist = compute_hamming_dist(code.code(), query_code);
         
-        if(item.dist > radius * table_count || item.image_id >= image_count) continue;
-         
+        if(item.dist >= (radius + 1) * table_count || item.image_id >= image_count) continue;
+        
+        knn_found[id] = 1;
+
         if (qmax.size() < k) {
+          cout<<"push 1 : "<<item.image_id<<" r: "<<radius<<endl;
           qmax.push(item);
         }else if (qmax.top().dist > item.dist) {
           qmax.pop();
+          cout<<"push 2: "<<item.image_id<<" r: "<<radius<<endl;
           qmax.push(item);
         }
       }
       total_find = qmax.size();
     }
+
     //Broadcast total_find to all processes.
     coord->bcast(&total_find);
     radius += 1;
@@ -160,8 +175,8 @@ int search_K_nearest_neighbors(int k, std::string query_code){
 void run(){   
   ID image_id;
   BinaryCode code;
-  table_count = binary_bits / s_bits;
-  substr_len = s_bits / 8;
+  table_count = binary_bits / n_local_bits;
+  n_local_bytes = n_local_bits / 8;
   
   //The number of mpi workers must equal to number of tables.
   if(table_count != coord->get_size())
@@ -215,7 +230,7 @@ void setup(int argc, char* argv[]){
   config_path = argv[1];
   image_count = atoi(argv[2]);
   binary_bits = atoi(argv[3]);
-  s_bits = atoi(argv[4]);
+  n_local_bits = atoi(argv[4]);
   k = atoi(argv[5]);
   read_mode = (read_modes)atoi(argv[7]);
 

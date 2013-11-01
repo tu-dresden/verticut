@@ -18,7 +18,6 @@
 #include "image_tools.h"
 #include "memcached_proxy.h"
 #include "pilaf_proxy.h"
-
 using namespace google;
 
 uint32_t image_count = 0;
@@ -96,8 +95,68 @@ void usage() {
   printf("./build_hash_tables <binarycode_path> <config_path> <binary_bits> <substring_bits>\n");
 }
 
+int main (int argc, char *argv[]) {
+
+  struct timeval start_time, end_time;
+  char * binarycode_path = "lsh.code";
+  config_path = "../config/memcached.cnf";
+  read_mode = READ_MODE_RDMA;
+
+  proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
+  proxy_clt->init(config_path);
+
+  if (argc == 5) {
+    binarycode_path = argv[1];
+    config_path = argv[2];
+
+    binary_bits = atoi(argv[3]);
+    s_bits = atoi(argv[4]);
+  } else if (argc == 2 && strcmp(argv[1], "--help") == 0) {
+    usage();
+    exit(0);
+  }
+
+  printf("Run with binary_path=%s config_path=%s binary_bits=%d substring_bits=%d\n", binarycode_path, config_path, binary_bits, s_bits);
+
+  // load binary code into memory
+  gettimeofday(&start_time, NULL);
+  load_binarycode(binarycode_path, config_path);
+  gettimeofday(&end_time, NULL);
+
+  long long totaltime = (long long) (end_time.tv_sec - start_time.tv_sec) * 1000000
+                          + (end_time.tv_usec - start_time.tv_usec);
+
+  printf("Load binary code finish! image count:%d time cost:%llus\n", image_count, totaltime);
+
+  // build multiple index hash table
+  gettimeofday(&start_time, NULL);
+
+  int m = binary_bits / s_bits;
+  substr_len = s_bits / 8 / sizeof(char);
+
+  int* table_ids = new int [m];
+  pthread_t* threads = new pthread_t [m];
+  for (int i = 0; i < m; i++) {
+    table_ids[i] = i;
+    pthread_create(&threads[i], NULL, build_hash_tables, &table_ids[i]);
+    pthread_join(threads[i], NULL);
+  }
+
+  gettimeofday(&end_time, NULL);
+  totaltime = (long long) (end_time.tv_sec - start_time.tv_sec) * 1000000
+                          + (end_time.tv_usec - start_time.tv_usec);
+  printf("build hash tables finish! time cost:%llus\n", totaltime);
+  
+  proxy_clt->close();
+  delete proxy_clt;
+  delete table_ids;
+  delete threads;
+  return 0;
+}
+
+/*
 void dump_hashtables(int table_count) {
-  /*FILE* fh;
+  FILE* fh;
   if (NULL == (fh = fopen("dump_hashtables.tmp","w"))) {
     return;
   }
@@ -149,11 +208,9 @@ void dump_hashtables(int table_count) {
   fclose(fh);
   c->teardown();
   delete(c);
-  */
 }
 
 void dump_binarycode() {
-  /*
   printf("Dump binarycode to file dump_binarycode.tmp!\n");
 
   FILE* fh;
@@ -187,69 +244,5 @@ void dump_binarycode() {
   fclose(fh);
   c->teardown();
   delete(c);
-  */
 }
-
-int main (int argc, char *argv[]) {
-
-  struct timeval start_time, end_time;
-  char * binarycode_path = "lsh.code";
-  config_path = "../config/memcached.cnf";
-  read_mode = READ_MODE_RDMA;
-
-  proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
-  proxy_clt->init(config_path);
-
-  if (argc == 5) {
-    binarycode_path = argv[1];
-    config_path = argv[2];
-
-    binary_bits = atoi(argv[3]);
-    s_bits = atoi(argv[4]);
-  } else if (argc == 2 && strcmp(argv[1], "--help") == 0) {
-    usage();
-    exit(0);
-  }
-
-  printf("Run with binary_path=%s config_path=%s binary_bits=%d substring_bits=%d\n", binarycode_path, config_path, binary_bits, s_bits);
-
-  // load binary code into memory
-  gettimeofday(&start_time, NULL);
-  load_binarycode(binarycode_path, config_path);
-  gettimeofday(&end_time, NULL);
-
-  long long totaltime = (long long) (end_time.tv_sec - start_time.tv_sec) * 1000000
-                          + (end_time.tv_usec - start_time.tv_usec);
-
-  printf("Load binary code finish! image count:%d time cost:%llus\n", image_count, totaltime);
-
-
-  // build multiple index hash table
-  gettimeofday(&start_time, NULL);
-
-  int m = binary_bits / s_bits;
-  substr_len = s_bits / 8 / sizeof(char);
-
-  int* table_ids = new int [m];
-  pthread_t* threads = new pthread_t [m];
-  for (int i = 0; i < m; i++) {
-    table_ids[i] = i;
-    pthread_create(&threads[i], NULL, build_hash_tables, &table_ids[i]);
-    pthread_join(threads[i], NULL);
-  }
-
-  //for (int i = 0; i < m; i++)
-  //  pthread_join(threads[i], NULL);
-
-  gettimeofday(&end_time, NULL);
-  totaltime = (long long) (end_time.tv_sec - start_time.tv_sec) * 1000000
-                          + (end_time.tv_usec - start_time.tv_usec);
-  printf("build hash tables finish! time cost:%llus\n", totaltime);
-  
-  proxy_clt->close();
-  delete proxy_clt;
-  delete table_ids;
-  delete threads;
-  return 0;
-}
-
+*/

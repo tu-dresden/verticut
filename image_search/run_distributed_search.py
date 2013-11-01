@@ -49,13 +49,12 @@ for o, a in opts:
 
 if server == "pilaf" and config_path is None:
   config_path = pilaf_config
-elif server == "memcached":
+elif server == "memcached" and config_path is None:
   config_path = memcached_config
 else:
   print "Unrecognized server type."
   usage()
   sys.exit(-1)
-
 
 arg = ['mpirun.openmpi', '-n', str(n),  'distributed-image-search', config_path, 
   str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode)]
