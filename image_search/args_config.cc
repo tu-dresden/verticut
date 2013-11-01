@@ -11,6 +11,7 @@ static struct option long_options[] = {
   {"read_mode",       required_argument,  0,  'r'},
   {"ntables",         required_argument,  0,  'n'},
   {"binary_file",     required_argument,  0,  'f'},
+  {"help",            no_argument,        0,  'h'},
   {0,                 0,                  0,  0}
 };
 
@@ -28,7 +29,15 @@ int knn = 10;
 
 void usage(){
   printf("Usage : \n");
-  printf("");
+  printf("--server -s : What kind of key-value server you want to connect.[memcached | pilaf]\n");
+  printf("--config_path -c : The path of the file you store server address information.\n");
+  printf("--binary_bits -b : How many bits of each binary code.\n");
+  printf("--ntables -n : How many sub-tables we use.\n");
+  printf("--binary_file -f : The path of the binary file. \n");
+  printf("-i : The number of images the server has.\n");
+  printf("-k : Find k nearest neighbors.\n");
+  printf("-r : The read mode. 0 means RDMA_READ, 1 means verb message read. Only works when use Pilaf proxy.\n");
+  printf("--help -h : help information.\n");
   exit(-1);
 }
 
@@ -36,7 +45,7 @@ void configure(int argc, char* argv[]){
   int opt_index = 0;
   int opt;
   
-  while((opt = getopt_long(argc, argv, "c:b:r:n:s:i:k:f:", long_options, &opt_index)) != -1){
+  while((opt = getopt_long(argc, argv, "c:b:r:n:s:i:k:f:h", long_options, &opt_index)) != -1){
     switch(opt){
       case 0:
         fprintf(stderr, "get_opt bug?\n");
@@ -72,6 +81,10 @@ void configure(int argc, char* argv[]){
       
       case 'f':
         binary_file = optarg;
+        break;
+      
+      case 'h':
+        usage();
         break;
 
       case '?':

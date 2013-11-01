@@ -17,17 +17,10 @@ inline uint32_t binaryToInt(const char * p, int len) {
   return result;
 }
 
-#ifndef SUB_BITS
 #define SUB_BITS 32
-#endif
 inline int compute_hamming_dist(std::string code1, std::string code2) {
-#if SUB_BITS == 64
-  const uint64_t * p1 = (uint64_t *)(code1.c_str());
-  const uint64_t * p2 = (uint64_t *)(code2.c_str());
-#else
   const uint32_t * p1 = (uint32_t *)(code1.c_str());
   const uint32_t * p2 = (uint32_t *)(code2.c_str());
-#endif
 
   int unit_len = SUB_BITS / 8 / sizeof(char);
   int len = code1.size() / unit_len;

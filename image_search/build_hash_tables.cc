@@ -87,7 +87,11 @@ int main (int argc, char *argv[]) {
   
   configure(argc, argv);
 
-  proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
+  if(strcmp("server", "memcached") == 0)
+    proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
+  else 
+    proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
+
   proxy_clt->init(config_path);
 
   load_binarycode(binary_file, config_path);

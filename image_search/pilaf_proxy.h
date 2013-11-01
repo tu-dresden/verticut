@@ -19,8 +19,8 @@ class PilafProxy:public BaseProxy<K, V>{
     //We use this buffer to receive the data from server.
     //This is OK since Pilaf is not thread-safe itself.
     //So we won't get data from different threads.
-    char m_buffer[MAX_BUF_LEN];
-    Client *m_clt;
+    char buffer_[MAX_BUF_LEN];
+    Client *clt_;
 
   public:
     PilafProxy();    
@@ -33,7 +33,7 @@ class PilafProxy:public BaseProxy<K, V>{
 
 template<class K, class V>
 PilafProxy<K, V>::PilafProxy(){
-  m_clt = 0;
+  clt_ = 0;
 }
 
 template<class K, class V>
@@ -42,7 +42,7 @@ int PilafProxy<K, V>::put(const K& key, const V& value){
   key.SerializeToString(&k_str);
   value.SerializeToString(&v_str);
   
-  int ret = m_clt->put_with_size(k_str.c_str(), v_str.c_str(), k_str.size(), v_str.size());
+  int ret = clt_->put_with_size(k_str.c_str(), v_str.c_str(), k_str.size(), v_str.size());
 
   return (ret == 0)? PROXY_PUT_DONE : PROXY_PUT_FAIL;
 }
@@ -53,9 +53,9 @@ int PilafProxy<K, V>::get(const K& key, V& value){
   key.SerializeToString(&k_str);
   size_t val_len;
 
-  int ret = m_clt->get_with_size(k_str.c_str(), m_buffer, k_str.size(), val_len); 
+  int ret = clt_->get_with_size(k_str.c_str(), buffer_, k_str.size(), val_len); 
   if(ret == POST_GET_FOUND){
-    value.ParseFromString(std::string(m_buffer, val_len));
+    value.ParseFromString(std::string(buffer_, val_len));
     return PROXY_FOUND;
   }  
   return PROXY_NOT_FOUND;
@@ -63,19 +63,19 @@ int PilafProxy<K, V>::get(const K& key, V& value){
 
 template<class K, class V>
 int PilafProxy<K, V>::init(const char* filename){
-  m_clt = new Client();
-  if(m_clt->setup())
+  clt_ = new Client();
+  if(clt_->setup())
     return -1;
 
   ConfigReader config(filename);
   while(!config.get_end()) {
     struct server_info* this_server = config.get_next();
-    if (m_clt->add_server(this_server->host->c_str(),this_server->port->c_str()))
+    if (clt_->add_server(this_server->host->c_str(),this_server->port->c_str()))
       return -1;
   }
 
-  m_clt->set_read_mode((read_modes)0);
-  m_clt->ready();
+  clt_->set_read_mode((read_modes)0);
+  clt_->ready();
   return 0;
 }
 
@@ -87,10 +87,10 @@ int PilafProxy<K, V>::contain(const K& key){
 
 template<class K, class V>
 void PilafProxy<K, V>::close(){
-  if(m_clt){
-    m_clt->teardown();
-    delete m_clt;
-    m_clt = 0;
+  if(clt_){
+    clt_->teardown();
+    delete clt_;
+    clt_ = 0;
   } 
 }
 #endif

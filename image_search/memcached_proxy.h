@@ -15,7 +15,7 @@ class MemcachedProxy:public BaseProxy<K, V>{
     MemcachedProxy(const MemcachedProxy &m);
   
   protected:
-    memcached_st* m_clt;
+    memcached_st* clt_;
   
   public:
     MemcachedProxy();    
@@ -28,7 +28,7 @@ class MemcachedProxy:public BaseProxy<K, V>{
 
 template<class K, class V>
 MemcachedProxy<K, V>::MemcachedProxy(){
-  m_clt = 0;
+  clt_ = 0;
 }
 
 template<class K, class V>
@@ -36,7 +36,7 @@ int MemcachedProxy<K, V>::put(const K& key, const V& value){
   std::string k_str, v_str;
   key.SerializeToString(&k_str);
   value.SerializeToString(&v_str);
-  memcached_return_t ret = memcached_set(m_clt, k_str.c_str(), k_str.size(), v_str.c_str(), v_str.size(), 0, 0); 
+  memcached_return_t ret = memcached_set(clt_, k_str.c_str(), k_str.size(), v_str.c_str(), v_str.size(), 0, 0); 
 
   return (ret == MEMCACHED_SUCCESS)? PROXY_PUT_DONE : PROXY_PUT_FAIL;
 }
@@ -49,7 +49,7 @@ int MemcachedProxy<K, V>::get(const K& key, V& value){
   memcached_return_t ret;
   char *buffer;
    
-  buffer = memcached_get(m_clt, k_str.c_str(), k_str.size(), &val_len, 0, &ret);
+  buffer = memcached_get(clt_, k_str.c_str(), k_str.size(), &val_len, 0, &ret);
   
   if(buffer != 0){
     value.ParseFromString(std::string(buffer, val_len));
@@ -70,19 +70,19 @@ int MemcachedProxy<K, V>::init(const char* filename){
   int port = 0;
   std::string ip;
   memcached_return_t ret;
-  m_clt = memcached_create(0);
+  clt_ = memcached_create(0);
 
   while(fin.getline(addr, 1024)){
     port = MEMCACHED_DEFAULT_PORT;
     std::istringstream sin(addr);
     sin>>ip>>port;
     
-    ret = memcached_server_add(m_clt, ip.c_str(), port);
+    ret = memcached_server_add(clt_, ip.c_str(), port);
     if(ret != MEMCACHED_SUCCESS)
       return -1;
   }
   //We're actually transmitting binary data. 
-  memcached_behavior_set(m_clt, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, 1);
+  memcached_behavior_set(clt_, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, 1);
   return 0;
 }
 
@@ -94,7 +94,7 @@ int MemcachedProxy<K, V>::contain(const K& key){
 
 template<class K, class V>
 void MemcachedProxy<K, V>::close(){
-  if(m_clt)
-    memcached_free(m_clt);
+  if(clt_)
+    memcached_free(clt_);
 }
 #endif

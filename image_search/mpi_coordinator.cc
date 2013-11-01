@@ -1,9 +1,9 @@
 #include "mpi_coordinator.h"
 
 mpi_coordinator::mpi_coordinator(MPI_Comm comm){
-  m_comm = comm;
-  MPI_Comm_size(m_comm, &m_size);
-  MPI_Comm_rank(m_comm, &m_rank);
+  comm_ = comm;
+  MPI_Comm_size(comm_, &size_);
+  MPI_Comm_rank(comm_, &rank_);
 }
 
 void mpi_coordinator::finalize(){
@@ -24,11 +24,11 @@ void mpi_coordinator::die(const std::string& str){
 }
 
 void mpi_coordinator::bcast(int *buf, int count, int root){
-  MPI_Bcast(buf, count, MPI_INT, root, m_comm);
+  MPI_Bcast(buf, count, MPI_INT, root, comm_);
 }
 
 void mpi_coordinator::gather(int *send_buf, int *recv_buf, int count){
-  MPI_Gather(send_buf, count, MPI_INT, recv_buf, count, MPI_INT, MASTER, m_comm);
+  MPI_Gather(send_buf, count, MPI_INT, recv_buf, count, MPI_INT, MASTER, comm_);
 }
     
 std::vector<int> mpi_coordinator::gather_vectors(std::vector<int> &data){
@@ -39,15 +39,15 @@ std::vector<int> mpi_coordinator::gather_vectors(std::vector<int> &data){
   int sum = 0;
 
   if(is_master()){
-    count_array = new int[m_size];
-    disp_array = new int[m_size];
+    count_array = new int[size_];
+    disp_array = new int[size_];
   }
   //Gather vector size for each processes.
-  MPI_Gather(&count, 1, MPI_INT, count_array, 1, MPI_INT, MASTER, m_comm);
+  MPI_Gather(&count, 1, MPI_INT, count_array, 1, MPI_INT, MASTER, comm_);
   
   if(is_master()){
     //Build displacement array.
-    for (int i = 0; i < m_size; i++){
+    for (int i = 0; i < size_; i++){
       disp_array[i] = (i > 0) ? (disp_array[i-1] + count_array[i-1]) : 0;
       sum += count_array[i];
     } 
@@ -56,7 +56,7 @@ std::vector<int> mpi_coordinator::gather_vectors(std::vector<int> &data){
   
   //Gather vector data.
   MPI_Gatherv(data.data(), count, MPI_INT, result_array, count_array, disp_array, MPI_INT,
-      MASTER, m_comm);
+      MASTER, comm_);
   
   if(is_master()){
     std::vector<int> ret(result_array, result_array + sum);

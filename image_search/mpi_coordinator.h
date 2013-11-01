@@ -2,7 +2,7 @@
 // Author : Yisheng Liao & Chenqi
 
 #ifndef MPI_COORDINATOR_H
-#define MPI_COORDITATOR_H
+#define MPI_COORDINATOR_H
 #include "mpi.h"
 #include <stdint.h>
 #include <string>
@@ -14,11 +14,11 @@ class mpi_coordinator{
   public: 
     mpi_coordinator(MPI_Comm comm = MPI_COMM_WORLD);
 
-    int get_size() { return m_size; }
-    int get_rank() { return m_rank; }
-    bool is_master() { return m_rank == MASTER; }
+    int get_size() { return size_; }
+    int get_rank() { return rank_; }
+    bool is_master() { return rank_ == MASTER; }
 
-    void synchronize(){ MPI_Barrier(m_comm); }
+    void synchronize(){ MPI_Barrier(comm_); }
     void bitwise_or(int *send_bmp, int *recv_bmp, int count);   
     
     //Broadcast one integer to all processes.
@@ -34,9 +34,9 @@ class mpi_coordinator{
     static void init(int argc, char* argv[]);
     
   protected:
-    MPI_Comm m_comm;
-    int m_rank;
-    int m_size;
+    MPI_Comm comm_;
+    int rank_;
+    int size_;
 
   private:
     //Disable copy constructor.

@@ -45,7 +45,7 @@ void search_K_nearest_neighbors(int k) {
     MAX item;
     item.image_id = i;
     item.dist = compute_hamming_dist(code.code(), search_code);
-
+    
     if (qmax.size() < k) {
       qmax.push(item);
     } else if (qmax.top().dist > item.dist) {
