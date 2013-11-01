@@ -17,7 +17,6 @@
 #include "memcached_proxy.h"
 #include "pilaf_proxy.h"
 #include <iostream>
-using namespace std;
 using namespace google;
 
 int s_bits;
@@ -65,34 +64,6 @@ void search_K_nearest_neighbors(int k) {
 int main (int argc, char *argv[]) {
   
   configure(argc, argv);
-
-  /*
-  uint32_t a[4] = {0};
-  uint32_t b[4] = {0};
-  
-  a[0] = 1;
-  b[0] = 0;
-  b[1] = 1;
-  a[2] = (1 << 30) + (1 << 29) + (1 << 28) + (1 << 27);
-
-  BinaryCode code, code2;
-  code.set_code(a, 16);
-  code2.set_code(b, 16);
-
-  cout<<code.code().substr(12, 16).length()<<endl;
-
-  int dist1 = compute_hamming_dist(code.code().substr(0, 4), code2.code().substr(0, 4));
-  
-  //cout<<code.code()<<" ! "<<code2.code()<<endl;
-
-  //cout<<dist1<<endl;
-  int dist2 = compute_hamming_dist(code.code().substr(4, 4), code2.code().substr(4, 4));
-  int dist3 = compute_hamming_dist(code.code().substr(8, 4), code2.code().substr(8, 4));
-  int dist4 = compute_hamming_dist(code.code().substr(12, 4), code2.code().substr(12, 4));
-  int dist = compute_hamming_dist(code.code(), code2.code());
-
-  cout<<dist1<<" "<<dist2<<" "<<dist3<<" "<<dist4<<" total : "<<dist<<endl;
-  */
 
   struct timeval start_time, end_time;  
   s_bits = binary_bits / n_tables;

@@ -7,11 +7,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/time.h>
-
-#include <boost/random.hpp>
-#include <boost/random/normal_distribution.hpp>
-
-#include <signal.h>
 #include <getopt.h>
 #include <pthread.h>
 #include "image_search.pb.h"
@@ -116,7 +111,6 @@ int main (int argc, char *argv[]) {
     exit(0);
   }
 
-  printf("Run with binary_path=%s config_path=%s binary_bits=%d substring_bits=%d\n", binarycode_path, config_path, binary_bits, s_bits);
 
   // load binary code into memory
   gettimeofday(&start_time, NULL);

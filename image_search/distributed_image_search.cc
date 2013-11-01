@@ -98,7 +98,6 @@ int search_R_neighbors(int r, uint32_t search_index,
 int search_K_nearest_neighbors(int k, std::string query_code){
   ID image_id;
   BinaryCode code;
-  int total_find = 0; //How many neighbors found so far.
   std::priority_queue<MAX> qmax;
   int radius = 0; //Current searching radius.
   std::vector<int> kn_candidates; //KNN candidates for current searching radius.
@@ -106,13 +105,14 @@ int search_K_nearest_neighbors(int k, std::string query_code){
   int start_pos = coord->get_rank() * n_local_bytes; 
   std::string local_query_code = query_code.substr(start_pos, n_local_bytes);
   uint32_t search_index = binaryToInt(local_query_code.c_str(), n_local_bytes);  
-    
+  int is_stop = 0;
+
   HashIndex idx;
   ImageList img_list;
   idx.set_table_id(coord->get_rank());
   idx.set_index(search_index); 
 
-  while(total_find < k && radius < n_local_bits){ 
+  while(!is_stop && radius <= n_local_bits){ 
     //Clear kn_candidates
     kn_candidates.clear();
     kn_candidates.reserve(8192);
@@ -143,25 +143,24 @@ int search_K_nearest_neighbors(int k, std::string query_code){
         item.image_id = id;
         item.dist = compute_hamming_dist(code.code(), query_code);
         
-        if(item.dist >= (radius + 1) * table_count || item.image_id >= image_count) continue;
-        
         knn_found[id] = 1;
 
         if (qmax.size() < k) {
-          cout<<"push 1 : "<<item.image_id<<" r: "<<radius<<endl;
           qmax.push(item);
         }else if (qmax.top().dist > item.dist) {
           qmax.pop();
-          cout<<"push 2: "<<item.image_id<<" r: "<<radius<<endl;
           qmax.push(item);
         }
       }
-      total_find = qmax.size();
     }
 
-    //Broadcast total_find to all processes.
-    coord->bcast(&total_find);
-    radius += 1;
+    radius += 1; 
+    //If the mininum distance next epoch we may find is less than the max one of 
+    //what we've found, then stop.
+    if(coord->is_master() && qmax.size() == k && qmax.top().dist < radius * 4)
+      is_stop = 1;
+
+    coord->bcast(&is_stop);
   }
 
   if(coord->is_master())
