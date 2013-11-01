@@ -13,17 +13,14 @@
 #include "image_tools.h"
 #include "memcached_proxy.h"
 #include "pilaf_proxy.h"
-using namespace google;
+#include "args_config.h"
 
-uint32_t image_count = 0;
-int binary_bits = 128;
-int s_bits = 32;
+using namespace google;
 int substr_len;
-char * config_path;
-read_modes read_mode;
+
 static BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt;
 
-void load_binarycode(char * fname, char * config_path) {
+void load_binarycode(const char * fname, const char * config_path) {
   FILE* fh;
   int ret;
 
@@ -37,18 +34,18 @@ void load_binarycode(char * fname, char * config_path) {
     if (read_bytes == 0) break;
 
     ID image_id;
-    image_id.set_id(image_count);
+    image_id.set_id(image_total);
 
     BinaryCode bcode;
     bcode.set_code(code, binary_bits/8);
-    printf("id:%d code_length:%lu\n", image_count, bcode.code().size());
+    printf("id:%d code_length:%lu\n", image_total, bcode.code().size());
     
     if(proxy_clt->put(image_id, bcode) != PROXY_PUT_DONE){
       printf("put fails\n");
       exit(0);
     }
     
-    image_count++;
+    image_total++;
   }
 
   fclose(fh);
@@ -66,7 +63,7 @@ void *build_hash_tables(void *arg) {
   idx.set_table_id(table_id);
   int start_pos = table_id * substr_len;
 
-  for (uint32_t i = 0; i < image_count; i++) {
+  for (uint32_t i = 0; i < image_total; i++) {
     image_id.set_id(i);
     proxy_clt->get(image_id, code);
 
@@ -86,61 +83,25 @@ void *build_hash_tables(void *arg) {
   }
 }
 
-void usage() {
-  printf("./build_hash_tables <binarycode_path> <config_path> <binary_bits> <substring_bits>\n");
-}
-
 int main (int argc, char *argv[]) {
-
-  struct timeval start_time, end_time;
-  char * binarycode_path = "lsh.code";
-  config_path = "../config/memcached.cnf";
-  read_mode = READ_MODE_RDMA;
+  
+  configure(argc, argv);
 
   proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
   proxy_clt->init(config_path);
 
-  if (argc == 5) {
-    binarycode_path = argv[1];
-    config_path = argv[2];
+  load_binarycode(binary_file, config_path);
+  substr_len = binary_bits / n_tables / 8;
 
-    binary_bits = atoi(argv[3]);
-    s_bits = atoi(argv[4]);
-  } else if (argc == 2 && strcmp(argv[1], "--help") == 0) {
-    usage();
-    exit(0);
-  }
+  int* table_ids = new int [n_tables];
+  pthread_t* threads = new pthread_t [n_tables];
 
-
-  // load binary code into memory
-  gettimeofday(&start_time, NULL);
-  load_binarycode(binarycode_path, config_path);
-  gettimeofday(&end_time, NULL);
-
-  long long totaltime = (long long) (end_time.tv_sec - start_time.tv_sec) * 1000000
-                          + (end_time.tv_usec - start_time.tv_usec);
-
-  printf("Load binary code finish! image count:%d time cost:%llus\n", image_count, totaltime);
-
-  // build multiple index hash table
-  gettimeofday(&start_time, NULL);
-
-  int m = binary_bits / s_bits;
-  substr_len = s_bits / 8 / sizeof(char);
-
-  int* table_ids = new int [m];
-  pthread_t* threads = new pthread_t [m];
-  for (int i = 0; i < m; i++) {
+  for (int i = 0; i < n_tables; i++) {
     table_ids[i] = i;
     pthread_create(&threads[i], NULL, build_hash_tables, &table_ids[i]);
     pthread_join(threads[i], NULL);
   }
 
-  gettimeofday(&end_time, NULL);
-  totaltime = (long long) (end_time.tv_sec - start_time.tv_sec) * 1000000
-                          + (end_time.tv_usec - start_time.tv_usec);
-  printf("build hash tables finish! time cost:%llus\n", totaltime);
-  
   proxy_clt->close();
   delete proxy_clt;
   delete table_ids;
@@ -181,7 +142,7 @@ void dump_hashtables(int table_count) {
     idx.set_table_id(table_id);
     int start_pos = table_id * substr_len;
 
-    for (uint32_t i = 0; i < image_count; i++) {
+    for (uint32_t i = 0; i < image_total; i++) {
       image_id.set_id(i);
       int rval = c->get_ext(image_id, code);
 
@@ -229,7 +190,7 @@ void dump_binarycode() {
   ID image_id;
   BinaryCode code;
 
-  for (uint32_t i = 0; i < image_count; i++) {
+  for (uint32_t i = 0; i < image_total; i++) {
     image_id.set_id(i);
     c->get_ext(image_id, code);
     fprintf(fh, "%d %s\n", i, binaryToString(code.code().c_str(), code.code().length()).c_str());

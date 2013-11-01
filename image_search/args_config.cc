@@ -10,6 +10,7 @@ static struct option long_options[] = {
   {"binary_bits",     required_argument,  0,  'b'},
   {"read_mode",       required_argument,  0,  'r'},
   {"ntables",         required_argument,  0,  'n'},
+  {"binary_file",     required_argument,  0,  'f'},
   {0,                 0,                  0,  0}
 };
 
@@ -17,14 +18,17 @@ const char* memcached_config = "../config/memcached.cnf";
 const char* pilaf_config = "../config/pilaf.cnf";
 const char* config_path = 0;
 const char* server = "pilaf";
+const char* binary_file = "lsh.code";
 int binary_bits = 128;
 int n_tables = 4;
 int read_mode  = 0;
 int image_total = 1000000;
 int knn = 10;
 
+
 void usage(){
-  printf("usage : \n");
+  printf("Usage : \n");
+  printf("");
   exit(-1);
 }
 
@@ -32,7 +36,7 @@ void configure(int argc, char* argv[]){
   int opt_index = 0;
   int opt;
   
-  while((opt = getopt_long(argc, argv, "c:b:r:n:s:i:k:", long_options, &opt_index)) != -1){
+  while((opt = getopt_long(argc, argv, "c:b:r:n:s:i:k:f:", long_options, &opt_index)) != -1){
     switch(opt){
       case 0:
         fprintf(stderr, "get_opt bug?\n");
@@ -64,6 +68,10 @@ void configure(int argc, char* argv[]){
       
       case 'k':
         knn = atoi(optarg);
+        break;
+      
+      case 'f':
+        binary_file = optarg;
         break;
 
       case '?':

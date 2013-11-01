@@ -65,7 +65,6 @@ int main (int argc, char *argv[]) {
   
   configure(argc, argv);
 
-  struct timeval start_time, end_time;  
   s_bits = binary_bits / n_tables;
   int search_times = 1;
 
@@ -80,7 +79,6 @@ int main (int argc, char *argv[]) {
   BinaryCode code;
   srand(34);
   
-  gettimeofday(&start_time, NULL);
   for (int i = 0; i < search_times; i++) {
     image_id.set_id(rand() % image_total);
     proxy_clt->get(image_id, code);
@@ -88,12 +86,7 @@ int main (int argc, char *argv[]) {
     printf("search_image_id:%d code:%s\n", image_id.id(), binaryToString(search_code.c_str(), search_code.length()).c_str());
     search_K_nearest_neighbors(knn);
   }
-  gettimeofday(&end_time, NULL);
 
-  long long totaltime = (long long) (end_time.tv_sec - start_time.tv_sec) * 1000000
-                          + (end_time.tv_usec - start_time.tv_usec);
-
-  printf("Search finish! time cost:%fs", (double)totaltime);
   proxy_clt->close();
   delete proxy_clt;
   return 0;
