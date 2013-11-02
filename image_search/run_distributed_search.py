@@ -51,7 +51,7 @@ if server == "pilaf" and config_path is None:
   config_path = pilaf_config
 elif server == "memcached" and config_path is None:
   config_path = memcached_config
-else:
+elif server != "pilaf" and server != "memcached":
   print "Unrecognized server type."
   usage()
   sys.exit(-1)

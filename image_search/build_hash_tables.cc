@@ -14,13 +14,15 @@
 #include "memcached_proxy.h"
 #include "pilaf_proxy.h"
 #include "args_config.h"
+#include "mpi_coordinator.h"
 
 using namespace google;
 int substr_len;
 
 static BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt;
+static mpi_coordinator *coord;
 
-void load_binarycode(const char * fname, const char * config_path) {
+void load_binarycode(const char * fname) {
   FILE* fh;
   int ret;
 
@@ -38,7 +40,9 @@ void load_binarycode(const char * fname, const char * config_path) {
 
     BinaryCode bcode;
     bcode.set_code(code, binary_bits/8);
-    printf("id:%d code_length:%lu\n", image_total, bcode.code().size());
+    
+    if(image_total % 10000 == 0)
+      printf("id:%d code_length:%lu\n", image_total, bcode.code().size());
     
     if(proxy_clt->put(image_id, bcode) != PROXY_PUT_DONE){
       printf("put fails\n");
@@ -51,10 +55,10 @@ void load_binarycode(const char * fname, const char * config_path) {
   fclose(fh);
 }
 
-void *build_hash_tables(void *arg) {
-  int table_id = *((int *)arg);
-
+void build_hash_tables() {
+  int table_id = coord->get_rank();
   printf("build hash table %d\n", table_id);
+
   ID image_id;
   BinaryCode code;
   HashIndex idx;
@@ -65,13 +69,17 @@ void *build_hash_tables(void *arg) {
 
   for (uint32_t i = 0; i < image_total; i++) {
     image_id.set_id(i);
-    proxy_clt->get(image_id, code);
+    
+    assert(proxy_clt->get(image_id, code) == PROXY_FOUND);
 
     std::string tmp_str = code.code().substr(start_pos, substr_len);
     idx.set_index(binaryToInt(tmp_str.c_str(), substr_len));
-    printf("table id%d, image id:%d, index:%d\n", table_id, i, idx.index());
+      
+    if(i % 10000 == 0)
+      printf("rank : %d, table id : %d, image id:%d, index:%d\n", coord->get_rank(), table_id, i, idx.index());
 
     int rval = proxy_clt->get(idx, img_list);
+
     if (rval == PROXY_FOUND) {
       img_list.add_images(i);
       assert(proxy_clt->put(idx, img_list) == PROXY_PUT_DONE);
@@ -85,31 +93,33 @@ void *build_hash_tables(void *arg) {
 
 int main (int argc, char *argv[]) {
   
+  mpi_coordinator::init(argc, argv);  
   configure(argc, argv);
+  image_total = 0;
 
-  if(strcmp("server", "memcached") == 0)
+  coord = new mpi_coordinator();
+  
+  if(strcmp(server, "memcached") == 0)
     proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
-  else 
+  else
     proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
-
+  
   proxy_clt->init(config_path);
 
-  load_binarycode(binary_file, config_path);
+  if(coord->is_master())
+    load_binarycode(binary_file);
+  
   substr_len = binary_bits / n_tables / 8;
+  coord->synchronize();
+  coord->bcast(&image_total);
 
-  int* table_ids = new int [n_tables];
-  pthread_t* threads = new pthread_t [n_tables];
-
-  for (int i = 0; i < n_tables; i++) {
-    table_ids[i] = i;
-    pthread_create(&threads[i], NULL, build_hash_tables, &table_ids[i]);
-    pthread_join(threads[i], NULL);
-  }
-
+  build_hash_tables();
+  
   proxy_clt->close();
+  mpi_coordinator::finalize();
+
   delete proxy_clt;
-  delete table_ids;
-  delete threads;
+  delete coord;
   return 0;
 }
 

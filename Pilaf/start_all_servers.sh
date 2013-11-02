@@ -13,7 +13,7 @@ do
     host="beaker-`echo $ip |awk '{split($1,s,".");print s[4];}'`"
     port=`echo "$LINE" | awk '{print $2}'`
     ssh $host $"cd workplace/image_search/Pilaf; nohup ./dht-test -s $port $PRESIZE </dev/null &>/dev/null &" &
-    sleep 5
+    sleep 1
     echo "Server $host:$port started"
 done
 
