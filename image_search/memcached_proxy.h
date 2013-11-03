@@ -7,6 +7,7 @@
 #include <string.h>
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 template<class K, class V>
 class MemcachedProxy:public BaseProxy<K, V>{

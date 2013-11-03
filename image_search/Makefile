@@ -10,7 +10,8 @@ OBJS_PILAF := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o $(PILAF_PATH)/store-clien
 OBJS_IMAGE_BUILD :=  $(OBJS_PILAF) image_search.pb.o build_hash_tables.o args_config.o mpi_coordinator.o
 OBJS_IMAGE_LINEAR_SEARCH := $(OBJS_PILAF) image_search.pb.o linear_search.o args_config.o
 OBJS_DISTRIBUTED_IMAGE_SEARCH := $(OBJS_PILAF) image_search.pb.o distributed_image_search.o mpi_coordinator.o search_worker.o 
-APPS := image-build-test image-linear-search-test distributed-image-search
+OBJS_INTEGRITY_CHECK := $(OBJS_PILAF) image_search.pb.o integrity_check.o mpi_coordinator.o args_config.o
+APPS := image-build-test image-linear-search-test distributed-image-search integrity-check
 
 all: $(APPS) 
 
@@ -27,6 +28,9 @@ image-linear-search-test: $(OBJS_IMAGE_LINEAR_SEARCH) $(PROXY_SRC)
 	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
 
 distributed-image-search: $(OBJS_DISTRIBUTED_IMAGE_SEARCH) $(PROXY_SRC)
+	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
+
+integrity-check: $(OBJS_INTEGRITY_CHECK) $(PROXY_SRC)
 	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS)
 
 clean:
