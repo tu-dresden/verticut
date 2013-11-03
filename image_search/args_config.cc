@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "args_config.h"
+#include "image_search_constants.h"
 
 static struct option long_options[] = {
   {"server",          required_argument,  0,  's'},
@@ -15,16 +16,16 @@ static struct option long_options[] = {
   {0,                 0,                  0,  0}
 };
 
-const char* memcached_config = "../config/memcached.cnf";
-const char* pilaf_config = "../config/pilaf.cnf";
+const char* memcached_config = MEMCACHED_CONFIG;
+const char* pilaf_config = PILAF_CONFIG;
 const char* config_path = 0;
-const char* server = "pilaf";
-const char* binary_file = "lsh.code";
-int binary_bits = 128;
-int n_tables = 4;
+const char* server = DEFAULT_SERVER;
+const char* binary_file = BINARY_CODE_FILE;
+int binary_bits = N_BINARY_BITS;
+int n_tables = DEFAULT_N_TABLES;
 int read_mode  = 0;
-int image_total = 1000000;
-int knn = 10;
+int image_total = DEFAULT_IMAGE_TOTAL;
+int knn = DEFAULT_KNN;
 
 
 void usage(){

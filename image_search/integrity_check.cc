@@ -7,8 +7,7 @@
 #include "args_config.h"
 #include <string.h>
 #include <stdlib.h>
-
-#define DIE mpi_coordinator::finalize(); exit(-1);
+#include "image_search_constants.h"
 
 using namespace std;
 using namespace google;
