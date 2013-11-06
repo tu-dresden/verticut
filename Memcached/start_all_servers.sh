@@ -6,9 +6,9 @@ do
     port=`echo "$LINE" | awk '{print $2}'`
 
     if [[ -z "$port" ]]; then
-      ssh $host $" nohup memcached -m 30096 -M &>/dev/null &" &
+      ssh $host $" nohup memcached -m 10000 -M &>/dev/null &" &
     else
-      ssh $host $" nohup memcached -m 30096 -M -p $port &>/dev/null &" &
+      ssh $host $" nohup memcached -m 10000 -M -p $port &>/dev/null &" &
     fi
 
     sleep 1 

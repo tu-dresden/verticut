@@ -11,5 +11,5 @@
 #define BINARY_CODE_FILE "lsh.code"
 #define DEFAULT_N_TABLES 4
 #define DEFAULT_IMAGE_TOTAL 1000000
-
+#define REPORT_SIZE 100000
 #endif

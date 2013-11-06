@@ -15,6 +15,7 @@
 #include "pilaf_proxy.h"
 #include "args_config.h"
 #include "mpi_coordinator.h"
+#include "image_search_constants.h"
 
 using namespace google;
 int substr_len;
@@ -41,7 +42,7 @@ void load_binarycode(const char * fname) {
     BinaryCode bcode;
     bcode.set_code(code, binary_bits/8);
     
-    if(image_total % 10000 == 0)
+    if(image_total % REPORT_SIZE == 0)
       printf("id:%d code_length:%lu\n", image_total, bcode.code().size());
     
     if(proxy_clt->put(image_id, bcode) != PROXY_PUT_DONE){

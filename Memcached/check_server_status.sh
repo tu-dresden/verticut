@@ -9,7 +9,7 @@ do
     ssh $host $" ps aux | pgrep memcached >/dev/null && echo 'Normal, Memory usage %, CPU usage %: ' &&  ps aux | \
       grep memcached | grep -v grep | grep -v server | awk '{print \$4; print \$3}' \
       || echo 'The server is down!'" &
-    sleep 1 
+    sleep 2 
 
 done
 
