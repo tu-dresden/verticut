@@ -13,12 +13,13 @@ read_mode = 0
 server = "pilaf"
 memcached_config = "../config/memcached.cnf"
 pilaf_config = "../config/pilaf.cnf"
+redis_config = "../config/redis.cnf"
 config_path = None
 
 def usage():
   print "Usage :"
   print """./run_distributed_search.py [-c config path], [-i image count] [-b binary bits]
-   [-s substr len] [-k k nearest] [-n n workers] [-r read mode] [--server memcached|pilaf]"""
+   [-s substr len] [-k k nearest] [-n n workers] [-r read mode] [--server memcached|pilaf|redis]"""
 
 try:
   opts, args = getopt.getopt(sys.argv[1:], "c:i:b:s:k:n:r:", ['server=', ])
@@ -51,7 +52,9 @@ if server == "pilaf" and config_path is None:
   config_path = pilaf_config
 elif server == "memcached" and config_path is None:
   config_path = memcached_config
-elif server != "pilaf" and server != "memcached":
+elif server == "redis" and config_path is None:
+  config_path = redis_config
+elif server != "pilaf" and server != "memcached" and server != "redis":
   print "Unrecognized server type."
   usage()
   sys.exit(-1)

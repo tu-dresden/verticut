@@ -18,6 +18,7 @@ static struct option long_options[] = {
 
 const char* memcached_config = MEMCACHED_CONFIG;
 const char* pilaf_config = PILAF_CONFIG;
+const char* redis_config = REDIS_CONFIG;
 const char* config_path = 0;
 const char* server = DEFAULT_SERVER;
 const char* binary_file = BINARY_CODE_FILE;
@@ -30,7 +31,7 @@ int knn = DEFAULT_KNN;
 
 void usage(){
   printf("Usage : \n");
-  printf("--server -s : What kind of key-value server you want to connect.[memcached | pilaf]\n");
+  printf("--server -s : What kind of key-value server you want to connect.[memcached|pilaf|redis]\n");
   printf("--config_path -c : The path of the file you store server address information.\n");
   printf("--binary_bits -b : How many bits of each binary code.\n");
   printf("--ntables -n : How many sub-tables we use.\n");
@@ -98,14 +99,16 @@ void configure(int argc, char* argv[]){
     }
   }
 
-  if(strcmp(server, "pilaf") != 0 && strcmp(server, "memcached") != 0){
+  if(strcmp(server, "pilaf") != 0 && strcmp(server, "memcached") != 0 && strcmp(server, "redis")){
     fprintf(stderr, "Unknown server type.\n");
     usage();
   }
 
   if(strcmp(server, "pilaf") == 0 && config_path == 0)
     config_path = pilaf_config;
-  else if(config_path == 0)
+  else if(strcmp(server, "memcached") == 0 && config_path == 0)
     config_path = memcached_config;
+  else if(config_path == 0)
+    config_path = redis_config;
 }
 

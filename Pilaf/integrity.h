@@ -8,7 +8,7 @@ class Integrity64 {
 
   private:
     // CRC variables/constants
-    #define poly 0x42F0E1EBA9EA3693
+    #define poly_lys_add 0x42F0E1EBA9EA3693
     #define hvinit 0x0060034000F0D50B
     uint64_t crc_table[256];
 	uint64_t seeds[4];
@@ -22,7 +22,7 @@ class Integrity64 {
         for(int j=0; j<8; j++, (part <<= 1)) {
           hv <<= 1;
           if (part & 0x80)
-            hv ^= poly;
+            hv ^= poly_lys_add;
         }
         crc_table[i] = hv;
       }

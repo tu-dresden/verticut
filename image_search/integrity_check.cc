@@ -1,6 +1,7 @@
 //Check the if the hash table is appropriatly build.
 #include "memcached_proxy.h"
 #include "pilaf_proxy.h"
+#include "redis_proxy.h"
 #include <iostream>
 #include "mpi_coordinator.h"
 #include "image_search.pb.h"
@@ -79,9 +80,11 @@ int main(int argc, char* argv[]){
   
   if(strcmp(server, "memcached") == 0)
     proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
-  else
+  else if(strcmp(server, "pilaf") == 0)
     proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
-  
+  else
+    proxy_clt = new RedisProxy<protobuf::Message, protobuf::Message>;
+
   proxy_clt->init(config_path);
   coord = new mpi_coordinator; 
 

@@ -8,6 +8,7 @@
 #include <algorithm>
 #include "pilaf_proxy.h"
 #include "memcached_proxy.h"
+#include "redis_proxy.h"
 #include <map>
 #include <iostream>
 #include "search_worker.h"
@@ -94,6 +95,8 @@ void setup(int argc, char* argv[]){
     proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
   else if(strcmp(argv[6], "memcached") == 0)
     proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
+  else if(strcmp(argv[6], "redis") == 0)
+    proxy_clt = new RedisProxy<protobuf::Message, protobuf::Message>;
   else
     mpi_coordinator::die("Unrecognized server type.");
 

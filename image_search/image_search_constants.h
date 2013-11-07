@@ -5,6 +5,7 @@
 
 #define MEMCACHED_CONFIG "../config/memcached.cnf"
 #define PILAF_CONFIG "../config/pilaf.cnf"
+#define REDIS_CONFIG "../config/redis.cnf"
 #define DEFAULT_KNN 10
 #define N_BINARY_BITS 128
 #define DEFAULT_SERVER "pilaf"

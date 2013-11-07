@@ -16,6 +16,7 @@
 #include "args_config.h"
 #include "memcached_proxy.h"
 #include "pilaf_proxy.h"
+#include "redis_proxy.h"
 #include <iostream>
 using namespace google;
 
@@ -70,8 +71,10 @@ int main (int argc, char *argv[]) {
 
   if(strcmp(server, "memcached") == 0)
     proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
-  else
+  else if(strcmp(server, "pilaf") == 0)
     proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
+  else
+    proxy_clt = new RedisProxy<protobuf::Message, protobuf::Message>;
 
   proxy_clt->init(config_path);
 

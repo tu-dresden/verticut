@@ -12,6 +12,7 @@
 #include "image_search.pb.h"
 #include "image_tools.h"
 #include "memcached_proxy.h"
+#include "redis_proxy.h"
 #include "pilaf_proxy.h"
 #include "args_config.h"
 #include "mpi_coordinator.h"
@@ -76,7 +77,7 @@ void build_hash_tables() {
     std::string tmp_str = code.code().substr(start_pos, substr_len);
     idx.set_index(binaryToInt(tmp_str.c_str(), substr_len));
       
-    if(i % 10000 == 0)
+    if(i % REPORT_SIZE == 0)
       printf("rank : %d, table id : %d, image id:%d, index:%d\n", coord->get_rank(), table_id, i, idx.index());
 
     int rval = proxy_clt->get(idx, img_list);
@@ -102,8 +103,10 @@ int main (int argc, char *argv[]) {
   
   if(strcmp(server, "memcached") == 0)
     proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
-  else
+  else if(strcmp(server, "pilaf") == 0)
     proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
+  else  
+    proxy_clt = new RedisProxy<protobuf::Message, protobuf::Message>;
   
   proxy_clt->init(config_path);
 

@@ -1,16 +1,20 @@
 .PHONY: clean
 
 PILAF_PATH := ../Pilaf
-LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached
-CFLAGS  := -Wno-write-strings -Ofast -rdynamic -I${PILAF_PATH}
+REDIS_PATH := ../Redis
+LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached -lboost_thread-mt
+CFLAGS  := -Wno-write-strings -Ofast -rdynamic -I${REDIS_PATH} -I${PILAF_PATH} 
 CC      := mpiCC.openmpi
 
 COMMON_SRC := memcached_proxy.h pilaf_proxy.h base_proxy.h image_search_constants.h 
 OBJS_PILAF := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o $(PILAF_PATH)/store-client.o 
-OBJS_IMAGE_BUILD :=  $(OBJS_PILAF) image_search.pb.o build_hash_tables.o args_config.o mpi_coordinator.o
-OBJS_IMAGE_LINEAR_SEARCH := $(OBJS_PILAF) image_search.pb.o linear_search.o args_config.o
-OBJS_DISTRIBUTED_IMAGE_SEARCH := $(OBJS_PILAF) image_search.pb.o distributed_image_search.o mpi_coordinator.o search_worker.o 
-OBJS_INTEGRITY_CHECK := $(OBJS_PILAF) image_search.pb.o integrity_check.o mpi_coordinator.o args_config.o
+OBJS_REDIS := $(REDIS_PATH)/anet.o
+COMMON_OBJS := image_search.pb.o args_config.o mpi_coordinator.o $(OBJS_PILAF) $(OBJS_REDIS)
+
+OBJS_IMAGE_BUILD := $(COMMON_OBJS) build_hash_tables.o 
+OBJS_IMAGE_LINEAR_SEARCH := $(COMMON_OBJS) linear_search.o 
+OBJS_DISTRIBUTED_IMAGE_SEARCH := $(COMMON_OBJS) distributed_image_search.o search_worker.o 
+OBJS_INTEGRITY_CHECK := $(COMMON_OBJS) integrity_check.o 
 APPS := build-tables linear-search distributed-image-search integrity-check
 
 all: $(APPS) 
