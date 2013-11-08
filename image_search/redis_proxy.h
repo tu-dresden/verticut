@@ -83,7 +83,7 @@ int RedisProxy<K, V>::init(const char* filename){
     
     con.host = ip;
     con.port = port;
-    con.dbindex = 14; //??
+    con.dbindex = 14; //Not sure what it means, but it works.
     redis_servers.push_back(con);
   }
   

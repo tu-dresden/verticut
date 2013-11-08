@@ -6,9 +6,9 @@ do
     port=`echo "$LINE" | awk '{print $2}'`
 
     if [[ -z "$port" ]]; then
-      ssh $host $" nohup redis-server  &>/dev/null &" &
+      ssh $host $" nohup redis-server --dir /scratch/yisheng  &>/dev/null &" &
     else
-      ssh $host $" nohup redis-server --port $port &>/dev/null &" &
+      ssh $host $" nohup redis-server --dir /scratch/yisheng --port $port &>/dev/null &" &
     fi
 
     sleep 1 
