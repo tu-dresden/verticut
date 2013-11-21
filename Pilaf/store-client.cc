@@ -112,6 +112,8 @@ int Client::remove(const KEY_TYPE key) {
  * updated accordingly. It also transparently handles reconnects and DHT
  * resizes the occur while it's working.
  */
+
+
 int Client::read_(const KEY_TYPE key, size_t key_len, VAL_TYPE& value, size_t& val_len, int op) {
   int rval = 0;
   size_t hash_idx = 0;
@@ -211,6 +213,8 @@ re_read:
 
   } else if (result == POST_GET_COLLISION) {
     //manager->log(VERB_VITAL, "POST_GET_COLLISION!\n");
+    //exit(0);
+
     stats_rdma_ht_reprobes++;
     hash_idx++;
     if (hash_idx == CUCKOO_D)
