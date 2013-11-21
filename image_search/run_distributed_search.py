@@ -21,7 +21,7 @@ query_id = 34
 def usage():
   print "Usage :"
   print """./run_distributed_search.py [-q query id] [-a approximate knn][-c config path], [-i image count],
-  [-b binary bits], [-s substr len] [-k k nearest] [-n n workers] [-r read mode] [--server memcached|pilaf|redis]"""
+  [-b binary bits], [-s substr len],[-k k nearest] [-n n workers] [-r read mode] [--server memcached|pilaf|redis]"""
 
 try:
   opts, args = getopt.getopt(sys.argv[1:], "q:c:i:b:s:k:n:r:a", ['server=', ])
@@ -70,7 +70,7 @@ arg = ['mpirun.openmpi', '-n', str(n),  'distributed-image-search', config_path,
   str(query_id)]
 
 print "Run with config_path = %s, image_count = %s, binary_bits = %s, substr_bits = %s,\
-    k = %s, server: %s, read_mode = %s apprximate_knn = %s, query id: %s" % (config_path, image_count, binary_bits, substr_len, 
-     k, server, read_mode, approximate_knn, query_id)
+k = %s, server: %s, read_mode = %s apprximate_knn = %s, query id: %s" % (config_path, image_count, binary_bits, substr_len, 
+k, server, read_mode, approximate_knn, query_id)
 
 call(arg)

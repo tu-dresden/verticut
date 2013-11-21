@@ -1,4 +1,4 @@
-/* Key-value store proxy client for Pilaf 
+/* Key-value store proxy client for local map 
  * Author : Yisheng Liao & Chenqi*/
 
 #ifndef MAP_PROXY

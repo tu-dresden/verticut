@@ -82,6 +82,7 @@ void SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
         search_result_st item;
         item.image_id = id;
         item.dist = compute_hamming_dist(code.code(), query_code);
+      
         knn_found_[id] = 1;
       
         if (qmax.size() < knn_) {
