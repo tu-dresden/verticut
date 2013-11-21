@@ -23,6 +23,7 @@ static int k;
 static char* config_path;
 static int n_local_bits;
 static int binary_bits;
+static bool approximate_knn;
 
 void cleanup();
 void setup(int argc, char* argv[]);
@@ -37,7 +38,7 @@ int main(int argc, char* argv[]){
    
   int query_image;
   
-  srand(34);
+  srand(getpid());
   if(coord->is_master())
     query_image = rand() % image_count;
  
@@ -50,7 +51,7 @@ int main(int argc, char* argv[]){
 
   std::string query_code = code.code();
   
-  list<SearchWorker::search_result_st> result = worker.find(query_code.c_str(), 16);
+  list<SearchWorker::search_result_st> result = worker.find(query_code.c_str(), 16, approximate_knn);
 
   if(coord->is_master()){
     list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
@@ -78,7 +79,7 @@ void cleanup(){
 
 //Set up code. The arguments should be passed by bootstrap script(run_distributed_search.py) 
 void setup(int argc, char* argv[]){
-  if(argc != 8)
+  if(argc != 9)
     mpi_coordinator::die("Incorrect number of arguments!");
   
   config_path = argv[1];
@@ -87,6 +88,7 @@ void setup(int argc, char* argv[]){
   n_local_bits = atoi(argv[4]);
   k = atoi(argv[5]);
   read_mode = (read_modes)atoi(argv[7]);
+  approximate_knn = atoi(argv[8]);
 
   mpi_coordinator::init(argc, argv);
   coord = new mpi_coordinator;
@@ -99,6 +101,6 @@ void setup(int argc, char* argv[]){
     proxy_clt = new RedisProxy<protobuf::Message, protobuf::Message>;
   else
     mpi_coordinator::die("Unrecognized server type.");
-
+  
   proxy_clt->init(config_path);
 } 
