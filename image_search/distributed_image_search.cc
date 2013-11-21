@@ -24,6 +24,7 @@ static char* config_path;
 static int n_local_bits;
 static int binary_bits;
 static bool approximate_knn;
+static int query_image_id = -1;
 
 void cleanup();
 void setup(int argc, char* argv[]);
@@ -36,15 +37,10 @@ int main(int argc, char* argv[]){
   
   SearchWorker worker(coord, proxy_clt, k, image_count);
    
-  int query_image;
   
-  srand(getpid());
-  if(coord->is_master())
-    query_image = rand() % image_count;
- 
-  coord->bcast(&query_image);
-  
-  image_id.set_id(query_image);
+  assert(query_image_id != -1 && query_image_id < image_count);
+
+  image_id.set_id(query_image_id);
   
   if(proxy_clt->get(image_id, code) != PROXY_FOUND)
     mpi_coordinator::die("Can't find match\n");
@@ -56,7 +52,7 @@ int main(int argc, char* argv[]){
   if(coord->is_master()){
     list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
     for(; iter != result.end(); ++iter)
-      std::cout<<"Image id : "<<iter->image_id<<" , hamming distance : "<<iter->dist<<endl;  
+      std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
   }
 
   cleanup();
@@ -79,7 +75,7 @@ void cleanup(){
 
 //Set up code. The arguments should be passed by bootstrap script(run_distributed_search.py) 
 void setup(int argc, char* argv[]){
-  if(argc != 9)
+  if(argc != 10)
     mpi_coordinator::die("Incorrect number of arguments!");
   
   config_path = argv[1];
@@ -89,6 +85,7 @@ void setup(int argc, char* argv[]){
   k = atoi(argv[5]);
   read_mode = (read_modes)atoi(argv[7]);
   approximate_knn = atoi(argv[8]);
+  query_image_id = atoi(argv[9]);
 
   mpi_coordinator::init(argc, argv);
   coord = new mpi_coordinator;

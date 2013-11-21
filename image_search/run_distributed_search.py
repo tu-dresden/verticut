@@ -16,14 +16,15 @@ pilaf_config = "../config/pilaf.cnf"
 redis_config = "../config/redis.cnf"
 config_path = None
 approximate_knn = 0
+query_id = 34
 
 def usage():
   print "Usage :"
-  print """./run_distributed_search.py [-a approximate knn][-c config path], [-i image count] [-b binary bits]
-   [-s substr len] [-k k nearest] [-n n workers] [-r read mode] [--server memcached|pilaf|redis]"""
+  print """./run_distributed_search.py [-q query id] [-a approximate knn][-c config path], [-i image count],
+  [-b binary bits], [-s substr len] [-k k nearest] [-n n workers] [-r read mode] [--server memcached|pilaf|redis]"""
 
 try:
-  opts, args = getopt.getopt(sys.argv[1:], "c:i:b:s:k:n:r:a", ['server=', ])
+  opts, args = getopt.getopt(sys.argv[1:], "q:c:i:b:s:k:n:r:a", ['server=', ])
 except getopt.GetoptError as err:
   print str(err)
   usage()
@@ -48,6 +49,8 @@ for o, a in opts:
     server = a
   elif o == "-a":
     approximate_knn = 1
+  elif o == "-q":
+    query_id = a
   else:
     usage()
 
@@ -63,10 +66,11 @@ elif server != "pilaf" and server != "memcached" and server != "redis":
   sys.exit(-1)
 
 arg = ['mpirun.openmpi', '-n', str(n),  'distributed-image-search', config_path, 
-  str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn)]
+  str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn), 
+  str(query_id)]
 
 print "Run with config_path = %s, image_count = %s, binary_bits = %s, substr_bits = %s,\
- k = %s, server: %s, read_mode = %s apprximate_knn = %s" % (config_path, image_count, binary_bits, substr_len, 
-     k, server, read_mode, approximate_knn)
+    k = %s, server: %s, read_mode = %s apprximate_knn = %s, query id: %s" % (config_path, image_count, binary_bits, substr_len, 
+     k, server, read_mode, approximate_knn, query_id)
 
 call(arg)
