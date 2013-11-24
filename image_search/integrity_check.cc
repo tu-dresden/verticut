@@ -48,6 +48,8 @@ void run_checking(){
       DIE
     }
     
+    assert(code.code().size() == 16);
+
     for(int t = 0; t < n_tables; ++t){
       idx.set_table_id(t);
       int start = t * substr_len;

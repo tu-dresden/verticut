@@ -80,8 +80,13 @@ def test():
 for i in xrange(iterations):
   print "%d th iteration:" % (i,)
   test()
+  print "accuracy:"
   print diff / (i+1)
+  print "approximate distance:"
   print dist_a / (i+1)
+  print "exact distance:"
   print dist_b / (i+1)
+  print "approximate time:"
   print time_a / (i+1)
+  print "exact time:"
   print time_b / (i+1)

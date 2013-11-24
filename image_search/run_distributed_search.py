@@ -2,6 +2,7 @@
 import sys
 import getopt
 from subprocess import call
+import os
 
 #Default value
 binary_bits = 128
@@ -65,7 +66,9 @@ elif server != "pilaf" and server != "memcached" and server != "redis":
   usage()
   sys.exit(-1)
 
-arg = ['mpirun.openmpi', '-n', str(n),  'distributed-image-search', config_path, 
+cur_dir = os.path.dirname(os.path.realpath(__file__))
+
+arg = ['mpirun.openmpi', '-n', str(n),  cur_dir + '/distributed-image-search', config_path, 
   str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn), 
   str(query_id)]
 
