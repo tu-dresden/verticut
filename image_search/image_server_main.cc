@@ -7,7 +7,7 @@
 #include "image_search_constants.h"
 #include <signal.h>
 
-static uint16_t port;
+static uint16_t port = DEFAULT_SERVER_PORT;
 static std::string ip = "0.0.0.0";
 static std::string config_path = DEFAULT_WORKERS_CONFIG;
 static uint16_t n_threads = 10;
@@ -33,7 +33,7 @@ void parse_args(int argc, char *argv[]){
   int opt_index = 0;
   int opt;
 
-  while((opt = getopt_long(argc, argv, "c:p:i:", long_options, &opt_index)) != -1){
+  while((opt = getopt_long(argc, argv, "c:p:i:n:", long_options, &opt_index)) != -1){
     switch(opt){
       case 0:
         fprintf(stderr, "get_opt but?\n");

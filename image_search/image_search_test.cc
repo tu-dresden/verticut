@@ -5,7 +5,6 @@ using namespace std;
 
 int main(){
   image_search_client c("127.0.0.1", 9191);
-  
 
   cout<<c.ping("hello world!")<<endl;
   

@@ -14,4 +14,5 @@
 #define DEFAULT_IMAGE_TOTAL 1000000
 #define REPORT_SIZE 100000
 #define DEFAULT_WORKERS_CONFIG "../config/workers.cnf"
+#define DEFAULT_SERVER_PORT 9191
 #endif
