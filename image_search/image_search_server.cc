@@ -78,6 +78,8 @@ void image_search_server::search_image_by_id(msgpack::rpc::request req,
   }
   
   req.result(wait_and_parse(f));
+  fclose(f);
+  printf("finish query for %u\n", id);
 }
 
 //Wait the child process finish and parse the output of the child process.
@@ -95,7 +97,6 @@ std::list<std::pair<uint32_t, uint32_t> > image_search_server::wait_and_parse(FI
       result.push_back(info);
     }
   }
-
-  fclose(f);
+  
   return result;
 }
