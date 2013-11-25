@@ -26,7 +26,7 @@ std::list<std::pair<uint32_t, uint32_t> > image_search_client::search_image_by_i
     bool approximate){
   
   msgpack::rpc::session s = pool_->get_session(ip_, port_);
-  s.set_timeout(120);
+  s.set_timeout(120 * 4);
   return s.call("search_image_by_id", 
                       id, 
                       knn, 

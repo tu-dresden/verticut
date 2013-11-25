@@ -17,6 +17,8 @@ static bool con_throughput_test = false;
 static bool approximate = false;
 static image_search_client *clt;
 static uint32_t knn = DEFAULT_KNN;
+static int32_t query_id = -1;
+static uint32_t image_total = 100000000;
 
 static struct option long_options[] = {
   {"throughput",    required_argument,  0,  't'},
@@ -25,7 +27,8 @@ static struct option long_options[] = {
   {"port",          required_argument,  0,  'p'},
   {"approximate",   required_argument,  0,  'a'},
   {"knn",           required_argument,  0,  'k'},
-  {"n_test",        required_argument,  0,  'n'}
+  {"n_test",        required_argument,  0,  'n'},
+  {"query_id",      required_argument,  0,  'q'}
 };
 
 void usage(){
@@ -37,7 +40,7 @@ void parse_args(int argc, char *argv[]){
   int opt_index = 0;
   int opt;
 
-  while((opt = getopt_long(argc, argv, "tci:p:ak:n:", long_options, &opt_index)) != -1){
+  while((opt = getopt_long(argc, argv, "tci:p:ak:n:q:", long_options, &opt_index)) != -1){
     switch(opt){
       case 0:
         fprintf(stderr, "get_opt but?\n");
@@ -45,6 +48,10 @@ void parse_args(int argc, char *argv[]){
 
       case 'c':
         con_throughput_test = true;
+        break;
+      
+      case 'q':
+        query_id = atoi(optarg);
         break;
 
       case 'p':
@@ -84,7 +91,11 @@ void parse_args(int argc, char *argv[]){
 
 void* query_thread(void* param){
   image_search_client c(ip, port);
-  uint32_t id = rand() % 100000000;
+  uint32_t id;  
+  if(query_id >= 0)
+    id = query_id;
+  else
+    id = rand() % image_total;
   std::list<std::pair<uint32_t, uint32_t> > res = c.search_image_by_id(id, knn, approximate);
 
   return NULL;
@@ -106,7 +117,13 @@ int main(int argc, char *argv[]){
     gettimeofday(&start_time, NULL);
 
     for(int i = 0; i < TEST_NUM; ++i){
-      uint32_t id = rand() % 100000000;
+      uint32_t id;
+      
+      if(query_id >= 0)
+        id = query_id;
+      else
+        id = rand() % image_total;
+      
       std::list<std::pair<uint32_t, uint32_t> > res = clt->search_image_by_id(id, knn, approximate);
       std::cerr<<'\r';
       std::cerr<<i<<"/"<<TEST_NUM;
