@@ -13,4 +13,5 @@
 #define DEFAULT_N_TABLES 4
 #define DEFAULT_IMAGE_TOTAL 1000000
 #define REPORT_SIZE 100000
+#define DEFAULT_WORKERS_CONFIG "../config/workers.cnf"
 #endif

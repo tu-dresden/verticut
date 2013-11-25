@@ -5,8 +5,8 @@
 #include <string>
 #include <list>
 #include <vector>
+#include "image_search_constants.h"
 
-#define DEFAULT_WORKERS_CONFIG "../config/workers.cnf"
 #define SEARCH_COMMAND "ssh %s \"cd ~/workplace/image_search/image_search/; ./run_distributed_search.py\"\
   -i 100000000 -q %d -k %d %s"
 
