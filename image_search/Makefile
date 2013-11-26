@@ -4,7 +4,7 @@ PILAF_PATH := ../Pilaf
 REDIS_PATH := ../Redis
 LDFLAGS := $(LDFLAGS) -lmsgpack -lmsgpack-rpc -lmpio -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached -lboost_thread-mt
 CFLAGS  := -Wno-write-strings -Ofast -rdynamic -I${REDIS_PATH} -I${PILAF_PATH} 
-CC      := mpiCC.openmpi
+CC      := mpiCC
 
 COMMON_SRC := memcached_proxy.h pilaf_proxy.h base_proxy.h image_search_constants.h 
 OBJS_PILAF := $(PILAF_PATH)/ib.o $(PILAF_PATH)/ibman.o $(PILAF_PATH)/store-client.o 

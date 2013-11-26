@@ -24,7 +24,7 @@ class SearchWorker{
                 int knn,
                 int image_total);
 
-    std::list<search_result_st> find(const char *binary_code, size_t nbytes, bool approximate = true);
+    std::list<search_result_st> find(const char *binary_code, size_t nbytes, bool approximate, size_t &radius);
     std::list<search_result_st> get_knn() { return result_; };
 
 
@@ -38,10 +38,10 @@ class SearchWorker{
     int n_local_bytes_;
     
     //Find exact KNN
-    void search_K_nearest_neighbors(BinaryCode &code);
+    size_t search_K_nearest_neighbors(BinaryCode &code);
     
     //Find approximate KNN, this is supposed to be much faster than exact KNN when k is large.
-    void search_K_approximate_nearest_neighbors(BinaryCode &code);
+    size_t search_K_approximate_nearest_neighbors(BinaryCode &code);
     void search_R_neighbors(int r, uint32_t search_index, 
         std::vector<int> &knn_candidates);
     void enumerate_entry(uint32_t curr, int len, int rr, HashIndex &idx, 

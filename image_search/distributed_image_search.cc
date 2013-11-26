@@ -46,14 +46,19 @@ int main(int argc, char* argv[]){
     mpi_coordinator::die("Can't find match\n");
 
   std::string query_code = code.code();
+  size_t radius;
+
+  list<SearchWorker::search_result_st> result = worker.find(query_code.c_str(), 16, approximate_knn, radius);
   
-  list<SearchWorker::search_result_st> result = worker.find(query_code.c_str(), 16, approximate_knn);
 
   if(coord->is_master()){
     list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
     for(; iter != result.end(); ++iter)
       std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
   }
+  
+  if(coord->is_master())
+    std::cout<<"Searching radius : "<<radius * 4<<std::endl;
 
   cleanup();
   return 0;

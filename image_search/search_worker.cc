@@ -19,7 +19,7 @@ SearchWorker::SearchWorker(mpi_coordinator *coord,
 }
 
 std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_code, 
-    size_t nbytes, bool approximate){
+    size_t nbytes, bool approximate, size_t &r){
   knn_found_.clear();
   result_.clear();
   
@@ -32,17 +32,17 @@ std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_
   code.set_code(binary_code, nbytes);
   
   if(approximate) //find approximate neighbors
-    search_K_approximate_nearest_neighbors(code);
+    r = search_K_approximate_nearest_neighbors(code);
   else
-    search_K_nearest_neighbors(code);
+    r = search_K_nearest_neighbors(code);
 
   return result_;
 }
 
 //Find approximate KNN, this is supposed to be much faster than exact KNN when k is large.
-void SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
+size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
   std::priority_queue<search_result_st> qmax;
-  int radius = 0; //Current searching radius.
+  size_t radius = 0; //Current searching radius.
   std::vector<int> kn_candidates; //KNN candidates for current searching radius.
   std::string query_code = code.code();
 
@@ -54,7 +54,7 @@ void SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
   while(!is_stop && radius <= n_local_bytes_ * 8){ 
     //Clear kn_candidates
     kn_candidates.clear();
-    kn_candidates.reserve(8192);
+    kn_candidates.reserve(8192 * 500);
     
     search_R_neighbors(radius, search_index, kn_candidates);
     vector<int> gathered_vector = coord_->gather_vectors(kn_candidates);
@@ -109,12 +109,14 @@ void SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
       result_.push_back(item);
       qmax.pop();
     }
+
+  return radius - 1;
 }
 
 //Find exact KNN
-void SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
+size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
   std::priority_queue<search_result_st> qmax;
-  int radius = 0; //Current searching radius.
+  size_t radius = 0; //Current searching radius.
   std::vector<int> kn_candidates; //KNN candidates for current searching radius.
   std::string query_code = code.code();
 
@@ -126,13 +128,14 @@ void SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
   while(!is_stop && radius <= n_local_bytes_ * 8){ 
     //Clear kn_candidates
     kn_candidates.clear();
-    kn_candidates.reserve(8192);
+    kn_candidates.reserve(8192 * 500);
     
     search_R_neighbors(radius, search_index, kn_candidates);
     vector<int> gathered_vector = coord_->gather_vectors(kn_candidates);
      
     if(coord_->is_master()){
-      sort(gathered_vector.begin(), gathered_vector.end()); 
+      sort(gathered_vector.begin(), gathered_vector.end());
+      std::cout<<gathered_vector.size()<<std::endl;
       //Eliminate duplicates.
       vector<int>::iterator iter = unique(gathered_vector.begin(), gathered_vector.end());
       gathered_vector.resize(distance(gathered_vector.begin(), iter));
@@ -181,6 +184,8 @@ void SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
       result_.push_back(item);
       qmax.pop();
     }
+
+  return radius - 1;
 }
 
 

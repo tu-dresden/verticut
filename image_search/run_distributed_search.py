@@ -8,7 +8,7 @@ import os
 binary_bits = 128
 substr_len = 32
 k = 100
-image_count = 1000000
+image_count = 100000000
 n = 4
 read_mode = 0
 server = "pilaf"
@@ -68,7 +68,7 @@ elif server != "pilaf" and server != "memcached" and server != "redis":
 
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 
-arg = ['mpirun.openmpi', '-n', str(n),  cur_dir + '/distributed-image-search', config_path, 
+arg = ['mpirun', '-n', str(n),  cur_dir + '/distributed-image-search', config_path, 
   str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn), 
   str(query_id)]
 
