@@ -2,7 +2,7 @@
 
 PILAF_PATH := ../Pilaf
 REDIS_PATH := ../Redis
-LDFLAGS := $(LDFLAGS) -lmsgpack -lmsgpack-rpc -lmpio -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached -lboost_thread-mt
+LDFLAGS := $(LDFLAGS) -lrt -lmsgpack -lmsgpack-rpc -lmpio -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached -lboost_thread-mt
 CFLAGS  := -Wno-write-strings -Ofast -rdynamic -I${REDIS_PATH} -I${PILAF_PATH} 
 CC      := mpiCC
 
@@ -17,7 +17,7 @@ OBJS_DISTRIBUTED_IMAGE_SEARCH := $(COMMON_OBJS) distributed_image_search.o searc
 OBJS_INTEGRITY_CHECK := $(COMMON_OBJS) integrity_check.o 
 OBJS_IMAGE_SERVER := image_search_server.o image_server_main.o
 OBJS_IMAGE_TEST := image_search_client.o image_search_test.o
-APPS := build-tables linear-search distributed-image-search integrity-check image-server image-search-test generate-bitmap
+APPS := build-tables linear-search distributed-image-search integrity-check image-server image-search-test generate-bitmap bitmap-deamon
 
 all: $(APPS) 
 
@@ -47,6 +47,9 @@ image-search-test: $(OBJS_IMAGE_TEST)
 	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS) 
 
 generate-bitmap: generate_bitmap.cc
+	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS) 
+
+bitmap-deamon: bitmap_deamon.cc
 	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS) 
 
 clean:
