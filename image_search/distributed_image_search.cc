@@ -12,6 +12,7 @@
 #include <map>
 #include <iostream>
 #include "search_worker.h"
+#include "timer.h"
 
 using namespace google;
 
@@ -57,9 +58,9 @@ int main(int argc, char* argv[]){
       std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
   }
   
-  if(coord->is_master())
+  if(coord->is_master()){
     std::cout<<"Searching radius : "<<radius * 4<<std::endl;
-
+  }
   cleanup();
   return 0;
 }

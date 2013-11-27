@@ -113,13 +113,24 @@ int Client::remove(const KEY_TYPE key) {
  * resizes the occur while it's working.
  */
 
+/*
+int read_total = 0;
+int read_fail = 0;
+int read_re = 0;
+*/
 
 int Client::read_(const KEY_TYPE key, size_t key_len, VAL_TYPE& value, size_t& val_len, int op) {
   int rval = 0;
   size_t hash_idx = 0;
   unsigned int serverepoch = 0;
+  
+  //if(read_re % 100000 == 0)
+  //  printf("fail / total / re_read:  %d / %d / %d\n", read_fail, read_total, read_re);
+  
+  //read_total++;
 
 re_read:
+  //read_re++;
   // Figure out which server has the key we need
   int whichserver = servers[0]->dhtclient->server_for_key(server_count,key,key_len);
   serverepoch = servers[whichserver]->epoch;
@@ -214,7 +225,7 @@ re_read:
   } else if (result == POST_GET_COLLISION) {
     //manager->log(VERB_VITAL, "POST_GET_COLLISION!\n");
     //exit(0);
-
+    //read_fail++;
     stats_rdma_ht_reprobes++;
     hash_idx++;
     if (hash_idx == CUCKOO_D)
@@ -236,7 +247,7 @@ re_read:
     return result;
 
   }
-
+  
 }
 
 /**

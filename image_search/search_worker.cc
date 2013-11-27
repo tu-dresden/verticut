@@ -1,6 +1,7 @@
 #include "search_worker.h"
 #include "image_tools.h"
 #include <iostream>
+#include "timer.h"
 
 bool operator<(const SearchWorker::search_result_st &a,const SearchWorker::search_result_st &b)
 {
@@ -60,6 +61,8 @@ size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
     vector<int> gathered_vector = coord_->gather_vectors(kn_candidates);
      
     if(coord_->is_master()){
+      timer t("if master");
+
       sort(gathered_vector.begin(), gathered_vector.end()); 
       //Eliminate duplicates.
       vector<int>::iterator iter = unique(gathered_vector.begin(), gathered_vector.end());
@@ -67,7 +70,7 @@ size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
       
       BinaryCode code;
       ID image_id;
-
+      
       for(uint32_t i = 0; i < gathered_vector.size(); ++i){
         int id = gathered_vector[i];
       
@@ -129,20 +132,19 @@ size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
     //Clear kn_candidates
     kn_candidates.clear();
     kn_candidates.reserve(8192 * 500);
-    
     search_R_neighbors(radius, search_index, kn_candidates);
     vector<int> gathered_vector = coord_->gather_vectors(kn_candidates);
      
     if(coord_->is_master()){
+
       sort(gathered_vector.begin(), gathered_vector.end());
-      std::cout<<gathered_vector.size()<<std::endl;
+      
       //Eliminate duplicates.
       vector<int>::iterator iter = unique(gathered_vector.begin(), gathered_vector.end());
       gathered_vector.resize(distance(gathered_vector.begin(), iter));
       
       BinaryCode code;
       ID image_id;
-
       for(uint32_t i = 0; i < gathered_vector.size(); ++i){
         int id = gathered_vector[i];
       
@@ -188,7 +190,6 @@ size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
   return radius - 1;
 }
 
-
 void SearchWorker::search_R_neighbors(int r, uint32_t search_index, 
     std::vector<int>& kn_candidates){ 
   HashIndex idx;
@@ -196,15 +197,22 @@ void SearchWorker::search_R_neighbors(int r, uint32_t search_index,
   enumerate_entry(search_index, 0, r, idx, kn_candidates);
 }
 
+//int hit = 0;
+//int miss = 0;
+
 //Enumerate all the entries.
 void SearchWorker::enumerate_entry(uint32_t curr, int len, int rr, HashIndex& idx, 
     std::vector<int> &kn_candidates){ 
   
+  //if(miss % 100000 == 0)
+  //  printf("miss / hit : %d / %d\n", miss, hit);
+
   if (rr == 0) {
     ImageList img_list;
     idx.set_index(curr);
-    int rval = proxy_clt_->get(idx, img_list);
-      
+    int rval;
+    rval = proxy_clt_->get(idx, img_list);
+    
     if (rval == PROXY_FOUND) {
       for(int i = 0; i < img_list.images_size(); i++){
         if(img_list.images(i) < image_total_){

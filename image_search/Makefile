@@ -13,11 +13,11 @@ COMMON_OBJS := image_search.pb.o args_config.o mpi_coordinator.o $(OBJS_PILAF) $
 
 OBJS_IMAGE_BUILD := $(COMMON_OBJS) build_hash_tables.o 
 OBJS_IMAGE_LINEAR_SEARCH := $(COMMON_OBJS) linear_search.o 
-OBJS_DISTRIBUTED_IMAGE_SEARCH := $(COMMON_OBJS) distributed_image_search.o search_worker.o 
+OBJS_DISTRIBUTED_IMAGE_SEARCH := $(COMMON_OBJS) distributed_image_search.o search_worker.o timer.o 
 OBJS_INTEGRITY_CHECK := $(COMMON_OBJS) integrity_check.o 
 OBJS_IMAGE_SERVER := image_search_server.o image_server_main.o
 OBJS_IMAGE_TEST := image_search_client.o image_search_test.o
-APPS := build-tables linear-search distributed-image-search integrity-check image-server image-search-test
+APPS := build-tables linear-search distributed-image-search integrity-check image-server image-search-test generate-bitmap
 
 all: $(APPS) 
 
@@ -44,6 +44,9 @@ image-server: $(OBJS_IMAGE_SERVER)
 	${CC} -o $@ $^ $(LDFLAGS) -lmsgpack -lmsgpack-rpc -lmpio 
 
 image-search-test: $(OBJS_IMAGE_TEST) 
+	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS) 
+
+generate-bitmap: generate_bitmap.cc
 	${CC} -o $@ $^ $(LDFLAGS) $(CFLAGS) 
 
 clean:
