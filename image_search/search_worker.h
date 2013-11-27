@@ -36,7 +36,9 @@ class SearchWorker{
     int knn_;
     int image_total_;
     int n_local_bytes_;
-    
+    int table_idx_;
+    void* addr_;
+
     //Find exact KNN
     size_t search_K_nearest_neighbors(BinaryCode &code);
     

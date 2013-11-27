@@ -15,4 +15,5 @@
 #define REPORT_SIZE 100000
 #define DEFAULT_WORKERS_CONFIG "../config/workers.cnf"
 #define DEFAULT_SERVER_PORT 9191
+#define MEM_ID "image_search_project_bitmap"
 #endif

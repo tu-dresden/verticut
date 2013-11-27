@@ -8,8 +8,7 @@
 #include <stdint.h>
 #include <sys/signal.h>
 #include <unistd.h>
-
-#define MEM_ID "image_search_project_bitmap"
+#include "image_search_constants.h"
 
 static unsigned long long total_size =  ((unsigned long long)1 << 32) / 8 * 4;
 static void *addr;
@@ -34,7 +33,8 @@ int main(int argc, char* argv[]){
   
   assert(ftruncate(sd, total_size) != -1);
   addr = mmap(0, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, sd, 0);
-   
+  close(sd);
+
   assert(addr != MAP_FAILED);
   
   FILE* f1 = fopen("/home/yisheng/data/data-1b-raw.txt_bmp_1.raw", "r");

@@ -2,6 +2,48 @@
 #include "image_tools.h"
 #include <iostream>
 #include "timer.h"
+#include <stdlib.h>
+#include "image_search_constants.h"
+#include <sys/mman.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
+static void* addr1;
+static void* addr2;
+static void* addr3;
+static void* addr4;
+static int sd;
+static unsigned long long total_size =  ((unsigned long long)1 << 32) / 8 * 4;
+
+static int shared_mem_init(){
+  sd = shm_open(MEM_ID, O_RDWR, 0666);
+  if(sd == -1)
+    return 0;
+  
+  unsigned long long size = total_size / 4;
+  addr1 = mmap(0, total_size, PROT_READ, MAP_SHARED, sd, 0);
+  
+  if(addr1 == MAP_FAILED){
+    addr1 = 0;
+    return 0;
+  }
+  addr2 = (char*)addr1 + size;
+  addr3 = (char*)addr1 + 2 * size;
+  addr4 = (char*)addr1 + 3 * size;
+  
+  return 1;
+}
+
+static void shared_mem_release(){
+
+}
+
+int get_idx(uint32_t *ptr, uint32_t bit_idx){
+  uint32_t word_idx = bit_idx / 32;
+  bit_idx = bit_idx % 32;
+  return ptr[word_idx] & (1 << bit_idx);
+}
 
 bool operator<(const SearchWorker::search_result_st &a,const SearchWorker::search_result_st &b)
 {
@@ -13,10 +55,21 @@ SearchWorker::SearchWorker(mpi_coordinator *coord,
                           int knn,
                           int image_total
                           ){
+  printf("init : %d\n", shared_mem_init());
   coord_  = coord;
   proxy_clt_ = proxy_clt;
   knn_ = knn;
   image_total_ = image_total;
+  table_idx_ = coord->get_rank();
+  
+  if(table_idx_ == 0)
+    addr_ = addr1;
+  else if(table_idx_ == 1)
+    addr_ = addr2;
+  else if(table_idx_ == 2)
+    addr_ = addr3;
+  else if(table_idx_ == 3)
+    addr_ = addr4;
 }
 
 std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_code, 
@@ -61,7 +114,6 @@ size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
     vector<int> gathered_vector = coord_->gather_vectors(kn_candidates);
      
     if(coord_->is_master()){
-      timer t("if master");
 
       sort(gathered_vector.begin(), gathered_vector.end()); 
       //Eliminate duplicates.
@@ -211,6 +263,14 @@ void SearchWorker::enumerate_entry(uint32_t curr, int len, int rr, HashIndex& id
     ImageList img_list;
     idx.set_index(curr);
     int rval;
+
+    if(addr_){
+      //printf("here\n");
+      if(get_idx((uint32_t*)addr_, curr) == 0){
+        return;
+      }
+    }
+  
     rval = proxy_clt_->get(idx, img_list);
     
     if (rval == PROXY_FOUND) {
