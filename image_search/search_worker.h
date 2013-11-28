@@ -9,6 +9,7 @@
 #include "image_search.pb.h"
 #include <list>
 #include <stdint.h>
+#include "bitmap.h"
 
 using namespace google;
 
@@ -27,17 +28,17 @@ class SearchWorker{
     std::list<search_result_st> find(const char *binary_code, size_t nbytes, bool approximate, size_t &radius);
     std::list<search_result_st> get_knn() { return result_; };
 
-
   protected:
     mpi_coordinator* coord_;
     BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt_;
     std::list<search_result_st> result_;
     std::map<int, bool> knn_found_;
+    ImageBitmap *bmp_;
+
     int knn_;
     int image_total_;
     int n_local_bytes_;
     int table_idx_;
-    void* addr_;
 
     //Find exact KNN
     size_t search_K_nearest_neighbors(BinaryCode &code);
@@ -48,6 +49,8 @@ class SearchWorker{
         std::vector<int> &knn_candidates);
     void enumerate_entry(uint32_t curr, int len, int rr, HashIndex &idx, 
         std::vector<int> &knn_candidates);
-  
+    
+    //try to map the memory space of bitmap deamon to local memory.
+    bool connect_bitmap_deamon(unsigned long long size = ((unsigned long long )1 << 32) / 8 * 4);
 };
 #endif
