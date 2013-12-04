@@ -119,17 +119,24 @@ int read_fail = 0;
 int read_re = 0;
 */
 
+//#define PRINT_READ
+
+#ifdef PRINT_READ
 int read_total = 0;
+#endif
 
 int Client::read_(const KEY_TYPE key, size_t key_len, VAL_TYPE& value, size_t& val_len, int op) {
   int rval = 0;
   size_t hash_idx = 0;
   unsigned int serverepoch = 0;
-  
+
+#ifdef PRINT_READ
   read_total++;
   
-  if(read_total % 10000 == 0)
+  if(read_total % 100000 == 0)
     printf("read total : %d\n", read_total);
+
+#endif
 
   //if(read_re % 100000 == 0)
   //  printf("fail / total / re_read:  %d / %d / %d\n", read_fail, read_total, read_re);

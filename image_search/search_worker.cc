@@ -46,7 +46,7 @@ SearchWorker::SearchWorker(mpi_coordinator *coord,
   table_idx_ = coord->get_rank();
   bmp_ = 0;
   
-  printf("init : %d\n", connect_bitmap_deamon());
+//  printf("init : %d\n", connect_bitmap_deamon());
 }
 
 std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_code, 

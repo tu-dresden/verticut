@@ -31,15 +31,15 @@ void cleanup();
 void setup(int argc, char* argv[]);
 
 int main(int argc, char* argv[]){  
-  //ID image_id;
-  //BinaryCode code;
+  ID image_id;
+  BinaryCode code;
   
   setup(argc, argv); 
   
   SearchWorker worker(coord, proxy_clt, k, image_count);
    
   
-  /*assert(query_image_id != -1 && query_image_id < image_count);
+  assert(query_image_id != -1 && query_image_id < image_count);
 
   image_id.set_id(query_image_id);
   
@@ -47,29 +47,18 @@ int main(int argc, char* argv[]){
     mpi_coordinator::die("Can't find match\n");
 
   std::string query_code = code.code();
-  */
-
-  char code[17];
-  code[16] = '\0';
-
 
   size_t radius;
 
   list<SearchWorker::search_result_st> result;
   
-  FILE* f = fopen("query", "r");
+  result = worker.find(query_code.c_str(), 16, approximate_knn, radius);
 
-  while(fread(code, 16, 1, f)){
-    result = worker.find(code, 16, approximate_knn, radius);
-    printf("finish\n");
-  }
-
-  if(coord->is_master()){/*
+  if(coord->is_master()){
     list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
     for(; iter != result.end(); ++iter)
       std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
-  */
-      }
+  }
   
   if(coord->is_master()){
     std::cout<<"Searching radius : "<<radius * 4<<std::endl;
