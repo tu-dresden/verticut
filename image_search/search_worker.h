@@ -10,6 +10,7 @@
 #include <list>
 #include <stdint.h>
 #include "bitmap.h"
+#define APPROXIMATE_FACTOR 20
 
 using namespace google;
 

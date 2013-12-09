@@ -9,7 +9,7 @@
 #include <sys/time.h>
 #include <pthread.h>
 
-static int TEST_NUM = 20;
+static int TEST_NUM = 40;
 static std::string ip = "127.0.0.1";
 static uint16_t port = DEFAULT_SERVER_PORT;
 static bool throughput_test = false;
@@ -90,12 +90,10 @@ void parse_args(int argc, char *argv[]){
 }
 
 void* query_thread(void* param){
+  long id = (long)param;
+  
+
   image_search_client c(ip, port);
-  uint32_t id;  
-  if(query_id >= 0)
-    id = query_id;
-  else
-    id = rand() % image_total;
   std::list<std::pair<uint32_t, uint32_t> > res = c.search_image_by_id(id, knn, approximate);
 
   return NULL;
@@ -116,7 +114,7 @@ int main(int argc, char *argv[]){
     std::cout<<"Testing sequential throughput..."<<std::endl;
     gettimeofday(&start_time, NULL);
 
-    for(int i = 0; i < TEST_NUM; ++i){
+    /*for(int i = 0; i < TEST_NUM; ++i){
       uint32_t id;
       
       if(query_id >= 0)
@@ -128,6 +126,14 @@ int main(int argc, char *argv[]){
       std::cerr<<'\r';
       std::cerr<<i<<"/"<<TEST_NUM;
     }
+    */
+
+    FILE* f = fopen("query_id", "r");
+    int id;
+    while(fscanf(f, "%d", &id) != EOF){ 
+      std::list<std::pair<uint32_t, uint32_t> > res = clt->search_image_by_id(id, knn, approximate);
+    }
+
     std::cerr<<std::endl;
     
     gettimeofday(&end_time, NULL);
@@ -142,10 +148,17 @@ int main(int argc, char *argv[]){
     gettimeofday(&start_time, NULL);
     
     pthread_t *tids = (pthread_t*)malloc(sizeof(pthread_t) * TEST_NUM);
-
-    for(int i = 0; i < TEST_NUM; ++i)
-      pthread_create(&tids[i], 0, query_thread, 0);
-
+    
+    FILE* f = fopen("query_id", "r");
+    long id;
+    int i = 0;
+    
+    while(fscanf(f, "%d", &id) != EOF){
+      pthread_create(&tids[i], 0, query_thread, (void*)id);
+      //printf("%d\n", id);
+      i++;
+    }
+    
     for(int i = 0; i < TEST_NUM; ++i)
       pthread_join(tids[i], NULL);
 

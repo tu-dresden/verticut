@@ -46,7 +46,8 @@ SearchWorker::SearchWorker(mpi_coordinator *coord,
   table_idx_ = coord->get_rank();
   bmp_ = 0;
   
-//  printf("init : %d\n", connect_bitmap_deamon());
+  connect_bitmap_deamon();
+  //printf("init : %d\n", connect_bitmap_deamon());
 }
 
 std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_code, 
@@ -117,7 +118,7 @@ size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
       
         knn_found_[id] = 1;
       
-        if (qmax.size() < knn_) {
+        if (qmax.size() < knn_ * APPROXIMATE_FACTOR) {
           qmax.push(item);
         }else if (qmax.top().dist > item.dist) {
           qmax.pop();
@@ -129,17 +130,24 @@ size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
     radius += 1; 
     //If the mininum distance next epoch we may find is less than the max one of 
     //what we've found, then stop.
-    if(coord_->is_master() && qmax.size() == knn_)
+    if(coord_->is_master() && qmax.size() == knn_ * APPROXIMATE_FACTOR)
       is_stop = 1;
 
     coord_->bcast(&is_stop);
   }
   
+  int i = 0;
+  int beg = qmax.size() - knn_;
+
   if(coord_->is_master())
     while (!qmax.empty()) {
       search_result_st item = qmax.top();
-      result_.push_back(item);
+      
+      if(i >= beg)
+        result_.push_back(item);
+      
       qmax.pop();
+      i++;
     }
 
   return radius - 1;

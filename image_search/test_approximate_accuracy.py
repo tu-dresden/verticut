@@ -8,7 +8,7 @@ import numpy as np
 query_id = 0
 knn = 0
 image_total = 100000000
-iterations = 10
+iterations = 20
 test_knns = [3, 100, 500, 1000]
 
 diff = np.zeros(len(test_knns), np.float32)
@@ -39,7 +39,6 @@ def compare_distance(a, b):
   for i in xrange(len(a)):
     dist_a += int(a[i].split(":")[1])
     dist_b += int(b[i].split(":")[1])
-  
   return (dist_a / len(a), dist_b / len(b))
    
 
@@ -49,7 +48,7 @@ def test():
   
   for i, k in enumerate(test_knns):
     knn = k 
-    command_approximate = ["./run_distributed_search.py", "-k", str(20 * knn), "-i", 
+    command_approximate = ["./run_distributed_search.py", "-k", str(10 * knn), "-i", 
         str(image_total), "-a", "-q", str(query_id)]
     
     command_exact = ["./run_distributed_search.py", "-k", str(knn), "-i", 
@@ -71,12 +70,16 @@ def test():
 
     liste = se.split("\n")
     lista = sa.split("\n")
-    diff[i] += compare_diff(liste[-2-knn:-2], lista[-2-knn:-2])
-    bd, ad = compare_distance(liste[-2-knn:-2], lista[-2-knn:-2])
+    liste = liste[-3-knn:-3]
+    lista = lista[-3-knn:-3]
+
+    diff[i] += compare_diff(liste, lista)
+    bd, ad = compare_distance(liste, lista)
     dist_a[i] += ad
     dist_b[i] += bd
 
 
+random.seed(100)
 for i in xrange(iterations):
   print "%d th iteration:" % (i,)
   test()

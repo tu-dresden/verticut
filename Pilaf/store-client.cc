@@ -259,9 +259,7 @@ re_read:
 
   } else {
     return result;
-
-  }
-  
+  } 
 }
 
 /**
