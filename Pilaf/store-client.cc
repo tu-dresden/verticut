@@ -163,6 +163,7 @@ re_read:
     rval = do_event_loop();
   } while(!rval && !servers[whichserver]->rdma_msg_ready &&
           servers[whichserver]->epoch == serverepoch);
+  
   servers[whichserver]->rdma_msg_ready = false;
 
   if (rval) return POST_GET_FAILURE;

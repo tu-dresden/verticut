@@ -15,6 +15,11 @@ bool operator<(const SearchWorker::search_result_st &a,const SearchWorker::searc
   return a.dist<b.dist;
 }
 
+void SearchWorker::get_nreads(uint64_t &n_main_reads, uint64_t &n_sub_reads, uint64_t &n_local_reads){
+  n_main_reads = n_main_reads_;
+  n_sub_reads = n_sub_reads_;
+  n_local_reads = n_local_reads_;
+}
 
 bool SearchWorker::connect_bitmap_deamon(unsigned long long size){
   int shared_fd_ = shm_open(MEM_ID, O_RDWR, 0666);
@@ -52,9 +57,13 @@ SearchWorker::SearchWorker(mpi_coordinator *coord,
 
 std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_code, 
     size_t nbytes, bool approximate, size_t &r){
+  
   knn_found_.clear();
   result_.clear();
-  
+  n_main_reads_ = 0;
+  n_sub_reads_ = 0;
+  n_local_reads_ = 0;
+
   assert(nbytes % coord_->get_size() == 0);
   n_local_bytes_ = nbytes / coord_->get_size();
 
@@ -109,6 +118,8 @@ size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
           continue;
         
         image_id.set_id(id);
+        n_main_reads_++;
+        
         if(proxy_clt_->get(image_id, code) != PROXY_FOUND)
           mpi_coordinator::die("No corresponding image found.\n");
         
@@ -189,7 +200,9 @@ size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
         if(knn_found_.find(id) != knn_found_.end())
           continue;
         
+        n_main_reads_++;
         image_id.set_id(id);
+        
         if(proxy_clt_->get(image_id, code) != PROXY_FOUND)
           mpi_coordinator::die("No corresponding image found.\n");
         
@@ -211,7 +224,6 @@ size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
     //If the mininum distance next epoch we may find is less than the max one of 
     //what we've found, then stop.
     if(coord_->is_master() && qmax.size() == knn_ && qmax.top().dist < radius * 4)
-    //if(coord_->is_master() && qmax.size() == knn_)
       is_stop = 1;
 
     coord_->bcast(&is_stop);
@@ -242,13 +254,15 @@ void SearchWorker::enumerate_entry(uint32_t curr, int len, int rr, HashIndex& id
     ImageList img_list;
     idx.set_index(curr);
     int rval;
-
+  
     if(bmp_){
+      n_local_reads_++;
       if(bmp_->get_idx(curr) == 0){
         return;
       }
     }
   
+    n_sub_reads_++;
     rval = proxy_clt_->get(idx, img_list);
     
     if (rval == PROXY_FOUND) {

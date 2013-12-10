@@ -48,7 +48,7 @@ def test():
   
   for i, k in enumerate(test_knns):
     knn = k 
-    command_approximate = ["./run_distributed_search.py", "-k", str(10 * knn), "-i", 
+    command_approximate = ["./run_distributed_search.py", "-k", str(knn), "-i", 
         str(image_total), "-a", "-q", str(query_id)]
     
     command_exact = ["./run_distributed_search.py", "-k", str(knn), "-i", 

@@ -28,6 +28,7 @@ class SearchWorker{
 
     std::list<search_result_st> find(const char *binary_code, size_t nbytes, bool approximate, size_t &radius);
     std::list<search_result_st> get_knn() { return result_; };
+    void get_nreads(uint64_t &n_main_reads, uint64_t &n_sub_reads, uint64_t &n_local_reads);
 
   protected:
     mpi_coordinator* coord_;
@@ -35,6 +36,9 @@ class SearchWorker{
     std::list<search_result_st> result_;
     std::map<int, bool> knn_found_;
     ImageBitmap *bmp_;
+    uint64_t n_main_reads_;
+    uint64_t n_sub_reads_;
+    uint64_t n_local_reads_;
 
     int knn_;
     int image_total_;
