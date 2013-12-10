@@ -54,4 +54,3 @@ bitmap-deamon: bitmap_deamon.cc
 
 clean:
 	@rm -f *.o ${APPS}
-

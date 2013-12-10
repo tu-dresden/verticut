@@ -423,6 +423,9 @@ int IBConn::rdma_push(uintptr_t addr, size_t length, uintptr_t local_addr, struc
   return ibv_post_send(s_conn->qp, &wr, &bad_wr);
 
 }
+
+uint64_t pilaf_n_rdma_read = 0;
+
 int IBConn::rdma_fetch(uintptr_t addr, size_t length, struct ibv_mr* remote_mr, ibv_mr* local_mr) {
   // XXX TODO Solve the issue with segfault on the first ibv_post_send after
   // a reconnect, which I suspect is due to it trying to clean up the last failed

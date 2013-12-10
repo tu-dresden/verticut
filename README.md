@@ -1,5 +1,5 @@
 image_search
 ============
 
-Image searching based on Pilaf/Memcached/Redis key-value storage system.
+Image searching based on Pilaf key-value store.
 

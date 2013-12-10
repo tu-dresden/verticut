@@ -9,16 +9,17 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-
 bool operator<(const SearchWorker::search_result_st &a,const SearchWorker::search_result_st &b)
 {
   return a.dist<b.dist;
 }
 
-void SearchWorker::get_nreads(uint64_t &n_main_reads, uint64_t &n_sub_reads, uint64_t &n_local_reads){
+void SearchWorker::get_stat(uint64_t &n_main_reads, uint64_t &n_sub_reads, 
+                                uint64_t &n_local_reads, uint32_t &radius){
   n_main_reads = n_main_reads_;
   n_sub_reads = n_sub_reads_;
   n_local_reads = n_local_reads_;
+  radius = radius_;
 }
 
 bool SearchWorker::connect_bitmap_deamon(unsigned long long size){
@@ -41,12 +42,11 @@ bool SearchWorker::connect_bitmap_deamon(unsigned long long size){
 
 SearchWorker::SearchWorker(mpi_coordinator *coord, 
                           BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt,
-                          int knn,
                           int image_total
                           ){
   coord_  = coord;
   proxy_clt_ = proxy_clt;
-  knn_ = knn;
+  knn_ = 0;
   image_total_ = image_total;
   table_idx_ = coord->get_rank();
   bmp_ = 0;
@@ -56,8 +56,9 @@ SearchWorker::SearchWorker(mpi_coordinator *coord,
 }
 
 std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_code, 
-    size_t nbytes, bool approximate, size_t &r){
+    size_t nbytes, int knn, bool approximate){
   
+  knn_ = knn;
   knn_found_.clear();
   result_.clear();
   n_main_reads_ = 0;
@@ -73,9 +74,9 @@ std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_
   code.set_code(binary_code, nbytes);
   
   if(approximate) //find approximate neighbors
-    r = search_K_approximate_nearest_neighbors(code);
+    radius_ = search_K_approximate_nearest_neighbors(code);
   else
-    r = search_K_nearest_neighbors(code);
+    radius_ = search_K_nearest_neighbors(code);
 
   return result_;
 }

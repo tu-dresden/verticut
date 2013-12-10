@@ -27,16 +27,21 @@ static int binary_bits;
 static bool approximate_knn;
 static int query_image_id = -1;
 
+//How many rdma accesses performs
+extern uint64_t pilaf_n_rdma_read;
+
 void cleanup();
 void setup(int argc, char* argv[]);
 
 int main(int argc, char* argv[]){  
   ID image_id;
   BinaryCode code;
-  
+  uint64_t n_main_reads, n_sub_reads, n_local_reads;
+  uint32_t radius;
+
   setup(argc, argv); 
   
-  SearchWorker worker(coord, proxy_clt, k, image_count);
+  SearchWorker worker(coord, proxy_clt, image_count);
    
   
   assert(query_image_id != -1 && query_image_id < image_count);
@@ -48,21 +53,22 @@ int main(int argc, char* argv[]){
 
   std::string query_code = code.code();
 
-  size_t radius;
 
   list<SearchWorker::search_result_st> result;
   
-  result = worker.find(query_code.c_str(), 16, approximate_knn, radius);
+  result = worker.find(query_code.c_str(), 16, k, approximate_knn);
+  worker.get_stat(n_main_reads, n_sub_reads, n_local_reads, radius); 
 
   if(coord->is_master()){
     list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
     for(; iter != result.end(); ++iter)
       std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
-    }
   
-  if(coord->is_master()){
-    std::cout<<"Searching radius : "<<radius * 4<<std::endl;
+    std::cout<<"n_main_reads : "<<n_main_reads<<" , n_sub_reads : "<<n_sub_reads<<", ";
+    std::cout<<"n_local_reads : "<<n_local_reads<<", radius : "<<radius<<", ";
+    std::cout<<"rdma : "<<pilaf_n_rdma_read<<std::endl;
   }
+  
   cleanup();
   return 0;
 }
