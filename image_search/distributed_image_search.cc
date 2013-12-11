@@ -40,10 +40,8 @@ int main(int argc, char* argv[]){
   uint32_t radius;
 
   setup(argc, argv); 
-  
+
   SearchWorker worker(coord, proxy_clt, image_count);
-   
-  
   assert(query_image_id != -1 && query_image_id < image_count);
 
   image_id.set_id(query_image_id);
@@ -64,11 +62,12 @@ int main(int argc, char* argv[]){
     for(; iter != result.end(); ++iter)
       std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
   
-    std::cout<<"n_main_reads : "<<n_main_reads<<" , n_sub_reads : "<<n_sub_reads<<", ";
+    std::cout<<coord->get_rank()<<"  n_main_reads : "<<n_main_reads<<" , n_sub_reads : "<<n_sub_reads<<", ";
     std::cout<<"n_local_reads : "<<n_local_reads<<", radius : "<<radius<<", ";
-    std::cout<<"rdma : "<<pilaf_n_rdma_read<<std::endl;
+    std::cout<<"rdma : "<<pilaf_n_rdma_read<<std::endl; 
   }
   
+
   cleanup();
   return 0;
 }
@@ -112,6 +111,6 @@ void setup(int argc, char* argv[]){
     proxy_clt = new RedisProxy<protobuf::Message, protobuf::Message>;
   else
     mpi_coordinator::die("Unrecognized server type.");
-  
+
   proxy_clt->init(config_path);
 } 

@@ -434,6 +434,7 @@ int IBConn::rdma_fetch(uintptr_t addr, size_t length, struct ibv_mr* remote_mr, 
   static struct ibv_send_wr wr, *bad_wr = NULL;
   static struct ibv_sge sge;
 //  struct ibv_send_wr* bad_wr = NULL;
+  pilaf_n_rdma_read++;
 
   if ((void*)addr < remote_mr->addr ||
       (void*)((char*)addr+length) > (void*)((char*)remote_mr->addr + remote_mr->length))

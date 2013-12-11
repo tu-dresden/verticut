@@ -18,14 +18,15 @@ redis_config = "../config/redis.cnf"
 config_path = None
 approximate_knn = 0
 query_id = 34
+query_file = None
 
 def usage():
   print "Usage :"
-  print """./run_distributed_search.py [-q query id] [-a approximate knn][-c config path], [-i image count],
+  print """./run_distributed_search.py [-q query id] [-a approximate knn][-c config path], [-i image count], [-f query file],
   [-b binary bits], [-s substr len],[-k k nearest] [-n n workers] [-r read mode] [--server memcached|pilaf|redis]"""
 
 try:
-  opts, args = getopt.getopt(sys.argv[1:], "q:c:i:b:s:k:n:r:a", ['server=', ])
+  opts, args = getopt.getopt(sys.argv[1:], "f:q:c:i:b:s:k:n:r:a", ['server=', ])
 except getopt.GetoptError as err:
   print str(err)
   usage()
@@ -52,6 +53,8 @@ for o, a in opts:
     approximate_knn = 1
   elif o == "-q":
     query_id = a
+  elif o == "-f":
+    query_file = a
   else:
     usage()
 
@@ -67,6 +70,16 @@ elif server != "pilaf" and server != "memcached" and server != "redis":
   sys.exit(-1)
 
 cur_dir = os.path.dirname(os.path.realpath(__file__))
+
+if query_file is not None:
+  with open(query_file) as f:
+    for line in f:
+      arg = ['mpirun', '-n', str(n),  cur_dir + '/distributed-image-search', config_path, 
+        str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn), 
+        str(line)]
+      
+      call(arg)
+  sys.exit(0)
 
 arg = ['mpirun', '-n', str(n),  cur_dir + '/distributed-image-search', config_path, 
   str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn), 

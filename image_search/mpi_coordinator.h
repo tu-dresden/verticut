@@ -27,7 +27,7 @@ class mpi_coordinator{
 
     //Gather the vetors from all processes. ONLY return the 
     //gathered result vector to MASTER process.
-    std::vector<int> gather_vectors(std::vector<int> &data); 
+    std::vector<uint64_t> gather_vectors(std::vector<uint64_t> &data); 
 
     static void die(const std::string& str);
     static void finalize();

@@ -31,11 +31,11 @@ void mpi_coordinator::gather(int *send_buf, int *recv_buf, int count){
   MPI_Gather(send_buf, count, MPI_INT, recv_buf, count, MPI_INT, MASTER, comm_);
 }
     
-std::vector<int> mpi_coordinator::gather_vectors(std::vector<int> &data){
+std::vector<uint64_t> mpi_coordinator::gather_vectors(std::vector<uint64_t> &data){
   int count = data.size();
   int *count_array = 0;
   int *disp_array = 0;
-  int *result_array = 0;
+  uint64_t *result_array = 0;
   int sum = 0;
 
   if(is_master()){
@@ -51,20 +51,20 @@ std::vector<int> mpi_coordinator::gather_vectors(std::vector<int> &data){
       disp_array[i] = (i > 0) ? (disp_array[i-1] + count_array[i-1]) : 0;
       sum += count_array[i];
     } 
-    result_array = new int[sum];
+    result_array = new uint64_t[sum];
   }
   
   //Gather vector data.
-  MPI_Gatherv(data.data(), count, MPI_INT, result_array, count_array, disp_array, MPI_INT,
+  MPI_Gatherv(data.data(), count, MPI_LONG_LONG, result_array, count_array, disp_array, MPI_LONG_LONG,
       MASTER, comm_);
   
   if(is_master()){
-    std::vector<int> ret(result_array, result_array + sum);
+    std::vector<uint64_t> ret(result_array, result_array + sum);
     delete result_array;
     delete disp_array;
     delete count_array;
     return ret;
   } 
-  return std::vector<int>();
+  return std::vector<uint64_t>();
 }
 
