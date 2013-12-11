@@ -26,6 +26,7 @@ static int n_local_bits;
 static int binary_bits;
 static bool approximate_knn;
 static int query_image_id = -1;
+static char* query_file = 0;
 
 //How many rdma accesses performs
 extern uint64_t pilaf_n_rdma_read;
@@ -37,36 +38,81 @@ int main(int argc, char* argv[]){
   ID image_id;
   BinaryCode code;
   uint64_t n_main_reads, n_sub_reads, n_local_reads;
-  uint32_t radius;
+  uint64_t n_main_reads_total = 0, n_sub_reads_total = 0, n_local_reads_total = 0;
+  uint32_t radius, radius_total;
 
   setup(argc, argv); 
 
   SearchWorker worker(coord, proxy_clt, image_count);
   assert(query_image_id != -1 && query_image_id < image_count);
 
-  image_id.set_id(query_image_id);
-  
-  if(proxy_clt->get(image_id, code) != PROXY_FOUND)
-    mpi_coordinator::die("Can't find match\n");
+  if(query_file){
+    FILE* f = fopen(query_file, "r");
+    if(f == 0){
+      fprintf(stderr, "Couldn't open file %s\n", query_file);
+      mpi_coordinator::die("Error");
+    }
+    
+    int n_query = 0;
+    while(fscanf(f, "%d", &query_image_id) != EOF){
+      image_id.set_id(query_image_id);
+      
+      if(proxy_clt->get(image_id, code) != PROXY_FOUND)
+        mpi_coordinator::die("Can't find match\n");
 
-  std::string query_code = code.code();
+      std::string query_code = code.code();
 
 
-  list<SearchWorker::search_result_st> result;
-  
-  result = worker.find(query_code.c_str(), 16, k, approximate_knn);
-  worker.get_stat(n_main_reads, n_sub_reads, n_local_reads, radius); 
+      list<SearchWorker::search_result_st> result;
 
-  if(coord->is_master()){
-    list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
-    for(; iter != result.end(); ++iter)
-      std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
-  
-    std::cout<<coord->get_rank()<<"  n_main_reads : "<<n_main_reads<<" , n_sub_reads : "<<n_sub_reads<<", ";
-    std::cout<<"n_local_reads : "<<n_local_reads<<", radius : "<<radius<<", ";
-    std::cout<<"rdma : "<<pilaf_n_rdma_read<<std::endl; 
+      result = worker.find(query_code.c_str(), 16, k, approximate_knn);
+      worker.get_stat(n_main_reads, n_sub_reads, n_local_reads, radius); 
+      n_main_reads_total += n_main_reads;
+      n_local_reads_total += n_local_reads;
+      n_sub_reads_total += n_sub_reads;
+      radius_total += radius;
+
+      if(coord->is_master()){
+        list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
+        //for(; iter != result.end(); ++iter)
+        //  std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
+        std::cout<<coord->get_rank()<<"  n_main_reads : "<<n_main_reads;
+        std::cout<<" , n_sub_reads : "<<n_sub_reads<<", ";
+        std::cout<<"n_local_reads : "<<n_local_reads<<", radius : "<<radius<<", ";
+        std::cout<<"rdma : "<<pilaf_n_rdma_read<<std::endl; 
+      } 
+      n_query++;
+    }
+      
+    if(coord->is_master()){
+      std::cout<<"Averate result : "<<std::endl;
+      std::cout<<coord->get_rank()<<"  n_main_reads : "<<n_main_reads_total / n_query;
+      std::cout<<" , n_sub_reads : "<<n_sub_reads_total / n_query<<", ";
+      std::cout<<"n_local_reads : "<<n_local_reads_total / n_query<<", radius : "<<radius_total / n_query<<", ";
+      std::cout<<"rdma : "<<pilaf_n_rdma_read / n_query<<std::endl; 
+    }
   }
-  
+  else{
+    image_id.set_id(query_image_id);
+    if(proxy_clt->get(image_id, code) != PROXY_FOUND)
+      mpi_coordinator::die("Can't find match\n");
+    std::string query_code = code.code();
+    list<SearchWorker::search_result_st> result;
+
+    result = worker.find(query_code.c_str(), 16, k, approximate_knn);
+    worker.get_stat(n_main_reads, n_sub_reads, n_local_reads, radius); 
+
+    if(coord->is_master()){
+      list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
+        for(; iter != result.end(); ++iter)
+          std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
+    
+      std::cout<<coord->get_rank()<<"  n_main_reads : "<<n_main_reads<<" , n_sub_reads : "<<n_sub_reads<<", ";
+      std::cout<<"n_local_reads : "<<n_local_reads<<", radius : "<<radius<<", ";
+      std::cout<<"rdma : "<<pilaf_n_rdma_read<<std::endl; 
+    }  
+  }
+
 
   cleanup();
   return 0;
@@ -88,7 +134,7 @@ void cleanup(){
 
 //Set up code. The arguments should be passed by bootstrap script(run_distributed_search.py) 
 void setup(int argc, char* argv[]){
-  if(argc != 10)
+  if(argc < 10)
     mpi_coordinator::die("Incorrect number of arguments!");
   
   config_path = argv[1];
@@ -99,6 +145,9 @@ void setup(int argc, char* argv[]){
   read_mode = (read_modes)atoi(argv[7]);
   approximate_knn = atoi(argv[8]);
   query_image_id = atoi(argv[9]);
+  
+  if(argc == 11)
+    query_file = argv[10];
 
   mpi_coordinator::init(argc, argv);
   coord = new mpi_coordinator;

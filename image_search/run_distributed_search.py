@@ -71,19 +71,12 @@ elif server != "pilaf" and server != "memcached" and server != "redis":
 
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 
-if query_file is not None:
-  with open(query_file) as f:
-    for line in f:
-      arg = ['mpirun', '-n', str(n),  cur_dir + '/distributed-image-search', config_path, 
-        str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn), 
-        str(line)]
-      
-      call(arg)
-  sys.exit(0)
-
 arg = ['mpirun', '-n', str(n),  cur_dir + '/distributed-image-search', config_path, 
   str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn), 
   str(query_id)]
+
+if query_file is not None:
+  arg.append(query_file)
 
 print "Run with config_path = %s, image_count = %s, binary_bits = %s, substr_bits = %s,\
 k = %s, server: %s, read_mode = %s apprximate_knn = %s, query id: %s" % (config_path, image_count, binary_bits, substr_len, 
