@@ -84,7 +84,9 @@ std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_
   return result_;
 }
 
-#define MAIN_GET_P
+
+#define MAIN_GET_P //Read main table in parallel
+
 //Find approximate KNN, this is supposed to be much faster than exact KNN when k is large.
 size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
   std::priority_queue<search_result_st> qmax;
@@ -110,10 +112,8 @@ size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
 
     for(int i = 0; i < kn_candidates.size(); ++i){
       uint32_t id = kn_candidates[i];
-
-
       image_id.set_id(id);
-      
+      n_main_reads_++;
       if(proxy_clt_->get(image_id, code) != PROXY_FOUND)
         mpi_coordinator::die("No corresponding image found.\n");
 
@@ -220,20 +220,47 @@ size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
     kn_candidates.clear();
     kn_candidates.reserve(8192 * 500);
     search_R_neighbors(radius, search_index, kn_candidates);
-    vector<uint64_t> gathered_vector = coord_->gather_vectors(kn_candidates);
-     
-    if(coord_->is_master()){
 
-      sort(gathered_vector.begin(), gathered_vector.end());
-      
+#ifdef MAIN_GET_P
+    ID image_id;
+    BinaryCode code;
+
+    for(int i = 0; i < kn_candidates.size(); ++i){
+      uint32_t id = kn_candidates[i];
+      image_id.set_id(id);
+      n_main_reads_++;
+      if(proxy_clt_->get(image_id, code) != PROXY_FOUND)
+        mpi_coordinator::die("No corresponding image found.\n");
+
+      uint64_t dist = compute_hamming_dist(code.code(), query_code);
+      kn_candidates[i] |= (dist << 32);
+    }
+#endif
+
+    vector<uint64_t> gathered_vector = coord_->gather_vectors(kn_candidates);     
+    
+    if(coord_->is_master()){
+#ifdef MAIN_GET_P
+      for(int i = 0; i < gathered_vector.size(); ++i){
+        uint32_t id = GET_ID(gathered_vector[i]);
+        int dist = GET_DIST(gathered_vector[i]);
+        
+        if(knn_found_.find(id) != knn_found_.end())
+          continue;
+        
+        search_result_st item;
+        item.image_id = id;
+        item.dist = dist;
+#else
+      //sort(gathered_vector.begin(), gathered_vector.end());      
       //Eliminate duplicates.
-      vector<uint64_t>::iterator iter = unique(gathered_vector.begin(), gathered_vector.end());
-      gathered_vector.resize(distance(gathered_vector.begin(), iter));
+      //vector<uint64_t>::iterator iter = unique(gathered_vector.begin(), gathered_vector.end());
+      //gathered_vector.resize(distance(gathered_vector.begin(), iter));
       
-      BinaryCode code;
-      ID image_id;
-      for(uint32_t i = 0; i < gathered_vector.size(); ++i){
-        int id = gathered_vector[i];
+        BinaryCode code;
+        ID image_id;
+        for(uint32_t i = 0; i < gathered_vector.size(); ++i){
+          int id = gathered_vector[i];
       
         //we've already added this to neighbor candidates lists
         if(knn_found_.find(id) != knn_found_.end())
@@ -248,6 +275,8 @@ size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
         search_result_st item;
         item.image_id = id;
         item.dist = compute_hamming_dist(code.code(), query_code);
+#endif
+        
         knn_found_[id] = 1;
       
         if (qmax.size() < knn_) {
