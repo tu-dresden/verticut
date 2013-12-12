@@ -1,9 +1,9 @@
 message ID {
-    required uint32 id = 1;
+      required uint32 id = 1;
 }
 
 message BinaryCode {
-    required bytes code = 1;
+      required bytes code = 1;
 }
 
 message HashIndex {
@@ -11,6 +11,16 @@ message HashIndex {
     required uint32 index = 2;
 }
 
-message ImageList {
-    repeated uint32 images = 1;
+message ID_Code_Pair{
+  required uint32 id = 1;
+  required bytes code = 2;
 }
+
+message ImageList {
+  repeated uint32 images = 1;
+}
+
+message Image_List{
+  repeated ID_Code_Pair images = 1;
+}
+

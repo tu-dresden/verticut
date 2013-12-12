@@ -19,7 +19,11 @@
 #include "redis_proxy.h"
 #include <iostream>
 using namespace google;
+int main(){
 
+  return 0;
+}
+/*
 int s_bits;
 std::string search_code;
 BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt;
@@ -94,4 +98,4 @@ int main (int argc, char *argv[]) {
   delete proxy_clt;
   return 0;
 }
-
+*/
