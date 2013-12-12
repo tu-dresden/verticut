@@ -1,105 +1,99 @@
-//Check the if the hash table is appropriatly build.
-#include "memcached_proxy.h"
-#include "pilaf_proxy.h"
-#include "redis_proxy.h"
-#include <iostream>
-#include "mpi_coordinator.h"
+// Copyright (C) 2013, Peking University
+// Author: Qi Chen (chenqi871025@gmail.com)
+//
+#include <math.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/time.h>
+#include <getopt.h>
+#include <pthread.h>
 #include "image_search.pb.h"
+#include "image_tools.h"
+#include "memcached_proxy.h"
+#include "redis_proxy.h"
+#include "pilaf_proxy.h"
 #include "args_config.h"
-#include <string.h>
-#include <stdlib.h>
+#include "mpi_coordinator.h"
 #include "image_search_constants.h"
 
-using namespace std;
 using namespace google;
+int substr_len;
 
-mpi_coordinator *coord;
-BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt;
+static BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt;
+static mpi_coordinator *coord;
 
-bool check_idx(const ImageList &img_list, uint32_t id){
-  for(int i = 0; i < img_list.images_size(); i++)
-    if(img_list.images(i) == id)
+bool check_is_in(Image_List &img_list, uint32_t id, const char* code){
+  
+  for(int i = 0; i < img_list.images_size(); ++i){
+    ID_Code_Pair pair = img_list.images(i); 
+    
+    if(pair.id() == id && strcmp(pair.code().c_str(), code) == 0)
       return true;
+  }
 
   return false;
 }
 
-void run_checking(){
-  ID image_id;
-  BinaryCode code;
-  HashIndex idx;
-  ImageList img_list;
-  int substr_len = binary_bits / n_tables / 8;
+void run_check(const char * fname) {
+  int table_id = coord->get_rank();
+  FILE* fh;
   int ret;
+  
+  if (NULL == (fh = fopen(fname,"r"))) {
+    fprintf(stderr, "Can't open file %s.", fname);
+    return;
+  }
 
-  uint32_t range = image_total / coord->get_size();
-  uint32_t start_pos, stop_pos;
-  start_pos = coord->get_rank() * range;
+  Image_List img_list;
+  HashIndex idx;
+  idx.set_table_id(table_id);
+  int start_pos = table_id * substr_len;
+
+  while(!feof(fh)) {
+    char code[17] = {'\0'};
+    int read_bytes = fread((void *)code, binary_bits/8, 1, fh);
+    if (read_bytes == 0) break;
   
-  if(coord->get_rank() == coord->get_size() - 1)
-    stop_pos = image_total;
-  else
-    stop_pos = start_pos + range;
-  
-  for(uint32_t i = start_pos; i < stop_pos; ++i){
-    image_id.set_id(i);
-    if(proxy_clt->get(image_id, code) != PROXY_FOUND){
-      std::cerr<<"Failed to get image id : "<<i<<" from main table."<<std::endl;
-      DIE
-    }
+    uint32_t index = binaryToInt(code + start_pos, substr_len);
+    idx.set_index(index);       
     
-    assert(code.code().size() == 16);
+    int rval = proxy_clt->get(idx, img_list);
+    assert(rval == PROXY_FOUND && check_is_in(img_list, image_total, code));
 
-    for(int t = 0; t < n_tables; ++t){
-      idx.set_table_id(t);
-      int start = t * substr_len;
-      int search_index = binaryToInt(code.code().substr(start, substr_len).c_str(), substr_len);
-      idx.set_index(search_index);
-      img_list.clear_images();
+    if(image_total % REPORT_SIZE == 0)
+      printf("rank : %d, table id : %d, image id:%d, index:%d\n", coord->get_rank(), table_id, image_total, idx.index());
 
-      ret = proxy_clt->get(idx, img_list);
-      if(ret == PROXY_NOT_FOUND){
-        std::cerr<<"Can't find image id : "<<i<<"'s "<<t<<"th part in table "<<t<<std::endl;
-        DIE
-      }
-      if(check_idx(img_list, i) == false){
-        std::cerr<<"The "<<t<<"th part of image "<<i\
-          <<" is not in the image list of sub-hash table."<<std::endl;
-        DIE
-      }
-    }
+    image_total++;
+  }
 
-    if(i % 10000 == 0)
-      std::cout<<"Rank : "<<coord->get_rank()<<" finished "<<i - start_pos<<"/"<<stop_pos - start_pos<<\
-        " part."<<std::endl;
-  } 
+  fclose(fh);
 }
 
 
-int main(int argc, char* argv[]){
+int main (int argc, char *argv[]) {
+  
+  mpi_coordinator::init(argc, argv);  
   configure(argc, argv);
-  mpi_coordinator::init(argc, argv);
+  image_total = 0;
+
+  coord = new mpi_coordinator();
   
   if(strcmp(server, "memcached") == 0)
     proxy_clt = new MemcachedProxy<protobuf::Message, protobuf::Message>;
   else if(strcmp(server, "pilaf") == 0)
     proxy_clt = new PilafProxy<protobuf::Message, protobuf::Message>;
-  else
+  else  
     proxy_clt = new RedisProxy<protobuf::Message, protobuf::Message>;
-
-  proxy_clt->init(config_path);
-  coord = new mpi_coordinator; 
-
-  run_checking();
   
-  if(coord->is_master())
-    std::cout<<"Finish integerity checking."<<std::endl;
+  proxy_clt->init(config_path);
+  substr_len = binary_bits / n_tables / 8;
 
-  mpi_coordinator::finalize();
+  run_check(binary_file);
+  
   proxy_clt->close();
+  mpi_coordinator::finalize();
 
   delete proxy_clt;
   delete coord;
-
   return 0;
 }
