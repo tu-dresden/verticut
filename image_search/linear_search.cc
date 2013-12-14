@@ -19,11 +19,6 @@
 #include "redis_proxy.h"
 #include <iostream>
 using namespace google;
-int main(){
-
-  return 0;
-}
-/*
 int s_bits;
 std::string search_code;
 BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt;
@@ -82,20 +77,38 @@ int main (int argc, char *argv[]) {
 
   proxy_clt->init(config_path);
 
-  ID image_id;
-  BinaryCode code;
   srand(34);
+
+  Image_List img_list;
+  std::string code = "1234567812345678";
+  HashIndex index;
+  index.set_index(1000);
+  index.set_table_id(1);
+
+  for(int i = 0; i < 250000; ++i){
+    ID_Code_Pair *pair = img_list.add_images();
+    pair->set_id(i);
+    pair->set_code(code.c_str(), code.size());
+  }
   
-  for (int i = 0; i < search_times; i++) {
+  std::string str;
+  img_list.SerializeToString(&str);
+  Image_List tmp;
+  tmp.ParseFromString(str);
+  
+  std::cout<<(str.size() / 1024.0 / 1024)<<std::endl;
+  proxy_clt->put(index, img_list);
+
+  /*for (int i = 0; i < search_times; i++) {
     image_id.set_id(rand() % image_total);
     proxy_clt->get(image_id, code);
     search_code = code.code();
     printf("search_image_id:%d code:%s\n", image_id.id(), binaryToString(search_code.c_str(), search_code.length()).c_str());
     search_K_nearest_neighbors(knn);
   }
+  */
 
   proxy_clt->close();
   delete proxy_clt;
   return 0;
 }
-*/

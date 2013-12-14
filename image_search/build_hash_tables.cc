@@ -64,8 +64,6 @@ void load_binarycode(const char * fname) {
     } 
 
     image_total++;
-    if(image_total == 85000000)
-      break;
   }
 
   fclose(fh);

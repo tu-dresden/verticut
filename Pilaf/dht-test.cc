@@ -161,7 +161,6 @@ int main(int argc, char **argv) {
   }
 
   if (role == R_SERVER) {
-
     signal(SIGUSR1, sighandler);
     // Set up server
     s = new Server;
@@ -176,10 +175,13 @@ int main(int argc, char **argv) {
     // Start the server running
     if (argc >= 3) {
       unsigned short port = atoi(argv[2]);
+      if(presize)
+        s->dht.resize(presize*2+1);
       s->ready(port);
     } else {
       s->ready();
     }
+    
 
 	if (presize) {
       s->dht.resize(presize*2+1);
