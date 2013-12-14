@@ -18,7 +18,7 @@ inline uint32_t binaryToInt(const char * p, int len) {
 }
 
 #define SUB_BITS 32
-inline int compute_hamming_dist(std::string code1, std::string code2) {
+inline int compute_hamming_dist(const std::string& code1, const std::string& code2) {
   const uint32_t * p1 = (uint32_t *)(code1.c_str());
   const uint32_t * p2 = (uint32_t *)(code2.c_str());
 

@@ -36,7 +36,7 @@
 #define SIZE_MAX (size_t)-1
 #define BUCKET_NOT_FOUND SIZE_MAX
 
-#define INIT_EXTENTS_SIZE (1<<20)	//1 MB
+#define INIT_EXTENTS_SIZE (1<<31)	//1 MB
 #define INIT_KV_CAPACITY 16
 
 #define EXTENTS_MARGIN 1.25			//25% spare space in extents

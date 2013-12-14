@@ -21,9 +21,9 @@
 
 // Constants
 const int TIMEOUT_IN_MS = 500; /* ms */
-const int RECV_BUF_SIZE = 2048; /* 2 KB */
+const int RECV_BUF_SIZE = 2048 * 10; /* 2 KB */
 const int BLOCK_READ_COUNT = 1;
-const int RDMA_BUFFER_SIZE = 1024;
+const int RDMA_BUFFER_SIZE = 1024 * 10;
 const int CQ_ACK_THRESH = 16;
 const int RECV_BUFS = 8;
 const int MAX_INLINE_SEND = 400; //bytes

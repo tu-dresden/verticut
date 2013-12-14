@@ -52,9 +52,9 @@ class SearchWorker{
     
     //Find approximate KNN, this is supposed to be much faster than exact KNN when k is large.
     size_t search_K_approximate_nearest_neighbors(BinaryCode &code);
-    void search_R_neighbors(int r, uint32_t search_index, 
+    void search_R_neighbors(std::string &query_code, int r, uint32_t search_index, 
         std::vector<uint64_t> &knn_candidates);
-    void enumerate_entry(uint32_t curr, int len, int rr, HashIndex &idx, 
+    void enumerate_entry(std::string &query_code, uint32_t curr, int len, int rr, HashIndex &idx, 
         std::vector<uint64_t> &knn_candidates);
     
     //try to map the memory space of bitmap deamon to local memory.

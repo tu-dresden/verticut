@@ -11,7 +11,7 @@
 #include <errno.h>
 
 #define SERVER_PORT 36001
-#define LOG_BUF_SIZE (1<<20)
+#define LOG_BUF_SIZE (1<<25)
 #define LOG_BUF_FLUSH (1<<18)
 
 class Server {

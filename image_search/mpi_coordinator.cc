@@ -67,4 +67,3 @@ std::vector<uint64_t> mpi_coordinator::gather_vectors(std::vector<uint64_t> &dat
   } 
   return std::vector<uint64_t>();
 }
-

@@ -9,7 +9,6 @@
 #include "pilaf_proxy.h"
 #include "memcached_proxy.h"
 #include "redis_proxy.h"
-#include <map>
 #include <iostream>
 #include "search_worker.h"
 #include "timer.h"
@@ -54,18 +53,14 @@ int main(int argc, char* argv[]){
     }
     
     int n_query = 0;
-    while(fscanf(f, "%d", &query_image_id) != EOF){
-      image_id.set_id(query_image_id);
-      
-      if(proxy_clt->get(image_id, code) != PROXY_FOUND)
-        mpi_coordinator::die("Can't find match\n");
+    char code[17];
+    code[16] = '\0';
 
-      std::string query_code = code.code();
-
+    while(fread(code, 16, 1, f) != 0){
 
       list<SearchWorker::search_result_st> result;
 
-      result = worker.find(query_code.c_str(), 16, k, approximate_knn);
+      result = worker.find(code, 16, k, approximate_knn);
       worker.get_stat(n_main_reads, n_sub_reads, n_local_reads, radius); 
       n_main_reads_total += n_main_reads;
       n_local_reads_total += n_local_reads;

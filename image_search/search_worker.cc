@@ -85,8 +85,6 @@ std::list<SearchWorker::search_result_st> SearchWorker::find(const char *binary_
 }
 
 
-#define MAIN_GET_P //Read main table in parallel
-
 //Find approximate KNN, this is supposed to be much faster than exact KNN when k is large.
 size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
   std::priority_queue<search_result_st> qmax;
@@ -104,79 +102,32 @@ size_t SearchWorker::search_K_approximate_nearest_neighbors(BinaryCode& code){
     kn_candidates.clear();
     kn_candidates.reserve(8192 * 500);
     
-    search_R_neighbors(radius, search_index, kn_candidates);
+    search_R_neighbors(query_code, radius, search_index, kn_candidates);
   
-#ifdef MAIN_GET_P
-    ID image_id;
-    BinaryCode code;
-
-    for(int i = 0; i < kn_candidates.size(); ++i){
-      uint32_t id = kn_candidates[i];
-      image_id.set_id(id);
-      n_main_reads_++;
-      if(proxy_clt_->get(image_id, code) != PROXY_FOUND)
-        mpi_coordinator::die("No corresponding image found.\n");
-
-      uint64_t dist = compute_hamming_dist(code.code(), query_code);
-      kn_candidates[i] |= (dist << 32);
-    }
-#endif
-    
     vector<uint64_t> gathered_vector = coord_->gather_vectors(kn_candidates);
 
     if(coord_->is_master()){
-#ifdef MAIN_GET_P
-      for(int i = 0; i < gathered_vector.size(); ++i){
+       for(int i = 0; i < gathered_vector.size(); ++i){ 
         uint32_t id = GET_ID(gathered_vector[i]);
-        int dist = GET_DIST(gathered_vector[i]);
         
         if(knn_found_.find(id) != knn_found_.end())
           continue;
-        
-        search_result_st item;
-        item.image_id = id;
-        item.dist = dist;
-#else
-      //sort(gathered_vector.begin(), gathered_vector.end()); 
-      //Eliminate duplicates.
-      //vector<uint64_t>::iterator iter = unique(gathered_vector.begin(), gathered_vector.end());
-      //gathered_vector.resize(distance(gathered_vector.begin(), iter));
-      
-      BinaryCode code;
-      ID image_id;
-      
-      for(uint32_t i = 0; i < gathered_vector.size(); ++i){
-        int id = gathered_vector[i];
-      
-        //we've already added this to neighbor candidates lists
-        if(knn_found_.find(id) != knn_found_.end())
-          continue;
-        
-        image_id.set_id(id);
-        n_main_reads_++;
-        
-        if(proxy_clt_->get(image_id, code) != PROXY_FOUND)
-          mpi_coordinator::die("No corresponding image found.\n");
 
         search_result_st item;
         item.image_id = id;
-        item.dist = compute_hamming_dist(code.code(), query_code);
-#endif    
-      
+        item.dist = GET_DIST(gathered_vector[i]);
+
         knn_found_[id] = 1;
-      
+         
         if (qmax.size() < knn_ * APPROXIMATE_FACTOR) {
           qmax.push(item);
         }else if (qmax.top().dist > item.dist) {
           qmax.pop();
           qmax.push(item);
         }  
-        //if(qmax.size() == knn_ * APPROXIMATE_FACTOR)
-        //  break;
       }
     }
-
-    
+ 
     radius += 1; 
     //If the mininum distance next epoch we may find is less than the max one of 
     //what we've found, then stop.
@@ -219,7 +170,7 @@ size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
     //Clear kn_candidates
     kn_candidates.clear();
     kn_candidates.reserve(8192 * 500);
-    search_R_neighbors(radius, search_index, kn_candidates);
+    search_R_neighbors(query_code, radius, search_index, kn_candidates);
 
 #ifdef MAIN_GET_P
     ID image_id;
@@ -307,19 +258,19 @@ size_t SearchWorker::search_K_nearest_neighbors(BinaryCode& code){
   return radius - 1;
 }
 
-void SearchWorker::search_R_neighbors(int r, uint32_t search_index, 
+void SearchWorker::search_R_neighbors(std::string& query_code, int r, uint32_t search_index, 
     std::vector<uint64_t>& kn_candidates){ 
   HashIndex idx;
   idx.set_table_id(coord_->get_rank());
-  enumerate_entry(search_index, 0, r, idx, kn_candidates);
+  enumerate_entry(query_code, search_index, 0, r, idx, kn_candidates);
 }
 
 //Enumerate all the entries.
-void SearchWorker::enumerate_entry(uint32_t curr, int len, int rr, HashIndex& idx, 
+void SearchWorker::enumerate_entry(std::string& query_code, uint32_t curr, int len, int rr, HashIndex& idx, 
     std::vector<uint64_t> &kn_candidates){ 
   
   if (rr == 0) {
-    ImageList img_list;
+    Image_List img_list;
     idx.set_index(curr);
     int rval;
   
@@ -335,14 +286,18 @@ void SearchWorker::enumerate_entry(uint32_t curr, int len, int rr, HashIndex& id
     
     if (rval == PROXY_FOUND) {
       for(int i = 0; i < img_list.images_size(); i++){
-        if(img_list.images(i) < image_total_){
-          kn_candidates.push_back(img_list.images(i));
-        }
+        ID_Code_Pair pair = img_list.images(i);
+        std::string code = pair.code();
+        uint32_t id = pair.id();
+        uint32_t dist = compute_hamming_dist(code, query_code);
+        uint64_t value = id;
+        value |= ((uint64_t)dist << 32);
+        kn_candidates.push_back(value);
       }
     }
   }else{
-    enumerate_entry(curr^(1<<len), len+1, rr-1, idx, kn_candidates);
+    enumerate_entry(query_code, curr^(1<<len), len+1, rr-1, idx, kn_candidates);
     if(n_local_bytes_ * 8 - len > rr)
-      enumerate_entry(curr, len+1, rr, idx, kn_candidates);
+      enumerate_entry(query_code, curr, len+1, rr, idx, kn_candidates);
   }
 }

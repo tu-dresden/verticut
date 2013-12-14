@@ -60,7 +60,7 @@ enum mr_types {
 const int MSG_BUF_SIZE = sizeof(dht_message);			//It will actually be the max of the sizes of the message and mrmessage structs
 
 #else
-const int RECV_EXT_SIZE = (1<<20); /* 16 MB (aka freaking massive, to fit key-val for giant puts) */
+const int RECV_EXT_SIZE = (1<<25); /* 16 MB (aka freaking massive, to fit key-val for giant puts) */
 const int MSG_BUF_SIZE = MAX(RECV_EXT_SIZE,sizeof(dht_message));
 
 #endif

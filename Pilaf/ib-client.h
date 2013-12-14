@@ -10,7 +10,7 @@
 #include <errno.h>
 
 #define MAX_RDMA_BUF_SIZE (1<<30)
-#define MAX_RDMA_RECV_BUF_SIZE (1<<20)
+#define MAX_RDMA_RECV_BUF_SIZE (1<<26)
 #define MSG_BUF_SIZE MAX_RDMA_RECV_BUF_SIZE
 
 #define MR_TYPE_RDMA_LADLE 37
