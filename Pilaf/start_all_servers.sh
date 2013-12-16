@@ -6,7 +6,7 @@ then
 else
 	PRESIZE=0
 fi
-PRESIZE=40000000
+
 cat ../config/pilaf.cnf| while read LINE
 do
     ip=`echo "$LINE" | awk '{print $1}'`

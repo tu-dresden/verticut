@@ -175,8 +175,10 @@ int main(int argc, char **argv) {
     // Start the server running
     if (argc >= 3) {
       unsigned short port = atoi(argv[2]);
-      if(presize)
+      if(presize){
         s->dht.resize(presize*2+1);
+        s->dht.resize_extents(presize*2UL*(1024UL+64UL));
+      }
       s->ready(port);
     } else {
       s->ready();

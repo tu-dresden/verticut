@@ -68,6 +68,7 @@ int main(int argc, char* argv[]){
       radius_total += radius;
 
       if(coord->is_master()){
+        
         list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
         //for(; iter != result.end(); ++iter)
         //  std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
