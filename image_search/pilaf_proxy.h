@@ -7,7 +7,7 @@
 #include <string>
 #include "store-client.h"
 #include "config.h"
-#define MAX_BUF_LEN 10000000
+#define MAX_BUF_LEN 40000000
 
 template<class K, class V>
 class PilafProxy:public BaseProxy<K, V>{

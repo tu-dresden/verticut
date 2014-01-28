@@ -55,31 +55,22 @@ int main(int argc, char* argv[]){
     int n_query = 0;
     char code[17];
     code[16] = '\0';
+    
 
     while(fread(code, 16, 1, f) != 0){
 
       list<SearchWorker::search_result_st> result;
-
+      if(coord->is_master())
+        std::cout<<"begin"<<std::endl;
       result = worker.find(code, 16, k, approximate_knn);
-      worker.get_stat(n_main_reads, n_sub_reads, n_local_reads, radius); 
-      n_main_reads_total += n_main_reads;
-      n_local_reads_total += n_local_reads;
-      n_sub_reads_total += n_sub_reads;
-      radius_total += radius;
-
-      if(coord->is_master()){
         
-        list<SearchWorker::search_result_st>::iterator iter = result.begin(); 
-        //for(; iter != result.end(); ++iter)
-        //  std::cout<<iter->image_id<<" : "<<iter->dist<<endl;  
-        std::cout<<coord->get_rank()<<"  n_main_reads : "<<n_main_reads;
-        std::cout<<" , n_sub_reads : "<<n_sub_reads<<", ";
-        std::cout<<"n_local_reads : "<<n_local_reads<<", radius : "<<radius<<", ";
-        std::cout<<"rdma : "<<pilaf_n_rdma_read<<std::endl; 
-      } 
+      if(coord->is_master()) std::cout<<"size : "<<result.size()<<" dist : "<<result.front().dist<<std::endl;
+
+      if(coord->is_master())
+        std::cout<<"end"<<std::endl;
       n_query++;
     }
-      
+
     if(coord->is_master()){
       std::cout<<"Averate result : "<<std::endl;
       std::cout<<coord->get_rank()<<"  n_main_reads : "<<n_main_reads_total / n_query;
@@ -89,9 +80,10 @@ int main(int argc, char* argv[]){
     }
   }
   else{
-    image_id.set_id(query_image_id);
+    /*image_id.set_id(query_image_id);
     if(proxy_clt->get(image_id, code) != PROXY_FOUND)
       mpi_coordinator::die("Can't find match\n");
+    
     std::string query_code = code.code();
     list<SearchWorker::search_result_st> result;
 
@@ -106,9 +98,10 @@ int main(int argc, char* argv[]){
       std::cout<<coord->get_rank()<<"  n_main_reads : "<<n_main_reads<<" , n_sub_reads : "<<n_sub_reads<<", ";
       std::cout<<"n_local_reads : "<<n_local_reads<<", radius : "<<radius<<", ";
       std::cout<<"rdma : "<<pilaf_n_rdma_read<<std::endl; 
-    }  
+    } 
+    */
+    mpi_coordinator::die("The version without main table doesn't support query by id.\.");
   }
-
 
   cleanup();
   return 0;
@@ -156,6 +149,8 @@ void setup(int argc, char* argv[]){
     proxy_clt = new RedisProxy<protobuf::Message, protobuf::Message>;
   else
     mpi_coordinator::die("Unrecognized server type.");
-
+  {
+  timer t("connect");
   proxy_clt->init(config_path);
+  }
 } 

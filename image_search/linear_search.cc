@@ -18,6 +18,8 @@
 #include "pilaf_proxy.h"
 #include "redis_proxy.h"
 #include <iostream>
+#include "timer.h"
+
 using namespace google;
 int s_bits;
 std::string search_code;
@@ -64,6 +66,29 @@ void search_K_nearest_neighbors(int k) {
 int main (int argc, char *argv[]) {
   
   configure(argc, argv);
+  std::string codes("0123456789123456");
+  Image_List img_lists;
+
+  for(int i = 0; i < 100; ++i){
+    ID_Code_Pair *pair = img_lists.add_images();
+    pair->set_id(i);
+    pair->set_code(codes.c_str(), codes.size());;
+  }
+  
+  std::string data;
+  img_lists.SerializeToString(&data);
+  
+  for(int i = 0; i < 16000; ++i){
+    img_lists.ParseFromString(data);
+    
+    for(int t = 0; t < img_lists.images_size(); ++t){
+      ID_Code_Pair pair = img_lists.images(t);
+    }
+  }
+
+  timer::show_all_timings();
+  return 0;
+  
 
   s_bits = binary_bits / n_tables;
   int search_times = 1;

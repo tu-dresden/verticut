@@ -81,15 +81,15 @@ int main(int argc, char* argv[]){
   std::string f3_name;
   std::string f4_name;
   
-  f1_name = std::string(data_file) + "_bmp_1.raw";
-  f2_name = std::string(data_file) + "_bmp_2.raw";
-  f3_name = std::string(data_file) + "_bmp_3.raw";
-  f4_name = std::string(data_file) + "_bmp_4.raw";
+  f1_name = std::string(data_file) + "_bmp_1_2b.raw";
+  f2_name = std::string(data_file) + "_bmp_2_2b.raw";
+  f3_name = std::string(data_file) + "_bmp_3_2b.raw";
+  f4_name = std::string(data_file) + "_bmp_4_2b.raw";
 
-  FILE* f1 = fopen(f1_name.c_str(), "w+");
-  FILE* f2 = fopen(f2_name.c_str(), "w+");
-  FILE* f3 = fopen(f3_name.c_str(), "w+");
-  FILE* f4 = fopen(f4_name.c_str(), "w+");
+  FILE* f1 = fopen(f1_name.c_str(), "w");
+  FILE* f2 = fopen(f2_name.c_str(), "w");
+  FILE* f3 = fopen(f3_name.c_str(), "w");
+  FILE* f4 = fopen(f4_name.c_str(), "w");
   
   if(f1 == NULL || f2 == NULL || f3 == NULL || f4 == NULL){
     fprintf(stderr, "can't create files.\n");
@@ -112,6 +112,10 @@ int main(int argc, char* argv[]){
     set_idx((uint32_t*)table_2, segs[1]);
     set_idx((uint32_t*)table_3, segs[2]);
     set_idx((uint32_t*)table_4, segs[3]);
+    
+    if(i == 120000000)
+      break;
+
   }
   
   

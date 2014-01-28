@@ -62,6 +62,9 @@ void load_binarycode(const char * fname) {
       pair->set_code(code, binary_bits/8);
       assert(proxy_clt->put(idx, img_list) == PROXY_PUT_DONE); 
     } 
+    
+    if(image_total == 130000000)
+      break;
 
     image_total++;
   }

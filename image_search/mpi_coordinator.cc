@@ -19,7 +19,7 @@ void mpi_coordinator::bitwise_or(int *send_bmp, int* recv_bmp, int count){
 }
 
 void mpi_coordinator::die(const std::string& str){
-  std::cerr<<str<<std::endl;
+  std::cerr<<str<<std::endl; 
   MPI_Abort(MPI_COMM_WORLD, -1);
 }
 

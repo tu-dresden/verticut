@@ -37,10 +37,10 @@ int main(int argc, char* argv[]){
 
   assert(addr != MAP_FAILED);
   
-  FILE* f1 = fopen("/home/yisheng/data/data-1b-raw.txt_bmp_1.raw", "r");
-  FILE* f2 = fopen("/home/yisheng/data/data-1b-raw.txt_bmp_2.raw", "r");
-  FILE* f3 = fopen("/home/yisheng/data/data-1b-raw.txt_bmp_3.raw", "r");
-  FILE* f4 = fopen("/home/yisheng/data/data-1b-raw.txt_bmp_4.raw", "r");
+  FILE* f1 = fopen("/hdfs/yisheng/image_search/2b_images_raw.data_bmp_1_2b.raw", "r");
+  FILE* f2 = fopen("/hdfs/yisheng/image_search/2b_images_raw.data_bmp_2_2b.raw", "r");
+  FILE* f3 = fopen("/hdfs/yisheng/image_search/2b_images_raw.data_bmp_3_2b.raw", "r");
+  FILE* f4 = fopen("/hdfs/yisheng/image_search/2b_images_raw.data_bmp_4_2b.raw", "r");
   
   if(f1 == 0 || f2 == 0 || f3 == 0 || f4 == 0){
     fprintf(stderr, "can't open fiel file\n");

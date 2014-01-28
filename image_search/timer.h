@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <sys/time.h>
+#include <stdint.h>
 
 class timer{
   protected:
@@ -33,5 +34,6 @@ class timer{
       std::cout<<"---------------------"<<std::endl; 
     }
 };
+
 
 #endif
