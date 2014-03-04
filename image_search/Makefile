@@ -2,7 +2,7 @@
 
 PILAF_PATH := ../Pilaf
 REDIS_PATH := ../Redis
-LDFLAGS := $(LDFLAGS) -lrt -lmsgpack -lmsgpack-rpc -lmpio -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached -lboost_thread-mt
+LDFLAGS := $(LDFLAGS) -lrt -lmsgpack -lmsgpack-rpc -lmpio -lrdmacm -libverbs -lrt -lpthread -lprotobuf -lmemcached -lboost_system 
 CFLAGS  := -Wno-write-strings -Ofast -rdynamic -I${REDIS_PATH} -I${PILAF_PATH} 
 CC      := mpiCC.openmpi
 

@@ -81,10 +81,10 @@ int main(int argc, char* argv[]){
   std::string f3_name;
   std::string f4_name;
   
-  f1_name = std::string(data_file) + "_bmp_1_2b.raw";
-  f2_name = std::string(data_file) + "_bmp_2_2b.raw";
-  f3_name = std::string(data_file) + "_bmp_3_2b.raw";
-  f4_name = std::string(data_file) + "_bmp_4_2b.raw";
+  f1_name = std::string(data_file) + "_bmp_1_2b_4k.raw";
+  f2_name = std::string(data_file) + "_bmp_2_2b_4k.raw";
+  f3_name = std::string(data_file) + "_bmp_3_2b_4k.raw";
+  f4_name = std::string(data_file) + "_bmp_4_2b_4k.raw";
 
   FILE* f1 = fopen(f1_name.c_str(), "w");
   FILE* f2 = fopen(f2_name.c_str(), "w");
@@ -113,7 +113,7 @@ int main(int argc, char* argv[]){
     set_idx((uint32_t*)table_3, segs[2]);
     set_idx((uint32_t*)table_4, segs[3]);
     
-    if(i == 120000000)
+    if(i == 40000000)
       break;
 
   }

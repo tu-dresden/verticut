@@ -9,6 +9,7 @@
 #include <sys/signal.h>
 #include <unistd.h>
 #include "image_search_constants.h"
+#include <iostream>
 
 static unsigned long long total_size =  ((unsigned long long)1 << 32) / 8 * 4;
 static void *addr;
@@ -37,11 +38,17 @@ int main(int argc, char* argv[]){
 
   assert(addr != MAP_FAILED);
   
-  FILE* f1 = fopen("/hdfs/yisheng/image_search/2b_images_raw.data_bmp_1_2b.raw", "r");
-  FILE* f2 = fopen("/hdfs/yisheng/image_search/2b_images_raw.data_bmp_2_2b.raw", "r");
-  FILE* f3 = fopen("/hdfs/yisheng/image_search/2b_images_raw.data_bmp_3_2b.raw", "r");
-  FILE* f4 = fopen("/hdfs/yisheng/image_search/2b_images_raw.data_bmp_4_2b.raw", "r");
+  FILE* f1 = fopen("/scratch2/cq/2b_images_raw.data_bmp_1_2b.raw", "r");
+  FILE* f2 = fopen("/scratch2/cq/2b_images_raw.data_bmp_2_2b.raw", "r");
+  FILE* f3 = fopen("/scratch2/cq/2b_images_raw.data_bmp_3_2b.raw", "r");
+  FILE* f4 = fopen("/scratch2/cq/2b_images_raw.data_bmp_4_2b.raw", "r");
   
+  /*FILE* f1 = fopen("/scratch2/cq/2b_images_raw.data_bmp_1_2b.raw", "r");
+  FILE* f2 = fopen("/scratch2/cq/2b_images_raw.data_bmp_2_2b.raw", "r");
+  FILE* f3 = fopen("/scratch2/cq/2b_images_raw.data_bmp_3_2b.raw", "r");
+  FILE* f4 = fopen("/scratch2/cq/2b_images_raw.data_bmp_4_2b.raw", "r");
+  */
+
   if(f1 == 0 || f2 == 0 || f3 == 0 || f4 == 0){
     fprintf(stderr, "can't open fiel file\n");
     exit(-1);
@@ -57,6 +64,8 @@ int main(int argc, char* argv[]){
   fclose(f3);
   fclose(f4);
   
+  std::cout<<"ok"<<std::endl;
+
   while(1){
     sleep(1);
   }

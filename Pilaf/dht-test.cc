@@ -172,27 +172,31 @@ int main(int argc, char **argv) {
       s->set_logging(true,logfile);
     }
 
+    size_t keys = 20 * 4 * 1024 * 1024;
+    s->dht.resize(keys * 2 + 1);
+    s->dht.resize_extents(keys * 40);
+
     // Start the server running
     if (argc >= 3) {
       unsigned short port = atoi(argv[2]);
-      if(presize){
-        s->dht.resize(presize*2+1);
-        s->dht.resize_extents(presize*2UL*(1024UL+64UL));
-      }
+      //if(presize){
+      //  s->dht.resize(presize*2+1);
+      //  s->dht.resize_extents(presize*2UL*(1024UL+64UL));
+      //}
       s->ready(port);
     } else {
       s->ready();
     }
-    
 
-	if (presize) {
-      s->dht.resize(presize*2+1);
-      if (test[0] == 'L') {
-        s->dht.resize_extents(presize*2UL*(1024UL+64UL));
-      } else {
-        s->dht.resize_extents(presize*2UL*(64UL+16UL));
-      }
-    }
+
+	//if (presize) {
+      //s->dht.resize(presize*2+1);
+      //if (test[0] == 'L') {
+      //  s->dht.resize_extents(presize*2UL*(1024UL+64UL));
+      //} else {
+      //  s->dht.resize_extents(presize*2UL*(64UL+16UL));
+      //}
+    //}
 
   } else {
 
