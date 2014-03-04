@@ -2,10 +2,10 @@
 
 all:
 	cd Pilaf/; make
-	cd image_search/; make
+	cd Monkey/; make
 	cd Redis/; make
 
 clean:
 	cd Pilaf/; make clean
-	cd image_search/; make clean
+	cd Monkey/; make clean
 	cd Redis/; make clean
