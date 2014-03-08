@@ -1,4 +1,4 @@
-Monkey
+VertiCut
 ============
 
 An image search engine on [Infiniband](http://searchstorage.techtarget.com/definition/InfiniBand). A distirbuted implementaion of paper 
