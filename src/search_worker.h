@@ -10,7 +10,7 @@
 #include <list>
 #include <stdint.h>
 #include "bitmap.h"
-//#include <unordered_set>
+//#include <unordered_map>
 #define APPROXIMATE_FACTOR 20
 
 using namespace google;
@@ -36,6 +36,7 @@ class SearchWorker{
     mpi_coordinator* coord_;
     BaseProxy<protobuf::Message, protobuf::Message> *proxy_clt_;
     std::list<search_result_st> result_;
+    //std::unordered_map<int, bool> knn_found_;
     std::map<int, bool> knn_found_;
     ImageBitmap *bmp_;
     uint64_t n_main_reads_;

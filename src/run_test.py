@@ -71,7 +71,7 @@ elif server != "pilaf" and server != "memcached" and server != "redis":
 
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 
-arg = ['mpirun', '-n', str(n),  cur_dir + '/accuracy-test', config_path, 
+arg = ['mpirun.openmpi', '-n', str(n),  cur_dir + '/accuracy-test', config_path, 
   str(image_count), str(binary_bits), str(substr_len), str(k), server, str(read_mode), str(approximate_knn), 
   str(query_id)]
 
