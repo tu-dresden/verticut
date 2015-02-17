@@ -661,6 +661,7 @@ void put_test(Tclient *c,int begin, int count, bool run_forever = false){
     gettimeofday(&end,NULL);
     printf("Successfully put %d k-v pairs with %zu bytes of keys and %zu bytes of vals\n",count,kbytes,vbytes);
     printf("Put Throughput: %f ops/sec \n",count*1.0/((end.tv_sec-start.tv_sec)+(end.tv_usec-start.tv_usec)*1.0/1000000)); 
+#if 0
     printf("Throughput number every %d sec begining with %d sec\n",INTERVAL_TIME,START_TIME);
     for(i=0;i<TIMEVAL_NUM+1;i++){
         if(i==0)
@@ -672,6 +673,7 @@ void put_test(Tclient *c,int begin, int count, bool run_forever = false){
             printf("%d\n",res);
         }
     }
+#endif
 }
 void usage(char **argv){
     printf("Usage:%s l <k-v file for putting> <k file for gettting> \t[load files into the shared memory]\n",argv[0]);
