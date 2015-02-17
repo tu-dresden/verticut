@@ -27,13 +27,13 @@
 #include <vector>
 #include <assert.h>
 #include <stdio.h>
+#include <cstdint>
 #include "table_types.h"
 #include "mem/mem5.h"
 
 // Contains CRC and hash functions
 #include "integrity.h"
 
-#define SIZE_MAX (size_t)-1
 #define BUCKET_NOT_FOUND SIZE_MAX
 
 #define INIT_EXTENTS_SIZE (1<<20)	//1 MB
