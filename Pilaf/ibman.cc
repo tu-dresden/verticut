@@ -215,6 +215,7 @@ void IBConnManager::destroy_global_mrs(void) {
     node = next;
   }
   global_mrs = NULL;
+  gpd = nullptr;
 }
 
 IBConn* IBConnManager::new_conn(size_t msgbuf_size) {
