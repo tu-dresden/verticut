@@ -42,7 +42,6 @@
 
 void unload_files();
 
-#define uint64_t unsigned long long int
 #define MAX_PAIR_NUM 5000000
 #define MAX_KEY_SIZE 30
 #define MAX_VAL_SIZE 128
