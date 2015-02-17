@@ -18,6 +18,7 @@
  *              pairs into key-value storages. *
  ***********************************************/
 
+#include <iostream>
 #include <math.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -38,6 +39,8 @@
 #if MEMCACHED
 #include "libmemcached/memcached.h"
 #endif
+
+void unload_files();
 
 #define uint64_t unsigned long long int
 #define MAX_PAIR_NUM 5000000
@@ -528,6 +531,16 @@ int load_put_file(char *filename){
     ret=munmap(values_addr,MAX_KEY_SIZE*MAX_PAIR_NUM);
     if(-1==ret)
         die("Failed to munmap vlaues");
+    if(max_keylen > MAX_KEY_SIZE || max_vallen > MAX_VAL_SIZE) {
+        std::cout << "Key or value longer than expected." << std::endl;
+        std::cout << "Max expected key len: " << MAX_KEY_SIZE << std::endl;
+        std::cout << "Longest loaded key: " << max_keylen << std::endl;
+        std::cout << "Max expected value len: " << MAX_VAL_SIZE << std::endl;
+        std::cout << "Longest loaded value: " << max_vallen << std::endl;
+        std::cout << "Adjust MAX_KEY_SIZE and/or MAX_VAL_SIZE and recompile." << std::endl;
+        unload_files();
+        exit(EXIT_FAILURE);
+    }
     return lines;    
 }
 int load_get_file(char *filename){
