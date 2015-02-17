@@ -45,7 +45,7 @@ void unload_files();
 #define uint64_t unsigned long long int
 #define MAX_PAIR_NUM 5000000
 #define MAX_KEY_SIZE 30
-#define MAX_VAL_SIZE 23
+#define MAX_VAL_SIZE 128
 #define GET_PERCENTAGE 1000 //among 1000
 #define TIMEVAL_NUM 100
 #define LATENCY_NUM 10000
