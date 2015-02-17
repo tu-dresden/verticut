@@ -1,6 +1,6 @@
 .PHONY: clean
 
-CFLAGS  := -Wno-write-strings -Ofast -rdynamic
+CFLAGS  := -std=c++11 -Wno-write-strings -Ofast -rdynamic
 CC      := g++
 LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lrt -lpthread
 OBJS_DT := ib.o ibman.o dht-test.o store-server.o store-client.o

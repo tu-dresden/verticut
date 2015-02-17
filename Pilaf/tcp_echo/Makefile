@@ -1,6 +1,6 @@
 .PHONY: clean
 
-CFLAGS  := -Wno-write-strings -fpermissive -O3
+CFLAGS  := -std=c++11 -Wno-write-strings -fpermissive -O3
 CC      := g++
 LDFLAGS := $(LDFLAGS) -lrt
 OBJS_CL := client.o helper.o

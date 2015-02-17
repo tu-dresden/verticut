@@ -4,7 +4,7 @@ MEMCACHED_HOME=/home/yifeng/lib/libmemcached
 REDIS_HOME=/home/yifeng/hiredis
 
 CFLAGS  :=-Wno-write-strings -Ofast 
-CXXFLAGS := -Wno-write-strings -Ofast -fPIC
+CXXFLAGS := -std=c++11 -Wno-write-strings -Ofast -fPIC
 CC      := g++
 LDFLAGS := $(LDFLAGS) -lrdmacm -libverbs -lprofiler -lrt
 OBJS_PLT := ../ib.o ../ibman.o ploadtest.o ../store-client.o
