@@ -95,7 +95,7 @@ private:
   friend class IB_DHT;
 
   // When loading gets beyond this percentage, resize
-  static const double kLoadFactor = 0.75;
+  static constexpr double kLoadFactor = 0.75;
 
   Integrity64 crc;
 
