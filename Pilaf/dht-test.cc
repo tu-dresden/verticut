@@ -172,7 +172,7 @@ int main(int argc, char **argv) {
       s->set_logging(true,logfile);
     }
 
-    size_t keys = 20 * 4 * 1024 * 1024;
+    size_t keys = 4 * 1024 * 1024;
     s->dht.resize(keys * 2 + 1);
     s->dht.resize_extents(keys * 40);
 
